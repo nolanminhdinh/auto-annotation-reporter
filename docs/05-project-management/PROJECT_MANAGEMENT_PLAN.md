@@ -2,8 +2,8 @@
 
 > **Dự án**: Auto Annotation Report Pipeline (CVAT & GitHub Sync - Power BI Hybrid)  
 > **Người lập & Trưởng dự án (Project Lead)**: Đinh Công Minh  
-> **Phiên bản**: v1.0.0  
-> **Ngày phê duyệt**: 08/10/2026
+> **Phiên bản**: v1.1.0 *(Cập nhật 11/10/2026 — Ghi nhận hoàn thành sớm ETL Engine & 4 CSV)*  
+> **Ngày phê duyệt**: 08/10/2026 | **Ngày cập nhật**: 11/10/2026
 
 ---
 
@@ -77,11 +77,14 @@ flowchart TD
 | 1.3 | Data Integration | Module trích xuất CVAT Quality Reports & GitHub Issues | **Duy** | Tú | `src/extractors/github_extractor.py` | Lấy đúng điểm QA, frame issues và sinh đúng Deep Link CVAT. |
 | 1.4 | Setup Môi trường | Khởi tạo cấu trúc repository, file `.env.example`, `requirements.txt` | **Ngọc** | Tuân | Khung Repo chuẩn hóa | Chạy `pip install` thành công, bảo mật thông tin secrets. |
 | **II** | **TUẦN 2: ETL & TÍNH TOÁN CHỈ SỐ** | | | | | |
-| 2.1 | Analytics Engine | Viết hàm tính Vận tốc (Frames/h, Objects/h) & AHT | **Tuân** | Minh | `src/processors/velocity.py` | Tính chính xác, lọc bỏ được thời gian idle (treo máy). |
-| 2.2 | Analytics Engine | Viết hàm tính Chất lượng (FTPR %, Rework %, Defect Density) | **Tuân** | Duy | `src/processors/quality.py` | Đếm chuẩn số lần trả về, phân loại đúng 4 nhóm lỗi. |
-| 2.3 | Analytics Engine | Viết thuật toán diện tích Shoelace & Phân loại COCO Scale | **Tuân** | Tú | `src/processors/geometry.py` | Tính chuẩn diện tích đa giác, phân loại Small/Medium/Large. |
-| 2.4 | Segmentation | Cài đặt thuật toán phân khúc thành viên (Final Annotator Segment) | **Tuân** | Minh | `src/processors/segmentation.py` | Khớp 100% điều kiện logic phân loại nhân sự đã thống nhất. |
-| 2.5 | Data Export | Xuất dữ liệu sạch dạng 4 file CSV vào `data/processed/` | **Tuân** | Ngọc | Bộ 4 file CSV chuẩn hóa | Không lỗi font UTF-8, không sót giá trị NULL bất thường. |
+| 2.1 | Analytics Engine | Viết hàm tính Vận tốc (Frames/h, Objects/h) & AHT | **Tuân** | Minh | `metrics-etl-processors/src/processors/velocity.py` | ⏳ **Tuần 2** — Đặc tả & công thức đã có trong `README.md`; chưa có file `.py`. |
+| 2.2 | Analytics Engine | Viết hàm tính Chất lượng (FTPR %, Rework %, Defect Density) | **Tuân** | Duy | `metrics-etl-processors/src/processors/quality.py` | ⏳ **Tuần 2** — Như trên. |
+| 2.3 | Analytics Engine | Viết thuật toán diện tích Shoelace & Phân loại COCO Scale | **Tuân** | Tú | `metrics-etl-processors/src/processors/geometry.py` | ⏳ **Tuần 2** — Như trên. |
+| 2.4 | Segmentation | Cài đặt thuật toán phân khúc thành viên (Final Annotator Segment) | **Tuân** | Minh | `metrics-etl-processors/src/processors/segmentation.py` | ⏳ **Tuần 2** — Logic 7 nhóm đã đặc tả; chưa có file `.py`. |
+| 2.5 | Data Export | Xuất dữ liệu sạch dạng 4 file CSV vào `data/processed/` | **Tuân** | Ngọc | `batch_progress.csv`, `qa_metrics.csv`, `annotator_segments.csv`, `edge_cases.csv` | ⏳ **Tuần 2** — Phụ thuộc WBS 2.1–2.4 hoàn thành trước. |
+| 2.6 | Adapter & Runner | Adapter đọc snapshot `cvat.json` & runner tổng hợp chỉ số | **Tuân** | Duy | `metrics-etl-processors/src/adapters/cvat_snapshot.py`, `snapshot_metrics.py` | ✅ **Hoàn thành cuối Tuần 1** — Chạy offline: `python -m src.adapters.snapshot_metrics <snapshot>`. |
+| 2.7 | Testing | Bộ test cho adapter snapshot | **Tuân** | — | `metrics-etl-processors/tests/adapters/test_cvat_snapshot.py` | ✅ **Hoàn thành cuối Tuần 1**. |
+| 2.8 | Documentation | Tài liệu kỹ thuật tầng processors (công thức, DAX mapping, giả định) | **Tuân** | Minh | `metrics-etl-processors/src/processors/README.md` | ✅ **Hoàn thành cuối Tuần 1** — Chờ Lead duyệt 8 giả định trong mục 5. |
 | **III**| **TUẦN 3: BÁO CÁO POWER BI & TỰ ĐỘNG HÓA** | | | | | |
 | 3.1 | Power BI Modeling | Nạp dữ liệu, thiết lập Star Schema và tạo Calendar Table | **Minh** | Tuân | `report_dashboard.pbix` (Model) | Quan hệ 1:N hoạt động trơn tru, không có vòng lặp quan hệ. |
 | 3.2 | DAX Development | Viết và kiểm thử bộ 20 công thức DAX Measures | **Minh** | Tuân | Bộ DAX Measures | Số liệu DAX khớp 100% với kết quả script Python của Tuân. |
