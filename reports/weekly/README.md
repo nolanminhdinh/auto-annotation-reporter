@@ -23,10 +23,12 @@ Nhóm áp dụng cơ chế báo cáo tiến độ **2 buổi / tuần**:
 ```text
 reports/weekly/
 ├── README.md                           <-- Quy chuẩn & Mục lục báo cáo tuần
-└── week-01/                            <-- Tuần 1: Khởi động, Nghiệp vụ, Kiến trúc & Tích hợp Ingestion
-    ├── TIMELINE_CONG_VIEC.md           <-- Timeline chi tiết từng ngày của 5 thành viên
-    ├── BAO_CAO_TUAN_01_LAN_01.md       <-- Báo cáo Lần 1 (Tối Thứ Năm, 08/10/2026): Nghiệp vụ & Prototype
-    └── BAO_CAO_TUAN_01_LAN_02.md       <-- Báo cáo Lần 2 (Tối Chủ Nhật, 11/10/2026): Nghiệm thu & Tích hợp Ingestion API
+├── week-01/                            <-- Tuần 1: Khởi động, Nghiệp vụ, Kiến trúc & Tích hợp Ingestion
+│   ├── TIMELINE_CONG_VIEC.md           <-- Timeline chi tiết từng ngày của 5 thành viên
+│   ├── BAO_CAO_TUAN_01_LAN_01.md       <-- Báo cáo Lần 1 (Tối Thứ Năm, 08/10/2026): Nghiệp vụ & Prototype
+│   └── BAO_CAO_TUAN_01_LAN_02.md       <-- Báo cáo Lần 2 (Tối Chủ Nhật, 11/10/2026): Nghiệm thu & Tích hợp Ingestion API
+└── week-02/                            <-- Tuần 2: ETL Engine, LLM Báo Cáo Nhóm & Demo End-to-End
+    └── KE_HOACH_SPRINT_TUAN_02.md      <-- Kế hoạch chi tiết Sprint Tuần 2 hướng tới Demo E2E Chủ Nhật
 ```
 
 ---
