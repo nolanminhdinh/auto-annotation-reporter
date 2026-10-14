@@ -10,11 +10,11 @@ class CVATExtractor:
 
     def __init__(self, host: str, token: str, org: Optional[str] = None):
         self.host = host.rstrip("/")
-        # CVAT supports 'Token <PAT>' or 'Bearer <PAT>'
+        # CVAT Cloud personal access tokens use Bearer authentication.
         self.client = BaseClient(
             base_url=self.host,
             token=token,
-            auth_prefix="Token",
+            auth_prefix="Bearer",
             org=org,
         )
 

@@ -3,6 +3,10 @@ from src.extractors.cvat_extractor import CVATExtractor
 
 
 class CVATExtractorTests(unittest.TestCase):
+    def test_cloud_pat_uses_bearer_authentication(self):
+        ext = CVATExtractor(host="https://app.cvat.ai", token="fake-pat")
+        self.assertEqual(ext.client.session.headers["Authorization"], "Bearer fake-pat")
+
     def test_build_deep_link_with_and_without_frame(self):
         ext = CVATExtractor(host="https://app.cvat.ai", token="fake")
         link_job = ext.build_deep_link(task_id=217, job_id=1719)
