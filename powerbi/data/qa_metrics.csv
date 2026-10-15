@@ -1,0 +1,2 @@
+﻿snapshot_dir,as_of,task_id,total_reviews,total_defects,first_time_pass_rate,rejection_rate,defect_density_per_100_frames,avg_defects_per_job,defect_box_displacement,defect_wrong_class,defect_missing_object,defect_wrong_attr,avg_miou,avg_f1,qa_score
+..\sample_data\real_snapshot,2026-10-14,217,0,,,,,,,,,,,,

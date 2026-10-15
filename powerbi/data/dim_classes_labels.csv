@@ -1,0 +1,6 @@
+﻿label_id,label_name,label_category,color_hex
+10,car,Vehicle,#2080E9
+11,motorbike,Vehicle,#18A058
+12,pedestrian,Human,#F0A020
+13,truck,Vehicle,#D03050
+1,vehicle_general,Vehicle,#8A2BE2

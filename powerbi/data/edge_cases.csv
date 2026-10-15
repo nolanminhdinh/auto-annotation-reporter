@@ -1,0 +1,2 @@
+﻿snapshot_dir,as_of,number,title,description,labels,source_url,state,author,updated_at,task_id,job_id,frame,link_status,cvat_deep_link
+..\sample_data\real_snapshot,2026-10-14,2,DEMO: occluded vehicle,Synthetic example only. CVAT task ID: 1001 CVAT job ID: 2002 Frame index (nếu có): 142 How should the team annotate an occluded vehicle?,ca-kho,https://example.com/issues/2,open,demo-user,2026-10-09T00:00:00Z,1001,2002,142,verified,https://example.com/tasks/1001/jobs/2002?frame=142

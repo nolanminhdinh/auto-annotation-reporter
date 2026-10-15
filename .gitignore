@@ -50,4 +50,6 @@ reports/draft_*.md
 !reports/.gitkeep
 temp/
 scratch/
-data/
+/data/
+!powerbi/data/
+powerbi/*_backup.pbix
