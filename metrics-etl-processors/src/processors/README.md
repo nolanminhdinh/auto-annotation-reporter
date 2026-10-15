@@ -23,23 +23,23 @@ Toàn bộ code là **Python thuần (stdlib)**, không cần cài thư viện n
 | `_math.py` | — | `safe_div`, `mean_or_none` |
 
 ```text
-dữ liệu thô ──► [adapter: chưa làm] ──► models ──► velocity / quality / geometry
-                                                         │
-                                                         ▼
-                                              annotator_stats ──► segmentation ──► [exporter CSV: chưa làm]
+dữ liệu thô (CVAT/GitHub) ──► adapters (Duy) ──► models ──► velocity / quality / geometry
+                                                                 │
+                                                                 ▼
+                                                      annotator_stats ──► segmentation ──► exporters CSV (Tuân) ──► Power BI
 ```
 
 ---
 
 ## 2. Chạy thử và chạy test
 
-Yêu cầu Python 3.10+. Chạy từ **thư mục gốc repo**:
+Yêu cầu Python 3.10+. Chạy từ **thư mục gốc repo** (`metrics-etl-processors/`):
 
 ```bash
-python -m unittest discover -s tests -t . -v
+python -m unittest discover -s tests -v
 ```
 
-Có 88 test, dùng `unittest` của thư viện chuẩn; `pytest` cũng chạy được cùng bộ test này.
+Bộ test bao gồm toàn diện 48 test cases (14 adapter tests + 34 processor & exporter tests) dùng `unittest` stdlib, pass 100%.
 
 ```python
 from datetime import date

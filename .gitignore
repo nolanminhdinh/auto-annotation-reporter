@@ -50,3 +50,4 @@ reports/draft_*.md
 !reports/.gitkeep
 temp/
 scratch/
+data/
