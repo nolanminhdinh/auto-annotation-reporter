@@ -1,0 +1,169 @@
+{
+  "task": {
+    "id": 217,
+    "name": "Batch-01 Vehicle Detection - Da Nang 2026",
+    "size": 500
+  },
+  "jobs": [
+    {
+      "id": 3001,
+      "task_id": 217,
+      "type": "annotation",
+      "stage": "annotation",
+      "state": "completed",
+      "status": "completed",
+      "frame_count": 100,
+      "assignee": {"id": 101, "username": "tu_nguyen", "first_name": "Minh", "last_name": "Tú"},
+      "updated_date": "2026-10-09T10:30:00Z"
+    },
+    {
+      "id": 3002,
+      "task_id": 217,
+      "type": "annotation",
+      "stage": "annotation",
+      "state": "completed",
+      "status": "completed",
+      "frame_count": 100,
+      "assignee": {"id": 101, "username": "tu_nguyen", "first_name": "Minh", "last_name": "Tú"},
+      "updated_date": "2026-10-10T09:00:00Z"
+    },
+    {
+      "id": 3003,
+      "task_id": 217,
+      "type": "annotation",
+      "stage": "annotation",
+      "state": "completed",
+      "status": "completed",
+      "frame_count": 100,
+      "assignee": {"id": 102, "username": "duy_vu", "first_name": "Trường", "last_name": "Duy"},
+      "updated_date": "2026-10-11T14:00:00Z"
+    },
+    {
+      "id": 3004,
+      "task_id": 217,
+      "type": "annotation",
+      "stage": "annotation",
+      "state": "annotation",
+      "status": "annotation",
+      "frame_count": 100,
+      "assignee": {"id": 102, "username": "duy_vu", "first_name": "Trường", "last_name": "Duy"},
+      "updated_date": "2026-10-13T16:00:00Z"
+    },
+    {
+      "id": 3005,
+      "task_id": 217,
+      "type": "annotation",
+      "stage": "annotation",
+      "state": "annotation",
+      "status": "annotation",
+      "frame_count": 100,
+      "assignee": null,
+      "updated_date": "2026-10-12T08:00:00Z"
+    }
+  ],
+  "labels": [
+    {"id": 10, "name": "car"},
+    {"id": 11, "name": "motorbike"},
+    {"id": 12, "name": "pedestrian"},
+    {"id": 13, "name": "truck"}
+  ],
+  "issues": [],
+  "comments": [],
+  "annotations": [
+    {
+      "job_id": 3001,
+      "status": "success",
+      "data": {
+        "version": 1,
+        "shapes": [
+          {"id": 1001, "label_id": 10, "frame": 0, "type": "rectangle", "points": [120, 80, 320, 200]},
+          {"id": 1002, "label_id": 10, "frame": 0, "type": "rectangle", "points": [400, 60, 580, 180]},
+          {"id": 1003, "label_id": 11, "frame": 1, "type": "rectangle", "points": [50, 90, 110, 150]},
+          {"id": 1004, "label_id": 12, "frame": 2, "type": "rectangle", "points": [200, 100, 240, 180]},
+          {"id": 1005, "label_id": 10, "frame": 3, "type": "rectangle", "points": [600, 200, 900, 380]},
+          {"id": 1006, "label_id": 13, "frame": 4, "type": "rectangle", "points": [100, 50, 500, 280]},
+          {"id": 1007, "label_id": 10, "frame": 5, "type": "rectangle", "points": [30, 30, 200, 120]},
+          {"id": 1008, "label_id": 11, "frame": 6, "type": "rectangle", "points": [700, 300, 760, 370]},
+          {"id": 1009, "label_id": 12, "frame": 7, "type": "rectangle", "points": [310, 120, 340, 200]},
+          {"id": 1010, "label_id": 10, "frame": 8, "type": "rectangle", "points": [450, 100, 700, 250]}
+        ],
+        "tracks": [],
+        "tags": []
+      }
+    },
+    {
+      "job_id": 3002,
+      "status": "success",
+      "data": {
+        "version": 1,
+        "shapes": [],
+        "tracks": [
+          {
+            "id": 2001, "label_id": 10,
+            "shapes": [
+              {"frame": 0, "type": "rectangle", "points": [100, 80, 280, 200], "outside": false},
+              {"frame": 5, "type": "rectangle", "points": [140, 85, 320, 205], "outside": false},
+              {"frame": 10, "type": "rectangle", "points": [200, 90, 380, 210], "outside": false},
+              {"frame": 15, "type": "rectangle", "points": [0, 0, 0, 0], "outside": true}
+            ]
+          },
+          {
+            "id": 2002, "label_id": 11,
+            "shapes": [
+              {"frame": 2, "type": "rectangle", "points": [500, 200, 560, 260], "outside": false},
+              {"frame": 8, "type": "rectangle", "points": [540, 210, 600, 270], "outside": false},
+              {"frame": 12, "type": "rectangle", "points": [0, 0, 0, 0], "outside": true}
+            ]
+          },
+          {
+            "id": 2003, "label_id": 13,
+            "shapes": [
+              {"frame": 1, "type": "rectangle", "points": [50, 50, 450, 300], "outside": false},
+              {"frame": 20, "type": "rectangle", "points": [0, 0, 0, 0], "outside": true}
+            ]
+          }
+        ],
+        "tags": []
+      }
+    },
+    {
+      "job_id": 3003,
+      "status": "success",
+      "data": {
+        "version": 1,
+        "shapes": [
+          {"id": 3001, "label_id": 10, "frame": 0, "type": "rectangle", "points": [80, 60, 250, 180]},
+          {"id": 3002, "label_id": 12, "frame": 1, "type": "rectangle", "points": [300, 100, 340, 160]},
+          {"id": 3003, "label_id": 10, "frame": 2, "type": "polygon", "points": [100, 50, 300, 50, 320, 200, 90, 200]},
+          {"id": 3004, "label_id": 11, "frame": 3, "type": "rectangle", "points": [400, 150, 460, 220]},
+          {"id": 3005, "label_id": 13, "frame": 4, "type": "rectangle", "points": [20, 20, 600, 350]}
+        ],
+        "tracks": [],
+        "tags": []
+      }
+    },
+    {
+      "job_id": 3004,
+      "status": "success",
+      "data": {
+        "version": 1,
+        "shapes": [
+          {"id": 4001, "label_id": 10, "frame": 0, "type": "rectangle", "points": [100, 80, 350, 220]},
+          {"id": 4002, "label_id": 12, "frame": 1, "type": "rectangle", "points": [280, 90, 310, 150]}
+        ],
+        "tracks": [],
+        "tags": []
+      }
+    },
+    {
+      "job_id": 3005,
+      "status": "success",
+      "data": {
+        "version": 1,
+        "shapes": [],
+        "tracks": [],
+        "tags": []
+      }
+    }
+  ]
+}

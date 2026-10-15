@@ -1,0 +1,12 @@
+{
+  "started_at": "2026-10-14T12:00:00Z",
+  "finished_at": "2026-10-14T12:05:00Z",
+  "scope": {
+    "task_id": 217,
+    "cvat_host": "https://cvat.example.org"
+  },
+  "sources": {
+    "cvat": {"status": "success"},
+    "github": {"status": "success"}
+  }
+}
