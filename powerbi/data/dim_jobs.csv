@@ -1,9 +1,6 @@
-﻿job_id,task_id,annotator_id,stage,state,status,type,frame_count,updated_date
-3001,217,101,annotation,completed,completed,annotation,100,2026-10-09
-3002,217,101,annotation,completed,completed,annotation,100,2026-10-10
-3003,217,102,annotation,completed,completed,annotation,100,2026-10-11
-3004,217,102,annotation,annotation,annotation,annotation,100,2026-10-13
-3005,217,,annotation,annotation,annotation,annotation,100,2026-10-12
-2001,1001,103,annotation,completed,completed,annotation,10,2026-10-12
-2002,1001,102,annotation,in progress,annotation,annotation,10,2026-10-12
-2003,1001,102,acceptance,completed,completed,ground_truth,10,2026-10-12
+﻿job_id,task_id,annotator_id,stage,state,frame_count,updated_at
+3001,217,101,annotation,completed,100,2026-10-16 02:36:36
+3002,217,101,annotation,completed,100,2026-10-16 02:36:36
+3003,217,102,annotation,completed,100,2026-10-16 02:36:36
+3004,217,102,annotation,annotation,100,2026-10-16 02:36:36
+3005,217,,annotation,annotation,100,2026-10-16 02:36:36

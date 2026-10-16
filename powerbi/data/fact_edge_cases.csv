@@ -1,10 +1,5 @@
-﻿case_id,number,title,description,labels,state,author,severity,task_id,job_id,frame,link_status,cvat_deep_link,source_url
-ISSUE_1,1,[API test] excluded,Test only,ca-kho,open,demo-user,Major,,,,unlinked,,https://example.com/issues/1
-ISSUE_2,2,DEMO: occluded vehicle,"Synthetic example only.
-CVAT task ID: 1001
-CVAT job ID: 2002
-Frame index (nếu có): 142
-How should the team annotate an occluded vehicle?",ca-kho,open,demo-user,Major,1001,2002,142,verified,https://cvat.example.org/tasks/1001/jobs/2002?frame=142,https://example.com/issues/2
-ISSUE_3,3,DEMO: guideline question,Synthetic general question: which guideline version should we use?,mentor-question,open,demo-user,Minor,,,,unlinked,,https://example.com/issues/3
-ISSUE_4,4,DEMO: different task,"CVAT task ID: 9999
-CVAT job ID: 9998",mentor-question,open,demo-user,Minor,9999,9998,,verified,https://cvat.example.org/tasks/9999/jobs/9998?frame=None,https://example.com/issues/4
+﻿snapshot_id,case_id,task_id,job_id,frame_idx,issue_number,title,status,label,cvat_url,resolution_status
+SNAP_20261016_BATCH01,CASE_1,217,,,1,[API test] excluded,open,ca-kho,,open
+SNAP_20261016_BATCH01,CASE_2,1001,2002,142,2,DEMO: occluded vehicle,open,ca-kho,https://cvat.example.org/tasks/217/jobs/2002?frame=142,open
+SNAP_20261016_BATCH01,CASE_3,217,,,3,DEMO: guideline question,open,blocker,,open
+SNAP_20261016_BATCH01,CASE_4,9999,9998,,4,DEMO: different task,open,blocker,https://cvat.example.org/tasks/217/jobs/9998?frame=None,open

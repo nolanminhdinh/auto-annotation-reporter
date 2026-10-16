@@ -1,4 +1,4 @@
-﻿defect_id,review_id,job_id,frame_idx,label_id,defect_type,severity,description,cvat_deep_link
-DEF_001,REV_3002_1,3002,5,10,box_displacement,Major,Bounding box xe hơi bị lệch 8px so với đuôi xe,https://cvat.example.org/tasks/217/jobs/3002?frame=5
-DEF_002,REV_3002_1,3002,8,11,wrong_class,Major,Gán nhầm xe máy thành xe tải nhỏ,https://cvat.example.org/tasks/217/jobs/3002?frame=8
-DEF_003,REV_3002_1,3002,12,12,missing_object,Blocker,Bỏ sót người đi bộ tại góc khuất,https://cvat.example.org/tasks/217/jobs/3002?frame=12
+﻿snapshot_id,defect_id,job_id,review_id,label_id,defect_type,severity,frame_idx
+SNAP_20261016_BATCH01,DEF_001,3002,REV_3002_1,10,box_displacement,Major,5
+SNAP_20261016_BATCH01,DEF_002,3002,REV_3002_1,11,wrong_class,Major,8
+SNAP_20261016_BATCH01,DEF_003,3002,REV_3002_1,12,missing_object,Blocker,12

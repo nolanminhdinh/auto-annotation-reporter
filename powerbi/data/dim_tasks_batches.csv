@@ -1,3 +1,3 @@
-﻿task_id,task_name,batch_id,total_frames_target,target_deadline,status,description
-217,Batch-01 Vehicle Detection - Da Nang 2026,Batch-01,500,2026-10-18,In Progress,Gán nhãn phát hiện phương tiện giao thông tại nút giao Đà Nẵng
-1001,Batch-02 Synthetic Demonstration & Edge Cases,Batch-02,200,2026-10-25,Planned,Tập dữ liệu giả lập tình huống khó và đánh giá mô hình
+﻿task_id,task_name,batch_id,total_frames_target,created_date
+217,Batch-01 Vehicle Detection - Da Nang 2026,Batch-01,500,2026-10-01
+1001,Batch-02 Synthetic Demonstration & Edge Cases,Batch-02,200,2026-10-05

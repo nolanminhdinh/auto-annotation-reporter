@@ -50,6 +50,7 @@ reports/draft_*.md
 !reports/.gitkeep
 temp/
 scratch/
-/data/
+/data/*
+!/data/annotation_warehouse.db
 !powerbi/data/
 powerbi/*_backup.pbix

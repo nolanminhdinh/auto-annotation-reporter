@@ -1,16 +1,32 @@
 // ==============================================================================
 // POWER QUERY (M) SCRIPTS CHO BÁO CÁO POWER BI (AUTO-ANNOTATION-REPORTER)
 // ==============================================================================
-// Hướng dẫn sử dụng:
-// 1. Mở Power BI Desktop -> Home -> Transform Data (Power Query Editor).
-// 2. Tạo Parameter: "Home" -> "Manage Parameters" -> "New Parameter"
-//    - Name: SourceFolder
-//    - Type: Text
-//    - Current Value: "C:\Users\MINH\vinai\Build phase\powerbi\data"
-// 3. Với mỗi truy vấn bên dưới: "New Source" -> "Blank Query" -> "Advanced Editor",
-//    dán mã tương ứng và đổi tên Query khớp với tên bảng.
+// CÁCH 1: KẾT NỐI TRỰC TIẾP VÀO DATABASE SQLITE (KHUYÊN DÙNG ĐỂ REFRESH TỰ ĐỘNG)
+// ------------------------------------------------------------------------------
+// Bấm "Get Data" -> "More..." -> "Python script" -> Dán đoạn mã sau:
+//
+// import sqlite3, pandas as pd
+// conn = sqlite3.connect(r"C:\Users\MINH\vinai\Build phase\data\annotation_warehouse.db")
+// dim_annotators = pd.read_sql_query("SELECT * FROM gold_dim_annotators", conn)
+// dim_reviewers = pd.read_sql_query("SELECT * FROM gold_dim_reviewers", conn)
+// dim_tasks_batches = pd.read_sql_query("SELECT * FROM gold_dim_tasks_batches", conn)
+// dim_classes_labels = pd.read_sql_query("SELECT * FROM gold_dim_classes_labels", conn)
+// dim_date = pd.read_sql_query("SELECT * FROM gold_dim_date", conn)
+// dim_jobs = pd.read_sql_query("SELECT * FROM gold_dim_jobs", conn)
+// fact_job_sessions = pd.read_sql_query("SELECT * FROM gold_fact_job_sessions", conn)
+// fact_annotations = pd.read_sql_query("SELECT * FROM gold_fact_annotations", conn)
+// fact_qa_reviews = pd.read_sql_query("SELECT * FROM gold_fact_qa_reviews", conn)
+// fact_qa_defects = pd.read_sql_query("SELECT * FROM gold_fact_qa_defects", conn)
+// fact_ground_truth_eval = pd.read_sql_query("SELECT * FROM gold_fact_ground_truth_eval", conn)
+// fact_edge_cases = pd.read_sql_query("SELECT * FROM gold_fact_edge_cases", conn)
+// batch_progress = pd.read_sql_query("SELECT * FROM gold_mart_batch_progress", conn)
+// qa_metrics = pd.read_sql_query("SELECT * FROM gold_mart_qa_metrics", conn)
+// annotator_segments = pd.read_sql_query("SELECT * FROM gold_mart_annotator_segments", conn)
+// conn.close()
+//
+// -> Khi đó Power BI sẽ hiển thị 15 bảng để bạn chọn load. Bấm Refresh là tự cập nhật!
 // ==============================================================================
-
+// CÁCH 2: KẾT NỐI QUA THƯ MỤC CSV (THAY THẾ NẾU KHÔNG DÙNG PYTHON CONNECTOR)
 // ------------------------------------------------------------------------------
 // PARAMETER: SourceFolder
 // ------------------------------------------------------------------------------

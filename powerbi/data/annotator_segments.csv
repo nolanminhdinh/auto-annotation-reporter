@@ -1,3 +1,4 @@
-﻿snapshot_dir,as_of,annotator_id,full_name,total_jobs_completed,total_frames_completed,total_objects,total_active_hours,avg_frames_per_hour,avg_velocity_fps,tenure_days,active_hours_7d,first_time_pass_rate,rejection_rate,mean_f1_score,velocity_segment,quality_risk_flag,final_segment,final_segment_short,priority,at_risk,action
-..\sample_data\real_snapshot,2026-10-14,101,Minh Tú,2,200,16,0.0,,,,0.0,,,,Vận tốc chậm / Cần hỗ trợ,Chất lượng đạt chuẩn,Cầu toàn quá mức (Slow but Steady),Cầu toàn quá mức,3,0,Hướng dẫn phím tắt CVAT; hỗ trợ AI Pre-annotation.
-..\sample_data\real_snapshot,2026-10-14,102,Trường Duy,1,100,7,0.0,,,,0.0,,,,Vận tốc chậm / Cần hỗ trợ,Chất lượng đạt chuẩn,Cầu toàn quá mức (Slow but Steady),Cầu toàn quá mức,3,0,Hướng dẫn phím tắt CVAT; hỗ trợ AI Pre-annotation.
+﻿snapshot_id,as_of,annotator_id,full_name,tenure_days,completed_frames,completed_jobs,total_objects,active_hours_total,velocity_fps,velocity_segment,first_time_pass_rate,rejection_rate,quality_risk_flag,final_segment,action_recommendation
+SNAP_20261016_BATCH01,2026-10-16,101,Nguyễn Minh Tú,31,100,1,85,2.5,40.0,ON_TARGET,1.0,0.0,LOW_RISK,STAR_ANNOTATOR,Duy trì hiệu suất nòng cốt
+SNAP_20261016_BATCH01,2026-10-16,102,Vũ Trường Duy,26,100,1,78,2.1,47.6,ON_TARGET,0.0,0.5,HIGH_RISK,NEEDS_RETRAINING,Tập huấn lại quy chuẩn Bbox và phân biệt nhãn
+SNAP_20261016_BATCH01,2026-10-16,103,Phạm Nguyễn Tuân,45,100,1,92,3.2,31.25,AVERAGE,1.0,0.0,LOW_RISK,CORE_PERFORMER,"Nhân sự nền tảng tin cậy, chất lượng cao"

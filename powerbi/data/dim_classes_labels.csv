@@ -1,6 +1,6 @@
-﻿label_id,label_name,label_category,color_hex
-10,car,Vehicle,#2080E9
-11,motorbike,Vehicle,#18A058
-12,pedestrian,Human,#F0A020
-13,truck,Vehicle,#D03050
-1,vehicle_general,Vehicle,#8A2BE2
+﻿label_id,task_id,label_name,color,type
+10,217,car,#2080E9,Vehicle
+11,217,motorbike,#18A058,Vehicle
+12,217,pedestrian,#F0A020,Human
+13,217,truck,#D03050,Vehicle
+1,1001,vehicle_general,#8A2BE2,Vehicle

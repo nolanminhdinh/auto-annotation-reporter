@@ -1,6 +1,6 @@
-﻿annotator_id,full_name,username,role,joined_date
-101,Nguyễn Minh Tú,tu_nguyen,Annotator,2026-09-15
-102,Vũ Trường Duy,duy_vu,Annotator,2026-09-20
-103,Phạm Nguyễn Tuân,tuan_pham,Core Performer,2026-09-01
-104,Trần Bảo Ngọc,ngoc_tran,Reviewer,2026-09-01
-105,Đinh Công Minh,minh_dinh,Project Lead,2026-08-15
+﻿annotator_id,username,full_name,role,updated_at
+101,tu_nguyen,Nguyễn Minh Tú,Annotator,2026-10-16 02:36:36
+102,duy_vu,Vũ Trường Duy,Annotator,2026-10-16 02:36:36
+103,tuan_pham,Phạm Nguyễn Tuân,Core Performer,2026-10-16 02:36:36
+104,ngoc_tran,Trần Bảo Ngọc,Reviewer,2026-10-16 02:36:36
+105,minh_dinh,Đinh Công Minh,Project Lead,2026-10-16 02:36:36
