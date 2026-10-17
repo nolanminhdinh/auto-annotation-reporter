@@ -116,6 +116,8 @@ Workflow chưa được dispatch từ phiên làm việc local này. Mục tiêu
 
 ## Vận hành Desktop và tổng hợp nhóm
 
+Sau khi ghép cập nhật GitHub: `src/main.py` giữ luồng canonical và nhận thêm `--verify`, `--brief`, `--no-brief`, cùng alias `--mode online` cho live. `--verify` đối chiếu Markdown với warehouse đang phục vụ và lưu agent_reconciliation.json; kiểm tra DAX Desktop vẫn dùng check_dax.ps1. API run_full_pipeline được giữ qua wrapper. ReportReaderAgent và summarize_from_warehouse nhận được cả warehouse canonical lẫn database prototype cũ; khi đọc canonical không trộn lịch sử hoặc tự điền KPI/ETA thiếu. Chatbot có thể chạy `python -m src.generators.report_agent --db data/annotation_reporting.db --report DUONG_DAN_BAO_CAO -i`.
+
 Chạy từ gốc repo, sau đó Refresh và Save trong Desktop:
 
 ```powershell

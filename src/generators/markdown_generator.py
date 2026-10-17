@@ -101,6 +101,15 @@ def render_mentor_report(data: Dict[str, Any]) -> str:
     else:
         lines += ["*Chưa có thống kê annotations trong snapshot này.*\n"]
 
+    # LLM Multi-Team Synthesis sub-section (nếu có)
+    llm_summary = data.get("llm_summary")
+    if llm_summary:
+        from .llm_summarizer import format_summary_markdown
+        lines += [
+            "",
+            format_summary_markdown(llm_summary),
+        ]
+
     # --- Section 2: Điểm chất lượng & QA/QC ---
     lines += [
         "---",
@@ -186,8 +195,17 @@ def render_mentor_report(data: Dict[str, Any]) -> str:
                 lines.append(f"- [Mở Job liên quan trên CVAT]({it['cvat_job_url']})")
             lines.append("")
             desc_lines = (it.get("description") or "Chưa có mô tả.").splitlines()
-            lines += [f"> {line}" for line in desc_lines]
             lines.append("")
+
+    # Gợi ý chủ đề thảo luận từ LLM
+    if llm_summary and llm_summary.get("suggested_agenda"):
+        lines += [
+            "### 💡 Gợi Ý Chủ Đề Họp Trọng Tâm Với Mentor (AI Synthesis):",
+            "",
+        ]
+        for idx, agenda_item in enumerate(llm_summary["suggested_agenda"], start=1):
+            lines.append(f"{idx}. {agenda_item}")
+        lines.append("")
 
     # --- Phụ lục Blocker nếu có ---
     blockers = data.get("blockers", {}).get("items", [])

@@ -41,7 +41,7 @@ def frame_size(value):
 
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--mode',choices=['offline','live'],default='offline')
+    parser.add_argument('--mode',choices=['offline','live','online'],default='offline')
     parser.add_argument('--snapshot',type=Path,help='Offline source snapshot; defaults to sample_data/powerbi_demo')
     parser.add_argument('--task-id',type=int)
     parser.add_argument('--repo')
@@ -57,7 +57,11 @@ def main(argv=None):
     parser.add_argument('--output',type=Path,default=ROOT/'data'/'runs')
     parser.add_argument('--powerbi-output',type=Path,default=ROOT/'data'/'processed')
     parser.add_argument('--export-powerbi',action='store_true',help='Compatibility flag; publication is always included')
+    parser.add_argument('--verify',action='store_true',help='Reconcile Markdown KPI table against the published warehouse (not the Desktop DAX engine)')
+    parser.add_argument('--brief',action='store_true',help='Print the incoming report agent executive briefing')
+    parser.add_argument('--no-brief',action='store_true',help='Suppress the executive briefing after --verify')
     args=parser.parse_args(argv)
+    if args.mode=='online': args.mode='live'
     from src.sync import run_pipeline
     run_root=args.output.resolve()
     destination=None; result=None
@@ -102,7 +106,7 @@ def main(argv=None):
             metrics=conn.execute('SELECT metric,expected_value,unit FROM gold_kpi_reconciliation WHERE snapshot_id=?',(result['snapshot_id'],)).fetchall()
             demo=conn.execute('SELECT is_demo FROM gold_report_status WHERE snapshot_id=?',(result['snapshot_id'],)).fetchone()[0]
         headline='DEMO — DỮ LIỆU GIẢ LẬP' if demo else 'SNAPSHOT NGUỒN — CẦN NHÓM TRƯỞNG DUYỆT'
-        summary=['## '+headline,'','| KPI đối chiếu Power BI | Giá trị | Đơn vị |','|---|---:|---|']
+        summary=['## '+headline,'',f'Snapshot: `{result["snapshot_id"]}`','','| KPI đối chiếu Power BI | Giá trị | Đơn vị |','|---|---:|---|']
         summary.extend('| '+name+' | '+('Chưa đủ dữ liệu' if value is None else f'{value:.6g}')+' | '+unit+' |' for name,value,unit in metrics)
         summary.extend(['','> '+result['warnings'],''])
         draft=destination/'MENTOR_REPORT_DRAFT.md'
@@ -112,6 +116,14 @@ def main(argv=None):
         if team_summary is not None:
             from src.generators.team_summary import markdown
             with draft.open('a',encoding='utf-8') as f: f.write('\n---\n\n'+markdown(team_summary))
+        if args.verify or args.brief:
+            from src.generators.report_agent import ReportReaderAgent
+            agent=ReportReaderAgent(report_path=draft,db_path=args.db)
+            if args.verify:
+                verification=agent.verify_reconciliation()
+                atomic_json(destination/'agent_reconciliation.json',verification)
+                if not verification['overall_consistent']: raise ValueError('Report agent reconciliation failed; inspect agent_reconciliation.json')
+            if not args.no_brief: print(agent.generate_executive_briefing())
         (destination/'publication.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
         message=format_message(result,{name:value for name,value,_ in metrics},bool(demo),args.dashboard_url)
         (destination/'notification_preview.txt').write_text(message,encoding='utf-8')
@@ -137,5 +149,17 @@ def main(argv=None):
             except OSError: pass
         print(f'Pipeline did not complete: {error}',file=sys.stderr)
         return 1
+
+def run_full_pipeline(mode='offline',snapshot_dir=None,db_path=None,export_powerbi=True,run_llm_summary=True,run_verify=True,show_brief=True):
+    """Compatibility with the GitHub orchestrator; canonical publication stays enabled."""
+    arguments=['--mode',mode]
+    if snapshot_dir is not None: arguments+=['--snapshot',str(snapshot_dir)]
+    if db_path is not None: arguments+=['--db',str(db_path)]
+    if run_llm_summary: arguments+=['--llm-summary']
+    if run_verify: arguments+=['--verify']
+    if show_brief: arguments+=['--brief']
+    else: arguments+=['--no-brief']
+    return main(arguments)
+
 
 if __name__=='__main__': raise SystemExit(main())
