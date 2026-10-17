@@ -27,7 +27,14 @@ class ReportReaderAgent:
     """Agent có khả năng đọc báo cáo Markdown và tương tác với Kho dữ liệu Medallion."""
 
     def __init__(self, report_path: Optional[Path] = None, db_path: Optional[Path] = None):
-        self.report_path = report_path or DEFAULT_REPORT_PATH
+        target_report = report_path or DEFAULT_REPORT_PATH
+        if not target_report.exists():
+            # Fallback to sample_data if reports/ does not have it yet
+            sample_rep = Path(__file__).resolve().parents[2] / "sample_data" / "MENTOR_REPORT_DRAFT.md"
+            if sample_rep.exists():
+                target_report = sample_rep
+
+        self.report_path = target_report
         self.db_path = db_path or DEFAULT_DB_PATH
         self.raw_report_text: str = ""
         self.sections: Dict[str, str] = {}
@@ -258,9 +265,30 @@ def main():
     parser.add_argument("--brief", action="store_true", help="Xuất bản tóm tắt điều hành siêu ngắn")
     parser.add_argument("--verify", action="store_true", help="Đối soát tính nhất quán giữa Báo cáo và Database")
     parser.add_argument("--ask", type=str, help="Đặt câu hỏi tương tác cho Agent")
+    parser.add_argument("-i", "--interactive", action="store_true", help="Khởi động chế độ Chatbot tương tác thời gian thực")
     args = parser.parse_args()
 
     agent = ReportReaderAgent(report_path=args.report, db_path=args.db)
+
+    if args.interactive:
+        print("\n" + "=" * 60)
+        print("🤖 AI REPORT & WAREHOUSE AGENT (Chế độ Trò chuyện Trực tiếp)")
+        print(f"📄 Báo cáo: {agent.report_path.name}")
+        print(f"🗄️ Database: {agent.db_path.name}")
+        print("Nhập câu hỏi của bạn (hoặc gõ 'exit'/'quit' để thoát).")
+        print("=" * 60 + "\n")
+        while True:
+            try:
+                user_q = input("💬 Bạn hỏi: ").strip()
+                if not user_q:
+                    continue
+                if user_q.lower() in ("exit", "quit", "q"):
+                    print("👋 Tạm biệt!")
+                    break
+                print("\n" + agent.answer_question(user_q) + "\n")
+            except (KeyboardInterrupt, EOFError):
+                break
+        return 0
 
     if args.verify:
         result = agent.verify_reconciliation()
