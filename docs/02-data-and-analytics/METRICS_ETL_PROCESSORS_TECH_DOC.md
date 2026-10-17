@@ -15,7 +15,7 @@ Tầng **Metrics ETL & Processors** đóng vai trò là "trái tim tính toán" 
 
 ```mermaid
 flowchart TD
-    RAW["Dữ liệu Thô\n(CVAT JSON / GitHub Issues)"] --> ADAPT["1. TẦNG ADAPTERS (WBS 1.2 - 1.3)\n• cvat_snapshot.py • snapshot_metrics.py\n(Chuyển đổi Dict JSON sang Dataclass)"]
+    RAW["Dữ liệu Thô\n(CVAT JSON / GitHub Issues)"] --> ADAPT["1. TẦNG ADAPTERS & INGESTION (WBS 1.2 - 1.3)\n• cvat_snapshot.py • snapshot_metrics.py\n(Chuyển đổi Dict JSON sang Dataclass)"]
 
     ADAPT --> MODELS["Dataclasses Chuẩn Hóa (models.py)\n(Job, Review, Shape, Defect, Annotator)"]
 
@@ -33,23 +33,30 @@ flowchart TD
     V --> S
     Q --> S
 
-    subgraph EXP["3. TẦNG XUẤT BẢN CSV (WBS 2.5)"]
-        C["csv_exporter.py\n• batch_progress.csv • qa_metrics.csv\n• annotator_segments.csv • edge_cases.csv\n• Mã hóa UTF-8 BOM • Null-safe • Schema stability"]
+    subgraph DB["3. KHO DỮ LIỆU MEDALLION LAKEHOUSE (data/annotation_warehouse.db)"]
+        direction TB
+        SILVER["TẦNG SILVER (Cleansed Entities)\n• silver_jobs • silver_annotations (Shoelace & COCO)\n• silver_qa_reviews & defects • silver_github_issues"]
+        GOLD["TẦNG GOLD (Star Schema & Marts)\n• gold_dim_* (Annotators, Reviewers, Tasks, Classes, Date, Jobs)\n• gold_fact_* (Sessions, Annotations, Reviews, Defects, GT, Edge Cases)\n• gold_mart_* (Batch Progress, QA Metrics, Annotator Segments)"]
+        SILVER --> GOLD
     end
 
-    S --> EXP
-    V --> EXP
-    Q --> EXP
-    G --> EXP
+    G --> SILVER
+    V --> GOLD
+    Q --> GOLD
+    S --> GOLD
 
-    EXP --> PBI["📊 POWER BI DASHBOARD\n(5 Trang Visual - 20 DAX Measures)"]
-    EXP --> DB["🗄️ MEDALLION LAKEHOUSE\n(Silver & Gold Fact Tables)"]
+    GOLD ==>|Kết nối trực tiếp SQLite ODBC Driver\n(Tự động hóa 100% - One-Click Refresh)| PBI["📊 POWER BI DASHBOARD\n(5 Trang Báo Cáo Điều Hành - 20 DAX Measures\nKHÔNG CẦN XUẤT / IMPORT FILE CSV THỦ CÔNG)"]
+
+    subgraph BACKUP["4. TẦNG XUẤT BẢN DỰ PHÒNG (Optional / Secondary Export)"]
+        CSV["csv_exporter.py (WBS 2.5)\n• Xuất CSV UTF-8 BOM kiểm toán độc lập / backup"]
+    end
+    GOLD -.->|Xuất phụ khi cần xem file rời| BACKUP
 ```
 
 ### 3 Nguyên tắc Thiết kế Bất biến (Core Tenets):
 1. **100% Python Standard Library (Zero-Ops & Zero External Dependencies)**: Không phụ thuộc vào bất kỳ thư viện bên ngoài nào (`numpy`, `pandas`, `scipy`). Toàn bộ thuật toán toán học và hình học được tự cài đặt từ đầu bằng Python thuần. Đảm bảo chạy được trên mọi môi trường mà không lo lỗi cài đặt hay xung đột phiên bản.
 2. **Thuật toán Tất định (Deterministic & Reproducible)**: Cùng một bộ dữ liệu đầu vào luôn cho ra kết quả duy nhất, chính xác tuyệt đối. Khớp $100\%$ về mặt toán học với **20 công thức DAX Measures** trên Power BI.
-3. **Bảo toàn Quản trị Dữ liệu (Strict Data Governance)**: Phân định rạch ròi giữa `None/null` (không có dữ liệu / chưa đo lường) và `0` (số đo bằng 0); làm tròn số học chuẩn ở tầng xuất bản (`ROUND_DP = 4`), giữ nguyên độ chính xác float trong suốt đường ống.
+3. **Tự động hóa Khép kín qua Database Warehouse (Zero-CSV Manual Import)**: Dữ liệu sau khi tính toán được nạp thẳng vào **Kho Dữ liệu Medallion SQLite (`data/annotation_warehouse.db`)**. Power BI kết nối trực tiếp vào database qua ODBC, cho phép làm mới tự động chỉ bằng 1 nút bấm (**One-Click Refresh**), **hoàn toàn loại bỏ thao tác xuất file CSV ra ngoài rồi mới import thủ công vào Power BI**.
 
 ---
 
@@ -189,33 +196,60 @@ flowchart TD
 
 ---
 
-### 5. WBS 2.5 — Tầng Xuất Bản CSV Cho Power BI (`src/exporters/csv_exporter.py`)
+### 5. WBS 2.5 — Nạp Dữ Liệu Vào Kho Medallion & Kênh Xuất Bản CSV Dự Phòng
 
-Module xuất dữ liệu đóng vai trò kết nối trực tiếp với Power BI Dashboard.
+Theo định hướng kiến trúc chuẩn hóa của **Project Lead Đinh Công Minh**, tầng xử lý chỉ số không dừng lại ở việc xuất file rời, mà được tích hợp tự động $100\%$ vào hệ sinh thái dữ liệu của toàn dự án:
 
-#### 5.1. Định dạng UTF-8 BOM (`utf-8-sig`):
-* Đảm bảo hiển thị hoàn hảo tiếng Việt có dấu trên Power BI Desktop và Microsoft Excel trên Windows.
+#### 5.1. Luồng Chính Sản Phẩm (Production Highway): Nạp Thẳng Database Medallion
+* **Địa chỉ lưu trữ**: [`data/annotation_warehouse.db`](file:///d:/vin/build_phase/data/annotation_warehouse.db) (SQLite Database 3 lớp Bronze $\to$ Silver $\to$ Gold).
+* **Cơ chế nạp tự động**: Module `src/storage/populate_warehouse.py` và `src/storage/db_manager.py` tự động nhận kết quả từ các processors để nạp vào:
+  - **6 Bảng Dimension**: `gold_dim_annotators`, `gold_dim_reviewers`, `gold_dim_tasks_batches`, `gold_dim_classes_labels`, `gold_dim_date`, `gold_dim_jobs`.
+  - **6 Bảng Fact**: `gold_fact_job_sessions`, `gold_fact_annotations`, `gold_fact_qa_reviews`, `gold_fact_qa_defects`, `gold_fact_ground_truth_eval`, `gold_fact_edge_cases`.
+  - **3 Data Marts KPI**: `gold_mart_batch_progress`, `gold_mart_qa_metrics`, `gold_mart_annotator_segments`.
+* **Kết nối Trực tiếp Power BI (Direct ODBC)**: Power BI kết nối trực tiếp vào file database thông qua **SQLite3 ODBC Driver**. Khi pipeline ETL hoàn tất, người dùng chỉ cần nhấn **Refresh (F5)** trên Power BI là toàn bộ 5 trang báo cáo tự động cập nhật ngay lập tức.
+* **Quyết định kiến trúc chốt**: **Về cuối quy trình KHÔNG CẦN xuất CSV để import thủ công vào Power BI**.
 
-#### 5.2. Nguyên tắc Bền vững Cấu trúc (Schema Stability):
-* Ngay cả khi snapshot rỗng (0 annotator, 0 job), file CSV vẫn ghi đầy đủ dòng header tiêu chuẩn. Tránh lỗi *"Column not found"* làm sập mô hình Power BI.
-
-#### 5.3. Tuân thủ Nguyên tắc Quản trị Dữ liệu:
-* Cột `total_active_hours`: Ghi `null` (để trống) khi snapshot thiếu log CVAT. Tuyệt đối không ghi `0`.
-* Cột `completed_frames_proxy`: Chú thích rõ ràng là proxy từ các completed jobs.
-* Xuất file `edge_cases.csv` từ đúng nguồn GitHub Issues có nhãn `ca-kho` đã xác minh liên kết CVAT.
+#### 5.2. Kênh Xuất Bản Dự Phòng (Secondary Backup Exporter — `csv_exporter.py`):
+Mặc dù Power BI kết nối trực tiếp vào Database, module `src/exporters/csv_exporter.py` vẫn được duy trì như một tiện ích xuất phụ:
+* **Mục đích**: Phục vụ kiểm toán độc lập (Audit Trail), chia sẻ nhanh qua bảng tính Excel, hoặc làm nguồn dự phòng offline khi máy trạm chưa cài đặt SQLite ODBC Driver.
+* **Chuẩn mã hóa**: UTF-8 BOM (`utf-8-sig`) chống lỗi font tiếng Việt trên Windows.
+* **Schema Stability**: Luôn ghi cố định dòng Header chuẩn ngay cả khi tập dữ liệu rỗng.
+* **Nguyên tắc quản trị**: Phân định rạch ròi `null` (không có log) và `0` (số đo bằng 0).
 
 ---
 
-## 📊 III. BÁO CÁO OUTPUT VÀ SCHEMA DỮ LIỆU ĐẦU RA
+## 📊 III. BÁO CÁO CẤU TRÚC ĐẦU RA DỮ LIỆU (DATABASE & CSV ARTIFACTS)
 
-Sau khi thực thi, tầng exporter tạo ra **4 file CSV nghiệp vụ chuẩn** tại thư mục đầu ra:
+### 1. Đích Đến Chính: 15 Bảng Tầng Gold trong Kho Dữ Liệu Medallion (`annotation_warehouse.db`)
 
-| Tên File CSV | Số Cột | Khóa Chính (PK) | Mục Đích Nghiệp Vụ | Trang Power BI Tiêu Thụ |
-|---|:---:|---|---|---|
-| [`batch_progress.csv`](file:///d:/vin/build_phase/data/processed/batch_progress.csv) | 9 | `task_id` | Đo lường tiến độ tổng thể, vận tốc toàn hệ thống, ngày bắt đầu và dự báo ngày hoàn thành (ETA). | **Trang 1: Executive 360** |
-| [`qa_metrics.csv`](file:///d:/vin/build_phase/data/processed/qa_metrics.csv) | 13 | `task_id` | Tỷ lệ FTPR, tỷ lệ từ chối, mật độ lỗi/100F, cơ cấu 4 nhóm lỗi và điểm Ground Truth (F1/mIoU). | **Trang 2: QA Deep-Dive** |
-| [`annotator_segments.csv`](file:///d:/vin/build_phase/data/processed/annotator_segments.csv) | 16 | `annotator_id` | Hồ sơ toàn diện từng nhân sự: vận tốc, thâm niên, phân nhóm 7 bậc, cờ rủi ro và khuyến nghị hành động. | **Trang 3: Annotator Matrix** |
-| [`edge_cases.csv`](file:///d:/vin/build_phase/data/processed/edge_cases.csv) | 9 | `issue_number` | Danh sách ca khó, blocker, tranh chấp guideline có Deep Link trỏ thẳng vào frame hình CVAT. | **Trang 5: Edge-Case Explorer** |
+Dữ liệu được tổ chức theo chuẩn **Kimball Star Schema** và **Pre-aggregated Data Marts**, sẵn sàng cho Power BI truy vấn trực tiếp:
+
+| Phân Loại | Tên Bảng trong Database | Số Cột | Vai Trò & Nghiệp Vụ Cung Cấp Cho Power BI |
+|---|---|:---:|---|
+| **Dimension** | `gold_dim_annotators` | 5 | Danh mục nhân sự gán nhãn, chức danh, phân quyền. |
+| | `gold_dim_reviewers` | 5 | Danh mục kiểm định viên QA / Lead Reviewer. |
+| | `gold_dim_tasks_batches` | 5 | Danh mục gói Task (Task 217, 1001), đợt chạy Batch, chỉ tiêu frame. |
+| | `gold_dim_classes_labels` | 5 | Phân loại nhãn vật thể (`car`, `motorbike`, `pedestrian`, `truck`). |
+| | `gold_dim_date` | 8 | Bảng lịch liên tục hỗ trợ Time-Intelligence theo ngày/tuần/tháng. |
+| | `gold_dim_jobs` | 7 | Danh mục Jobs, phân công annotator, trạng thái tiến độ. |
+| **Fact** | `gold_fact_job_sessions` | 13 | Chỉ số vận tốc (fps/ops), thời gian làm việc thực tế (Active Hours, AHT). |
+| | `gold_fact_annotations` | 9 | Đo lường diện tích Shoelace, kích thước COCO, tỷ lệ diện tích khung hình. |
+| | `gold_fact_qa_reviews` | 8 | Lịch sử duyệt/trả về của QA (Iteration, Pass/Reject). |
+| | `gold_fact_qa_defects` | 8 | Chi tiết lỗi chuẩn hóa theo 4 nhóm taxonomy và mức độ nghiêm trọng. |
+| | `gold_fact_ground_truth_eval` | 8 | Kết quả AI Benchmark khách quan (mIoU, F1-Score, Precision, Recall). |
+| | `gold_fact_edge_cases` | 11 | Ca khó có **URL Deep Link trỏ thẳng Frame CVAT (`?frame=142`)**. |
+| **Data Marts** | `gold_mart_batch_progress` | 19 | KPI điều hành: Tiến độ 60%, Vận tốc 38.46 f/h, Dự báo ngày hoàn thành (ETA 18/10). |
+| | `gold_mart_qa_metrics` | 16 | KPI chất lượng: FTPR 67%, Tỷ lệ Reject 25%, Điểm QA 91.4. |
+| | `gold_mart_annotator_segments`| 15 | Phân khúc 7 nhóm nhân sự phục vụ ma trận năng lực và điều phối nhân sự. |
+
+### 2. Kênh Xuất Bản CSV Dự Phòng (4 File Nghiệp Vụ Chuẩn):
+
+| Tên File CSV | Số Cột | Khóa Chính | Ý nghĩa & Ứng dụng dự phòng |
+|---|:---:|---|---|
+| [`batch_progress.csv`](file:///d:/vin/build_phase/data/processed/batch_progress.csv) | 9 | `task_id` | Xem nhanh tiến độ, vận tốc toàn hệ thống và ngày hoàn thành dự báo (ETA). |
+| [`qa_metrics.csv`](file:///d:/vin/build_phase/data/processed/qa_metrics.csv) | 13 | `task_id` | Xem nhanh tỷ lệ FTPR, mật độ lỗi/100F và cơ cấu 4 nhóm lỗi QA. |
+| [`annotator_segments.csv`](file:///d:/vin/build_phase/data/processed/annotator_segments.csv) | 16 | `annotator_id` | Danh sách phân khúc 7 nhóm nhân sự, cờ rủi ro và khuyến nghị hành động. |
+| [`edge_cases.csv`](file:///d:/vin/build_phase/data/processed/edge_cases.csv) | 9 | `issue_number` | Tra cứu offline danh sách ca khó kèm link verified CVAT frame-level. |
 
 ### Chi tiết Schema Từng Bảng:
 

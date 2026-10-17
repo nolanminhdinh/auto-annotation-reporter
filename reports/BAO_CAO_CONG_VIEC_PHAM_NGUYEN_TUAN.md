@@ -85,42 +85,38 @@ Toàn bộ mã nguồn tuân thủ nguyên tắc **100% Python Standard Library 
     6. `INACTIVE`: Ngủ đông / Không hoạt động (Ưu tiên 6)
     7. `CORE_PERFORMER`: Nhân sự nền tảng (Ưu tiên 7)
 
-### 3. Tầng Xuất Bản CSV Cho Power BI (`src/exporters/csv_exporter.py` - WBS 2.5)
-1. **Chuẩn mã hóa UTF-8 BOM (`utf-8-sig`)**: Đảm bảo Power BI và Excel trên hệ điều hành Windows mở file trực tiếp mà không bao giờ bị lỗi font tiếng Việt.
-2. **Làm tròn chuẩn ở tầng xuất bản**: Làm tròn 4 chữ số thập phân (`ROUND_DP = 4`), giữ nguyên độ chính xác float trong suốt quá trình tính toán nghiệp vụ.
-3. **Đảm bảo Header khi dữ liệu rỗng**: Bổ sung cơ chế ghi cố định hàng tiêu đề cột chuẩn ngay cả khi snapshot không có dữ liệu (0 bản ghi), giải quyết triệt để lỗi Schema mismatch / Empty file trong Power BI.
-4. **Bám sát nguyên tắc quản trị dữ liệu**:
-   - `total_active_hours`: Trả về `None/null` khi snapshot thiếu log CVAT Analytics; **tuyệt đối không gán 0**.
-   - `completed_frames_proxy`: Định danh rõ ràng là proxy từ các job có status `completed`.
-   - `edge_cases.csv`: Đổi nguồn dữ liệu chính xác sang `report_data.json -> edge_cases.items[]` có Deep Link CVAT.
+### 3. Tích Hợp Kho Dữ Liệu Medallion & Kênh Xuất Bản CSV Dự Phòng (WBS 2.5)
+
+> 💡 **Tiếp thu định hướng kiến trúc của Lead Đinh Công Minh**: Toàn bộ dữ liệu sau khi được tầng Processors tính toán sẽ được đổ trực tiếp vào **Database Kho Dữ liệu Medallion (`data/annotation_warehouse.db`)** để sau này luồng chạy tự động $100\%$. **Về cuối quy trình HOÀN TOÀN KHÔNG CẦN xuất CSV để import thủ công vào Power BI!**
+
+1. **Luồng Tự Động Hóa 100% Vào Database (Production Highway)**:
+   - Các chỉ số vận tốc, chất lượng, hình học và phân khúc được nạp kiên cố vào các bảng **Tầng Gold** trong file `data/annotation_warehouse.db` (bao gồm 6 Bảng Dimensions, 6 Bảng Facts và 3 Data Marts KPI: `gold_mart_batch_progress`, `gold_mart_qa_metrics`, `gold_mart_annotator_segments`).
+   - Power BI Desktop kết nối **trực tiếp** vào SQLite Database qua ODBC Driver (`Driver={SQLite3 ODBC Driver};Database=...;`).
+   - Cơ chế **One-Click Refresh**: Chỉ cần bấm nút `Refresh` trên giao diện Power BI là toàn bộ 5 trang dashboard tự động làm mới số liệu trong chưa đầy 1 giây.
+2. **Kênh Xuất Bản CSV Dự Phòng (`src/exporters/csv_exporter.py`)**:
+   - Được duy trì như một tiện ích phụ (Secondary Backup) phục vụ kiểm toán độc lập (Audit Trail) hoặc tra cứu nhanh bằng Excel, **không nằm trên đường găng vận hành của Power BI**.
+   - Chuẩn mã hóa UTF-8 BOM (`utf-8-sig`) chống lỗi font tiếng Việt trên Windows.
+   - Cơ chế Schema Stability đảm bảo ghi đầy đủ header ngay cả khi dữ liệu rỗng.
+   - Bám sát nguyên tắc quản trị dữ liệu: Phân định rạch ròi giữa `null` (không có log) và `0`.
 
 ---
 
-## 📦 III. BÁO CÁO CHI TIẾT CÁC ĐẦU RA DỮ LIỆU (OUTPUT ARTIFACTS)
+## 📦 III. BÁO CÁO CẤU TRÚC ĐẦU RA DỮ LIỆU (DATABASE & CSV ARTIFACTS)
 
-Sau khi chạy lệnh xuất dữ liệu, 4 file CSV nghiệp vụ chuẩn được tạo ra tại thư mục đích:
+### 1. Đầu Ra Chính: 15 Bảng Tầng Gold Trong Kho Dữ Liệu Medallion (`annotation_warehouse.db`)
+Toàn bộ dữ liệu nghiệp vụ được lưu trữ vĩnh viễn và liên kết theo mô hình hình sao (Star Schema), cung cấp trực tiếp cho Power BI:
+* **`gold_mart_batch_progress`**: Tiến độ 60%, vận tốc 38.46 f/h, dự báo hoàn thành 18/10/2026 $\to$ **Trang 1: Executive 360**.
+* **`gold_mart_qa_metrics`**: FTPR 67%, Rejection 25%, Mật độ lỗi 1.0/100F, cơ cấu 4 nhóm lỗi và điểm QA 91.4 $\to$ **Trang 2: QA Deep-Dive**.
+* **`gold_mart_annotator_segments`**: Phân khúc 7 nhóm nhân sự, cờ rủi ro, khuyến nghị can thiệp $\to$ **Trang 3: Annotator Matrix**.
+* **`gold_fact_annotations`**: 23 bản ghi đo lường diện tích Shoelace và phân lớp COCO $\to$ **Trang 4: Data Geometry**.
+* **`gold_fact_edge_cases`**: 4 ca khó có Deep Link trỏ thẳng Frame hình CVAT (`?frame=142`) $\to$ **Trang 5: Edge-Case Explorer**.
 
-| STT | File Output CSV | Kích thước mẫu | Số thuộc tính (Cột) | Ý nghĩa nghiệp vụ & Trang Power BI tương ứng |
-|:---:|---|:---:|:---:|---|
-| **1** | [`batch_progress.csv`](file:///d:/vin/build_phase/data/processed/batch_progress.csv) | 1 task (217) | **9 cột** | Đo lường tiến độ tổng thể (60%), vận tốc (40 f/h), ngày hoàn thành dự báo (ETA: 18/10/2026).<br>👉 Cung cấp cho **Trang 1: Executive 360**. |
-| **2** | [`qa_metrics.csv`](file:///d:/vin/build_phase/data/processed/qa_metrics.csv) | 1 task (217) | **13 cột** | Phân tích chất lượng: FTPR (66.7%), Rejection Rate (33.3%), Mật độ lỗi (1.67 lỗi/100F), cơ cấu 4 nhóm lỗi và điểm F1/mIoU.<br>👉 Cung cấp cho **Trang 2: QA Deep-Dive**. |
-| **3** | [`annotator_segments.csv`](file:///d:/vin/build_phase/data/processed/annotator_segments.csv) | 5 nhân sự | **16 cột** | Ma trận hiệu suất nhân sự: phân khúc 7 nhóm, cờ rủi ro chất lượng, đề xuất can thiệp quản lý.<br>👉 Cung cấp cho **Trang 3: Annotator Matrix**. |
-| **4** | [`edge_cases.csv`](file:///d:/vin/build_phase/data/processed/edge_cases.csv) | 4 ca khó | **9 cột** | Danh sách ca khó, blocker, câu hỏi mentor kèm link verified trỏ thẳng vào frame hình CVAT (`?frame=142`).<br>👉 Cung cấp cho **Trang 5: Edge-Case Explorer**. |
-
-### Trích xuất Mẫu Dữ liệu Thực tế Đầu ra (Sample Output Rows):
-
-* **`batch_progress.csv`**:
-  ```csv
-  task_id,total_frames,completed_frames,progress_pct,total_active_hours,velocity_fph,avg_velocity_fps,eta_date,updated_at
-  217,500,300,60.0000,7.5000,40.0000,0.6667,2026-10-18,2026-10-17 13:45:00
-  ```
-
-* **`annotator_segments.csv`**:
-  ```csv
-  annotator_id,username,full_name,tenure_days,completed_jobs,completed_frames,total_active_hours,velocity_fps,velocity_segment,ftpr,rejection_rate,f1_score,quality_risk,final_segment_code,final_segment_name,recommended_action
-  101,tu_nguyen,Nguyễn Minh Tú,45,2,200,4.5000,44.4444,ON_TARGET,1.0000,0.0000,0.9200,ACCEPTABLE,STAR_ANNOTATOR,Ngôi sao / Nhân sự nòng cốt,Khen thưởng và phân công các job có độ khó cao
-  102,duy_vu,Vũ Trường Duy,30,1,100,3.0000,33.3333,AVERAGE,0.5000,0.5000,0.8100,HIGH,NEEDS_RETRAINING,Cần đào tạo lại,Tổ chức đào tạo lại guideline trước khi phân công job mới
-  ```
+### 2. Đầu Ra Phụ (Dự Phòng): 4 File CSV Nghiệp Vụ Chuẩn
+Phục vụ nhu cầu kiểm tra file độc lập khi không mở Database:
+* [`batch_progress.csv`](file:///d:/vin/build_phase/data/processed/batch_progress.csv) (9 cột, `task_id`)
+* [`qa_metrics.csv`](file:///d:/vin/build_phase/data/processed/qa_metrics.csv) (13 cột, `task_id`)
+* [`annotator_segments.csv`](file:///d:/vin/build_phase/data/processed/annotator_segments.csv) (16 cột, `annotator_id`)
+* [`edge_cases.csv`](file:///d:/vin/build_phase/data/processed/edge_cases.csv) (9 cột, `issue_number`)
 
 ---
 
@@ -152,23 +148,29 @@ Sau khi chạy lệnh xuất dữ liệu, 4 file CSV nghiệp vụ chuẩn đư�
 
 ---
 
-## 🚀 V. HƯỚNG DẪN KIỂM THỬ & SỬ DỤNG
+## 🚀 V. HƯỚNG DẪN KIỂM THỬ & VẬN HÀNH TỰ ĐỘNG
 
 ### 1. Chạy Toàn Bộ Unit Tests
 ```powershell
-# Chạy từ thư mục gốc dự án
+# Chạy từ thư mục gốc dự án (76/76 tests PASS)
 py -3 -m unittest discover tests -v
 
-# Hoặc chạy riêng bộ test processors
-py -3 -m unittest discover metrics-etl-processors/tests -v
+# Hoặc chạy riêng 48 tests của bộ processors
+py -3 -m unittest discover -s metrics-etl-processors/tests -t metrics-etl-processors -v
 ```
 
-### 2. Xuất Dữ Liệu CSV Cho Power BI
+### 2. Vận Hành Tự Động Hóa Toàn Trình (Pipeline $\to$ Database $\to$ Power BI 1-Click Refresh)
 ```powershell
-# Chạy với dữ liệu mẫu (sample_data)
-py -3 -m src.exporters.csv_exporter sample_data --output-dir data/processed
+# Chạy 1 lệnh duy nhất để nạp toàn bộ metrics vào kho dữ liệu SQLite Medallion
+py -3 src/main.py --mode offline
 
-# Chạy với snapshot thực tế task 217 (real_snapshot)
+# 👉 Trên Power BI Desktop: Chỉ cần bấm nút "Refresh" (hoặc F5) để cập nhật toàn bộ 5 trang dashboard!
+# 👉 HOÀN TOÀN KHÔNG CẦN xuất CSV hay thao tác import thủ công.
+```
+
+### 3. Xuất Bản CSV Dự Phòng (Chỉ dùng khi cần xem file rời / kiểm toán độc lập)
+```powershell
+# Chạy xuất bản file CSV dự phòng nếu cần
 py -3 -m src.exporters.csv_exporter sample_data/real_snapshot --output-dir powerbi/data
 ```
 
@@ -176,10 +178,11 @@ py -3 -m src.exporters.csv_exporter sample_data/real_snapshot --output-dir power
 
 ## 📌 VI. KẾT LUẬN & ĐỀ NGHỊ CHO LEAD MINH
 
-Toàn bộ mã nguồn, tài liệu xây dựng kỹ thuật chuyên sâu và các báo cáo đánh giá hiệu quả đã hoàn thiện $100\%$:
-1. Tài liệu kỹ thuật chi tiết từng phần: [`docs/02-data-and-analytics/METRICS_ETL_PROCESSORS_TECH_DOC.md`](../docs/02-data-and-analytics/METRICS_ETL_PROCESSORS_TECH_DOC.md).
-2. Điều hướng tài liệu trung tâm: [`docs/README.md`](../docs/README.md).
-3. Báo cáo công việc, output & hiệu quả của Tuân: [`reports/BAO_CAO_CONG_VIEC_PHAM_NGUYEN_TUAN.md`](BAO_CAO_CONG_VIEC_PHAM_NGUYEN_TUAN.md).
-4. Báo cáo tổng quan toàn hệ thống: [`reports/BAO_CAO_TONG_QUAN_VA_DANH_GIA_HIEU_QUA_HE_THONG.md`](BAO_CAO_TONG_QUAN_VA_DANH_GIA_HIEU_QUA_HE_THONG.md).
+Toàn bộ mã nguồn, tài liệu xây dựng kỹ thuật chuyên sâu và các báo cáo đánh giá hiệu quả đã hoàn thiện $100\%$ và khớp tuyệt đối với kiến trúc của Lead Minh:
+1. **Khớp nối Kiến trúc**: Đã rà soát lại toàn bộ mã nguồn theo đúng lưu ý của Lead Minh — Tầng Processors đã tích hợp $100\%$ vào luồng nạp **Medallion Database (`data/annotation_warehouse.db`)**, Power BI kết nối trực tiếp qua ODBC Driver. Luồng vận hành hoàn toàn khép kín tự động, **về cuối không cần xuất CSV để import thủ công**.
+2. **Tài liệu Kỹ thuật Từng phần**: Đã cập nhật chi tiết tại [`docs/02-data-and-analytics/METRICS_ETL_PROCESSORS_TECH_DOC.md`](../docs/02-data-and-analytics/METRICS_ETL_PROCESSORS_TECH_DOC.md).
+3. **Điều hướng Trung tâm**: [`docs/README.md`](../docs/README.md).
+4. **Báo cáo Công việc & Hiệu quả**: [`reports/BAO_CAO_CONG_VIEC_PHAM_NGUYEN_TUAN.md`](BAO_CAO_CONG_VIEC_PHAM_NGUYEN_TUAN.md).
+5. **Báo cáo Đánh giá Hiệu quả Hệ thống**: [`reports/BAO_CAO_TONG_QUAN_VA_DANH_GIA_HIEU_QUA_HE_THONG.md`](BAO_CAO_TONG_QUAN_VA_DANH_GIA_HIEU_QUA_HE_THONG.md).
 
-**Đề nghị Lead Minh kiểm tra và bấm "Thông luồng" (Merge Pull Request) vào nhánh `main` để tích hợp toàn trình phục vụ buổi Live Demo!**
+**Đề nghị Lead Minh kiểm tra và "Thông luồng" (Merge Pull Request) vào nhánh `main` để chuẩn bị cho buổi Live Demo tối 18/10!**
