@@ -1,185 +1,92 @@
-/* ==============================================================================
-   BỘ 20 DAX MEASURES CHUẨN HÓA CHO POWER BI DASHBOARD
-   Dự án: Auto Annotation Reporter (CVAT - GitHub - Power BI)
-   Tác giả: Đinh Công Minh (Project Lead) & Phạm Nguyễn Tuân (ETL Processors)
-   Tương thích: 100% với Python metrics-etl-processors & Data Contract v1
-   ============================================================================== */
+Total_Completed_Frames =
+COALESCE(CALCULATE(SUM(fact_job_sessions[total_frames]), fact_job_sessions[status] = "completed"), 0)
 
-// ==============================================================================
-// NHÓM 1: TIẾN ĐỘ & VẬN TỐC (PROGRESS & VELOCITY)
-// ==============================================================================
+Total_Objects_Created =
+IF(MAX(report_status[annotations_available]) = 1, COALESCE(COUNTROWS(fact_annotations), 0))
 
-// 1. Tổng số Frame đã hoàn thành kiểm định
-Total_Completed_Frames = 
-CALCULATE(
-    SUM(fact_job_sessions[total_frames]),
-    fact_job_sessions[status] = "completed"
-)
+Total_Active_Hours =
+IF(COUNTROWS(fact_job_sessions) > 0 && COUNT(fact_job_sessions[active_time_hours]) = COUNTROWS(fact_job_sessions), SUM(fact_job_sessions[active_time_hours]))
 
-// 2. Tổng số đối tượng (boxes, polygons, tracks) đã vẽ
-Total_Objects_Created = 
-COUNTROWS(fact_annotations)
+Velocity_Frames_Per_Hour =
+DIVIDE([Total_Completed_Frames], [Total_Active_Hours])
 
-// 3. Tổng thời gian thao tác thực tế (Active Hours)
-Total_Active_Hours = 
-SUM(fact_job_sessions[active_time_hours])
+Velocity_Objects_Per_Hour =
+DIVIDE([Total_Objects_Created], [Total_Active_Hours])
 
-// 4. Vận tốc gán nhãn theo frame (Frames/giờ)
-Velocity_Frames_Per_Hour = 
-DIVIDE([Total_Completed_Frames], [Total_Active_Hours], BLANK())
+Avg_Time_Per_Frame_Mins =
+DIVIDE([Total_Active_Hours] * 60, [Total_Completed_Frames])
 
-// 5. Vận tốc gán nhãn theo đối tượng (Objects/giờ)
-Velocity_Objects_Per_Hour = 
-DIVIDE([Total_Objects_Created], [Total_Active_Hours], BLANK())
+Avg_Time_Per_Object_Secs =
+DIVIDE([Total_Active_Hours] * 3600, [Total_Objects_Created])
 
-// 6. Thời gian xử lý trung bình 1 khung hình (Phút/frame)
-Avg_Time_Per_Frame_Mins = 
-DIVIDE([Total_Active_Hours] * 60, [Total_Completed_Frames], BLANK())
+First_Time_Pass_Rate =
+IF(MAX(report_status[reviews_available]) = 1, DIVIDE(COALESCE(CALCULATE(COUNTROWS(fact_qa_reviews), fact_qa_reviews[review_iteration] = 1, fact_qa_reviews[review_decision] = "Accepted"), 0), CALCULATE(COUNTROWS(fact_qa_reviews), fact_qa_reviews[review_iteration] = 1)))
 
-// 7. Thời gian vẽ trung bình 1 đối tượng (Giây/object)
-Avg_Time_Per_Object_Secs = 
-DIVIDE([Total_Active_Hours] * 3600, [Total_Objects_Created], BLANK())
+Rejection_Rate =
+IF(MAX(report_status[reviews_available]) = 1, DIVIDE(COALESCE(CALCULATE(COUNTROWS(fact_qa_reviews), fact_qa_reviews[review_decision] = "Rejected"), 0), COUNTROWS(fact_qa_reviews)))
 
+Total_Defects =
+IF(MAX(report_status[defects_available]) = 1, COALESCE(COUNTROWS(fact_qa_defects), 0))
 
-// ==============================================================================
-// NHÓM 2: CHẤT LƯỢNG & QA/QC (QUALITY ASSURANCE)
-// ==============================================================================
+Defect_Density_Per_100F =
+DIVIDE([Total_Defects] * 100, [Total_Completed_Frames])
 
-// 8. Tỷ lệ duyệt ngay vòng đầu (First-Time Pass Rate - FTPR)
-First_Time_Pass_Rate = 
-DIVIDE(
-    CALCULATE(
-        COUNTROWS(fact_qa_reviews),
-        fact_qa_reviews[review_iteration] = 1,
-        fact_qa_reviews[review_decision] = "Accepted"
-    ),
-    CALCULATE(
-        COUNTROWS(fact_qa_reviews),
-        fact_qa_reviews[review_iteration] = 1
-    ),
-    BLANK()
-)
+Avg_Defects_Per_Job =
+DIVIDE([Total_Defects], DISTINCTCOUNT(fact_qa_reviews[job_id]))
 
-// 9. Tỷ lệ trả về làm lại (Rejection Rate)
-Rejection_Rate = 
-DIVIDE(
-    CALCULATE(
-        COUNTROWS(fact_qa_reviews),
-        fact_qa_reviews[review_decision] = "Rejected"
-    ),
-    COUNTROWS(fact_qa_reviews),
-    BLANK()
-)
+Avg_mIoU_Score =
+IF(MAX(report_status[gt_available]) = 1, AVERAGE(fact_ground_truth_eval[mean_iou]))
 
-// 10. Tổng số lỗi do Reviewer ghi nhận
-Total_Defects = 
-COUNTROWS(fact_qa_defects)
+Avg_F1_Score =
+IF(MAX(report_status[gt_available]) = 1, AVERAGE(fact_ground_truth_eval[f1_score]))
 
-// 11. Mật độ lỗi trên 100 khung hình (Defect Density per 100 frames)
-Defect_Density_Per_100F = 
-DIVIDE([Total_Defects] * 100, [Total_Completed_Frames], BLANK())
-
-// 12. Số lỗi trung bình trên mỗi Job thẩm định
-Avg_Defects_Per_Job = 
-DIVIDE(
-    [Total_Defects],
-    DISTINCTCOUNT(fact_qa_reviews[job_id]),
-    BLANK()
-)
-
-// 13. Điểm mIoU trung bình khi đối chiếu Ground Truth
-Avg_mIoU_Score = 
-AVERAGE(fact_ground_truth_eval[mean_iou])
-
-// 14. Điểm F1-Score trung bình khi đối chiếu Ground Truth
-Avg_F1_Score = 
-AVERAGE(fact_ground_truth_eval[f1_score])
-
-
-// ==============================================================================
-// NHÓM 3: HÌNH HỌC & PHÂN BỔ DỮ LIỆU (GEOMETRY & DATA DISTRIBUTION)
-// ==============================================================================
-
-// 15. Diện tích vật thể trung bình (Pixels)
-Avg_Object_Area_Pixels = 
+Avg_Object_Area_Pixels =
 AVERAGE(fact_annotations[area_pixels])
 
-// 16. Tỷ lệ chiếm dụng khung hình trung bình (0-1, format %)
-Avg_Area_Frame_Pct = 
-DIVIDE(
-    AVERAGE(fact_annotations[frame_area_pct]),
-    100,
-    BLANK()
-)
+Avg_Area_Frame_Pct =
+DIVIDE(AVERAGE(fact_annotations[frame_area_pct]), 100)
 
-// 17. Tỷ lệ vật thể nhỏ (COCO Small Scale < 1024 px²)
-Pct_Small_Objects = 
-DIVIDE(
-    CALCULATE(
-        COUNTROWS(fact_annotations),
-        fact_annotations[size_scale] = "Small"
-    ),
-    [Total_Objects_Created],
-    BLANK()
-)
+Pct_Small_Objects =
+DIVIDE(COALESCE(CALCULATE(COUNTROWS(fact_annotations), fact_annotations[size_scale] = "Small"), 0), CALCULATE(COUNTROWS(fact_annotations), NOT ISBLANK(fact_annotations[size_scale])))
 
+Count_At_Risk_Annotators =
+VAR People = ADDCOLUMNS(VALUES(dim_annotators[annotator_id]), "F", [First_Time_Pass_Rate], "R", [Rejection_Rate], "G", [Avg_F1_Score]) VAR Assessed = FILTER(People, NOT ISBLANK([F]) || NOT ISBLANK([R]) || NOT ISBLANK([G])) RETURN IF(COUNTROWS(Assessed) > 0, COALESCE(COUNTROWS(FILTER(Assessed, (NOT ISBLANK([F]) && [F] < 0.8) || (NOT ISBLANK([R]) && [R] >= 0.2) || (NOT ISBLANK([G]) && [G] < 0.85))), 0))
 
-// ==============================================================================
-// NHÓM 4: PHÂN KHÚC NHÂN SỰ & QUẢN TRỊ RỦI RO (ANNOTATOR MATRIX & RISK)
-// ==============================================================================
+System_Avg_Velocity =
+CALCULATE([Velocity_Frames_Per_Hour], REMOVEFILTERS(dim_annotators))
 
-// 18. Số lượng nhân sự rủi ro cao (Rejection >= 20% hoặc FTPR < 80%)
-Count_At_Risk_Annotators = 
-CALCULATE(
-    DISTINCTCOUNT(fact_job_sessions[annotator_id]),
-    FILTER(
-        dim_annotators,
-        [Rejection_Rate] >= 0.20 || ([First_Time_Pass_Rate] > 0 && [First_Time_Pass_Rate] < 0.80)
-    )
-)
+Project_Progress_Pct =
+DIVIDE([Total_Completed_Frames], SUM(dim_tasks_batches[total_frames_target]))
 
+Total_Target_Frames =
+SUM(dim_tasks_batches[total_frames_target])
 
-// ==============================================================================
-// NHÓM 5: BENCHMARK TOÀN DỰ ÁN & TIẾN ĐỘ TỔNG (PROJECT BENCHMARK & PROGRESS)
-// ==============================================================================
+Frames_In_Annotation =
+COALESCE(CALCULATE(SUM(fact_job_sessions[total_frames]), fact_job_sessions[status] = "annotation"), 0)
 
-// 19. Vận tốc trung bình toàn hệ thống (Bỏ lọc cá nhân)
-System_Avg_Velocity = 
-CALCULATE(
-    [Velocity_Frames_Per_Hour],
-    ALL(dim_annotators)
-)
+Frames_In_Validation =
+COALESCE(CALCULATE(SUM(fact_job_sessions[total_frames]), fact_job_sessions[status] = "validation"), 0)
 
-// 20. Tỷ lệ tiến độ toàn dự án (% hoàn thành mục tiêu)
-Project_Progress_Pct = 
-DIVIDE(
-    [Total_Completed_Frames],
-    SUM(dim_tasks_batches[total_frames_target]),
-    BLANK()
-)
+Daily_Completed_Frames =
+CALCULATE(SUM(fact_job_sessions[total_frames]), fact_job_sessions[status] = "completed")
 
+Total_Open_Edge_Cases =
+COALESCE(CALCULATE(COUNTROWS(fact_edge_cases), fact_edge_cases[state] = "open"), 0)
 
-// ==============================================================================
-// MEASURES BỔ TRỢ CHO 5 TRANG BÁO CÁO (SUPPORTING MEASURES)
-// ==============================================================================
+Total_Blockers =
+COALESCE(CALCULATE(COUNTROWS(fact_edge_cases), fact_edge_cases[state] = "open", fact_edge_cases[severity] = "Blocker"), 0)
 
-// Tổng số ca khó đang mở (Open Edge Cases)
-Total_Open_Edge_Cases = 
-CALCULATE(
-    COUNTROWS(fact_edge_cases),
-    fact_edge_cases[state] = "open"
-)
+Active_Annotators =
+COUNTROWS(FILTER(VALUES(dim_annotators[annotator_id]), CALCULATE(COUNTROWS(fact_job_sessions)) > 0))
 
-// Tổng số ca nghiêm trọng / Blocker
-Total_Blockers = 
-CALCULATE(
-    COUNTROWS(fact_edge_cases),
-    fact_edge_cases[severity] = "Blocker"
-)
+Source_Label =
+IF(MAX(report_status[is_demo]) = 1, "DEMO / DỮ LIỆU GIẢ LẬP", "DỮ LIỆU NGUỒN") & "  |  " & FORMAT(MAX(report_status[as_of]), "dd/MM/yyyy")
 
-// Số khung hình còn lại cần hoàn thành
-Target_Remaining_Frames = 
-MAX(
-    0,
-    SUM(dim_tasks_batches[total_frames_target]) - [Total_Completed_Frames]
-)
+Data_Warnings =
+"Nguồn: " & IF(ISBLANK([Total_Active_Hours]), "giờ làm chưa đủ", "có giờ làm") & " | " & IF(MAX(report_status[reviews_available]) = 1, "có review", "thiếu review") & " | " & IF(MAX(report_status[gt_available]) = 1, "có Ground Truth", "thiếu Ground Truth") & UNICHAR(10) & "KPI trống = chưa đủ dữ liệu. Frames hoàn thành là proxy theo trạng thái job, chưa đồng nghĩa QA pass."
+
+Selected_Case =
+SELECTEDVALUE(fact_edge_cases[description], "Chọn một ca trong bảng phía trên để đọc mô tả. Link example.org trong bản DEMO chỉ dùng minh họa.")
+
+Annotator_Segment =
+VAR V = [Velocity_Frames_Per_Hour] VAR F = [First_Time_Pass_Rate] VAR R = [Rejection_Rate] VAR G = [Avg_F1_Score] VAR Known = NOT ISBLANK(F) || NOT ISBLANK(R) || NOT ISBLANK(G) VAR Risk = (NOT ISBLANK(F) && F < .8) || (NOT ISBLANK(R) && R >= .2) || (NOT ISBLANK(G) && G < .85) RETURN SWITCH(TRUE(), ISBLANK(V) || NOT Known, "Insufficient data", Risk && V >= 60, "Fast and faulty", Risk && V < 20, "Needs retraining", Risk, "Needs QA support", V < 20, "Slow but steady", V >= 40, "Star annotator", "Core performer")

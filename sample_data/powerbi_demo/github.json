@@ -1,0 +1,66 @@
+{
+  "issues": [
+    {
+      "number": 1,
+      "title": "[DEMO] Vehicle partly occluded",
+      "state": "open",
+      "body": "CVAT task ID: 700\nCVAT job ID: 7001\nFrame index: 5\nSynthetic example for layout and interaction.",
+      "labels": [
+        {
+          "name": "ca-kho"
+        }
+      ],
+      "user": {
+        "login": "demo_annotator"
+      },
+      "html_url": "https://example.org/demo/issues/1"
+    },
+    {
+      "number": 2,
+      "title": "[DEMO] How to label reflections?",
+      "state": "open",
+      "body": "CVAT task ID: 700\nCVAT job ID: 7002\nFrame index: 105\nSynthetic example for layout and interaction.",
+      "labels": [
+        {
+          "name": "mentor-question"
+        }
+      ],
+      "user": {
+        "login": "demo_annotator"
+      },
+      "html_url": "https://example.org/demo/issues/2"
+    },
+    {
+      "number": 3,
+      "title": "[DEMO] Guideline decision required",
+      "state": "open",
+      "body": "CVAT task ID: 700\nCVAT job ID: 7003\nFrame index: 205\nSynthetic example for layout and interaction.",
+      "labels": [
+        {
+          "name": "blocker"
+        }
+      ],
+      "user": {
+        "login": "demo_annotator"
+      },
+      "html_url": "https://example.org/demo/issues/3"
+    },
+    {
+      "number": 4,
+      "title": "[DEMO] Small object at image edge",
+      "state": "open",
+      "body": "CVAT task ID: 700\nCVAT job ID: 7004\nFrame index: 305\nSynthetic example for layout and interaction.",
+      "labels": [
+        {
+          "name": "ca-kho"
+        }
+      ],
+      "user": {
+        "login": "demo_annotator"
+      },
+      "html_url": "https://example.org/demo/issues/4"
+    }
+  ],
+  "labels": [],
+  "comments": []
+}

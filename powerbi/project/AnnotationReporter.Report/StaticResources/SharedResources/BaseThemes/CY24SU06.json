@@ -1,0 +1,13 @@
+{
+  "name": "Annotation Operations",
+  "dataColors": [
+    "#2563EB",
+    "#14B8A6",
+    "#F59E0B",
+    "#EF4444",
+    "#8B5CF6"
+  ],
+  "background": "#F3F6FB",
+  "foreground": "#172B4D",
+  "tableAccent": "#2563EB"
+}

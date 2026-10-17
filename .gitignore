@@ -54,3 +54,8 @@ scratch/
 !/data/annotation_warehouse.db
 !powerbi/data/
 powerbi/*_backup.pbix
+
+# Power BI local caches
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+**/.pbi/unappliedChanges.json

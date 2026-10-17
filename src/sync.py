@@ -43,6 +43,7 @@ def run_pipeline(
     session_name: Optional[str] = None,
     output_dir: Optional[Path] = None,
     offline_snapshot: Optional[Path] = None,
+    snapshot_folder: Optional[Path] = None,
 ) -> int:
     """Run full automated sync pipeline."""
     load_dotenv(PROJECT_DIR / ".env")
@@ -112,7 +113,7 @@ def run_pipeline(
         return 1
 
     now_utc = datetime.now(timezone.utc)
-    target_folder = (output_dir or (PROJECT_DIR / "data" / "raw")) / now_utc.strftime("%Y%m%dT%H%M%S%fZ")
+    target_folder = snapshot_folder or ((output_dir or (PROJECT_DIR / "data" / "raw")) / now_utc.strftime("%Y%m%dT%H%M%S%fZ"))
     target_folder.mkdir(parents=True, exist_ok=True)
 
     manifest = {
