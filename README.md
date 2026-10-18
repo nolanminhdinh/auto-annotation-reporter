@@ -15,19 +15,19 @@
 
 ## 🏆 VINAI BUILD PHASE 2026 — HỒ SƠ NỘP BÀI DỰ ÁN (SUBMISSION PACKAGE)
 
-| Hạng Mục Yêu Cầu | Chi Tiết & Liên Kết Sản Phẩm | Mô Tả & Trạng Thái |
-|:---|:---|:---:|
-| **1. Tên Dự Án** | **Auto Annotation Reporter** | ✅ Đầy đủ |
-| **2. Mô Tả Dự Án** | Hệ thống tự động hóa quản trị, tính toán chỉ số KPI và trực quan hóa tiến độ & chất lượng gán nhãn dữ liệu Computer Vision (CVAT & GitHub Sync - Power BI Hybrid) | ✅ Đầy đủ |
-| **3. Link MVP (Sản phẩm Live)** | • 🌐 **Live Web Dashboard:** [https://nolanminhdinh.github.io/auto-annotation-reporter/](https://nolanminhdinh.github.io/auto-annotation-reporter/) *(hoặc mở [docs/index.html](docs/index.html))*<br>• 💻 **1-Click Local Desktop:** Chạy [START_AUTO.cmd](START_AUTO.cmd) hoặc [Xem_Bao_Cao.bat](Xem_Bao_Cao.bat) | ✅ Trải nghiệm tức thì |
-| **4. Video Demo (Tối đa 3 phút)** | • 🎬 **Kịch bản chi tiết từng giây (0:00 - 2:55):** [docs/08-video-demo/VIDEO_DEMO_SCRIPT.md](docs/08-video-demo/VIDEO_DEMO_SCRIPT.md)<br>• 📺 **Link Video Demo:** [https://youtu.be/auto-annotation-reporter-demo](https://youtu.be/auto-annotation-reporter-demo) | ✅ $\le$ 3 phút |
-| **5. Slides Thuyết Trình (Pitch Deck)** | • 📑 **Bản thuyết trình 11 slide chi tiết:** [docs/07-pitch-deck/PITCH_DECK.md](docs/07-pitch-deck/PITCH_DECK.md)<br>• 🖥️ **Interactive Web Presentation:** [docs/07-pitch-deck/index.html](docs/07-pitch-deck/index.html) *(Dùng phím &larr;/&rarr; để trình chiếu trực tiếp)* | ✅ Chuẩn quốc tế |
-| **6. Link Ảnh Thumbnail** | 🖼️ **Ảnh đại diện Vector HD chính thức:** [assets/project-thumbnail.svg](assets/project-thumbnail.svg) | ✅ 1200x630px |
-| **7. Source Code Toàn Bộ** | Toàn bộ mã nguồn modular tại [`src/`](src/), [`powerbi/`](powerbi/), [`tools/`](tools/), [`workflows/`](workflows/) | ✅ 100% Clean Code |
-| **8. Sơ Đồ Kiến Trúc** | 🏗️ [docs/01-architecture/SYSTEM_ARCHITECTURE.md](docs/01-architecture/SYSTEM_ARCHITECTURE.md) & [assets/](assets/) | ✅ 4 Sơ đồ Mermaid & SVG |
-| **9. Tài Liệu Đặc Tả & Thiết Kế** | 📐 [docs/02-data-and-analytics/PROJECT_ANALYTICS_SPEC.md](docs/02-data-and-analytics/PROJECT_ANALYTICS_SPEC.md) & [DATA_CONTRACT.md](docs/03-integrations/DATA_CONTRACT.md) | ✅ Chi tiết Star Schema & DAX |
-| **10. Tài Liệu Kiểm Thử Chất Lượng** | 🧪 [docs/06-testing/TESTING_SPECIFICATION_AND_REPORTS.md](docs/06-testing/TESTING_SPECIFICATION_AND_REPORTS.md) | ✅ 136/136 PASS (2.57s) |
-| **11. Nhật Ký Tuần (Weekly Logs)** | 📅 [reports/weekly/](reports/weekly/) (Đầy đủ hồ sơ Tuần 1 và Tuần 2) | ✅ Đầy đủ 5 thành viên |
+| Hạng Mục Yêu Cầu | Chi Tiết & Liên Kết Sản Phẩm |
+|:---|:---|
+| **1. Tên Dự Án** | **Auto Annotation Reporter** |
+| **2. Mô Tả Dự Án** | Hệ thống tự động hóa quản trị, tính toán chỉ số KPI và trực quan hóa tiến độ & chất lượng gán nhãn dữ liệu Computer Vision (CVAT & GitHub Sync - Power BI Hybrid) |
+| **3. Link MVP (Sản phẩm Live)** | • 🌐 **Live Web Dashboard:** [https://nolanminhdinh.github.io/auto-annotation-reporter/](https://nolanminhdinh.github.io/auto-annotation-reporter/) *(hoặc mở [docs/index.html](docs/index.html))*<br>• 💻 **1-Click Local Desktop:** Chạy [START_AUTO.cmd](START_AUTO.cmd) hoặc [Xem_Bao_Cao.bat](Xem_Bao_Cao.bat) |
+| **4. Video Demo (Tối đa 3 phút)** | • 🎬 **Kịch bản chi tiết từng giây (0:00 - 2:55):** [docs/08-video-demo/VIDEO_DEMO_SCRIPT.md](docs/08-video-demo/VIDEO_DEMO_SCRIPT.md)<br>• 📺 **Link Video Demo:** [https://youtu.be/auto-annotation-reporter-demo](https://youtu.be/auto-annotation-reporter-demo) |
+| **5. Slides Thuyết Trình (Pitch Deck)** | • 📑 **Bản thuyết trình 11 slide chi tiết:** [docs/07-pitch-deck/PITCH_DECK.md](docs/07-pitch-deck/PITCH_DECK.md)<br>• 🖥️ **Interactive Web Presentation:** [docs/07-pitch-deck/index.html](docs/07-pitch-deck/index.html) *(Dùng phím &larr;/&rarr; để trình chiếu trực tiếp)* |
+| **6. Link Ảnh Thumbnail** | 🖼️ **Ảnh đại diện Vector HD chính thức:** [assets/project-thumbnail.svg](assets/project-thumbnail.svg) *(1200x630px)* |
+| **7. Source Code Toàn Bộ** | Toàn bộ mã nguồn modular tại [`src/`](src/), [`powerbi/`](powerbi/), [`tools/`](tools/), [`workflows/`](workflows/) |
+| **8. Sơ Đồ Kiến Trúc** | 🏗️ [docs/01-architecture/SYSTEM_ARCHITECTURE.md](docs/01-architecture/SYSTEM_ARCHITECTURE.md) & [assets/](assets/) |
+| **9. Tài Liệu Đặc Tả & Thiết Kế** | 📐 [docs/02-data-and-analytics/PROJECT_ANALYTICS_SPEC.md](docs/02-data-and-analytics/PROJECT_ANALYTICS_SPEC.md) & [DATA_CONTRACT.md](docs/03-integrations/DATA_CONTRACT.md) |
+| **10. Tài Liệu Kiểm Thử Chất Lượng** | 🧪 [docs/06-testing/TESTING_SPECIFICATION_AND_REPORTS.md](docs/06-testing/TESTING_SPECIFICATION_AND_REPORTS.md) *(140/140 Unit Tests PASS 100%)* |
+| **11. Nhật Ký Tuần (Weekly Logs)** | 📅 [reports/weekly/](reports/weekly/) (Đầy đủ hồ sơ Tuần 1 và Tuần 2) |
 
 ---
 
