@@ -233,7 +233,101 @@ def send_telegram_report(
     )
 
 
+
+# ---------------------------------------------------------------------------
+# Compatibility helpers imported by src/notifiers/__init__.py
+# ---------------------------------------------------------------------------
+
+def format_message(
+    publication: Dict[str, Any],
+    metrics: Dict[str, Any],
+    is_demo: bool = False,
+    dashboard_url: Optional[str] = None,
+) -> str:
+    """Định dạng tin nhắn báo cáo đơn giản dùng cho cả Telegram lẫn console."""
+    from urllib.parse import urlsplit
+
+    def value(key: str, pct: bool = False) -> str:
+        number = metrics.get(key)
+        if number is None:
+            return "Chưa đủ dữ liệu"
+        return f"{number * 100:.1f}%" if pct else f"{number:,.2f}".rstrip("0").rstrip(".")
+
+    lines = [
+        "Báo cáo gán nhãn — " + ("DEMO" if is_demo else "Snapshot nguồn"),
+        "Snapshot: " + publication.get("snapshot_id", "N/A"),
+        "Frames completed (job proxy): " + value("Total_Completed_Frames"),
+        "Tiến độ: " + value("Project_Progress_Pct", True),
+        "Vận tốc frames/h: " + value("Velocity_Frames_Per_Hour"),
+        "FTPR: " + value("First_Time_Pass_Rate", True),
+        "Đây là bản thảo cần nhóm trưởng duyệt.",
+    ]
+    if dashboard_url:
+        parsed = urlsplit(dashboard_url)
+        if parsed.scheme != "https" or not parsed.netloc or parsed.username or parsed.password:
+            raise ValueError("Dashboard URL must be a public HTTPS URL without credentials")
+        lines.append(dashboard_url)
+    return "\n".join(lines)
+
+
+def send_message(
+    channel: str,
+    message: str,
+    env: Dict[str, str],
+    session=None,
+) -> Dict[str, Any]:
+    """Gửi tin nhắn thông báo tới kênh chỉ định (telegram / discord)."""
+    import re
+    from urllib.parse import urlsplit
+
+    client = session or requests
+    if channel == "telegram":
+        token = env.get("TELEGRAM_BOT_TOKEN", "")
+        chat = env.get("TELEGRAM_CHAT_ID", "")
+        if not re.fullmatch(r"\d+:[A-Za-z0-9_-]+", token) or not chat:
+            raise ValueError("Telegram token/chat ID not configured")
+        url = "https://api.telegram.org/bot" + token + "/sendMessage"
+        payload: Dict[str, Any] = {
+            "chat_id": chat,
+            "text": message[:4000],
+            "disable_web_page_preview": True,
+        }
+    elif channel == "discord":
+        url = env.get("DISCORD_WEBHOOK_URL", "")
+        parsed = urlsplit(url)
+        if (
+            parsed.scheme != "https"
+            or parsed.netloc != "discord.com"
+            or parsed.query
+            or parsed.fragment
+            or not re.fullmatch(r"/api/webhooks/\d+/[A-Za-z0-9_.-]+", parsed.path)
+        ):
+            raise ValueError("Discord webhook must use https://discord.com/api/webhooks/ID/TOKEN")
+        payload = {"content": message[:1900], "allowed_mentions": {"parse": []}}
+    else:
+        raise ValueError("Unknown notification channel")
+
+    try:
+        response = client.post(url, json=payload, timeout=(10, 20), allow_redirects=False)
+    except requests.RequestException:
+        raise RuntimeError("Notification transport failed; delivery unknown, check destination before retrying") from None
+
+    if response.status_code not in (200, 204):
+        raise RuntimeError(f"Notification rejected (HTTP {response.status_code})")
+
+    if channel == "telegram":
+        try:
+            confirmation = response.json()
+        except ValueError:
+            raise RuntimeError("Telegram returned an invalid confirmation; delivery unknown") from None
+        if not isinstance(confirmation, dict) or confirmation.get("ok") is not True:
+            raise RuntimeError("Telegram did not confirm delivery")
+
+    return {"channel": channel, "status": "sent"}
+
+
 if __name__ == "__main__":
+
     print("Testing TelegramNotifier standalone...")
     sample_llm = {
         "executive_summary": "Tiến độ 60%, vận tốc 38.46 f/h. Camera 02 bị lóa đèn pha buổi chiều, cần Mentor chốt quy chuẩn gán nhãn xe che khuất.",

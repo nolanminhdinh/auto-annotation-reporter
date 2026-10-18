@@ -20,6 +20,7 @@ import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Any, Dict, Optional
 
 # Đảm bảo UTF-8 trên Windows console
 if sys.stdout.encoding and sys.stdout.encoding.lower() != 'utf-8':

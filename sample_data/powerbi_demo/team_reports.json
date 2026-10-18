@@ -1,0 +1,23 @@
+[
+  {
+    "report_id": "TR-001",
+    "team": "Team Vehicles (DEMO)",
+    "reporter": "demo_1",
+    "report_text": "Đã hoàn thành phần việc được giao. Có tranh chấp guideline khi xe bị che khuất, cần Mentor xác nhận cách xử lý.",
+    "reported_at": "2026-10-16T09:00:00Z"
+  },
+  {
+    "report_id": "TR-002",
+    "team": "Team Pedestrians (DEMO)",
+    "reporter": "demo_2",
+    "report_text": "Blocker: một nhóm ảnh bị lóa nên không thể xác định nhãn. Có cần loại ảnh này khỏi batch không?",
+    "reported_at": "2026-10-16T09:15:00Z"
+  },
+  {
+    "report_id": "TR-003",
+    "team": "Team QA (DEMO)",
+    "reporter": "demo_qa",
+    "report_text": "Reviewer đã rà soát các lỗi được ghi nhận. Cần thống nhất quy chuẩn bounding box cho vật thể ở mép ảnh trước phiên Mentor.",
+    "reported_at": "2026-10-16T09:30:00Z"
+  }
+]

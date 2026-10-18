@@ -1,5 +1,7 @@
 # 🚀 auto-annotation-reporter
 
+> **Đường chạy Desktop hiện tại:** bấm [START_AUTO.cmd](START_AUTO.cmd). Bộ khởi động tự tạo môi trường Python, cài thư viện cố định, chạy pipeline và publish PostgreSQL cho Power BI DirectQuery. Cần cài sẵn Python 3.10+, Docker và Power BI; đăng nhập nguồn một lần trên mỗi máy. Mặc định demo, không cần CVAT_TOKEN; hỗ trợ chọn snapshot hoặc nguồn thật qua cấu hình riêng. Xem [hướng dẫn dùng trên nhiều máy](powerbi/MULTI_MACHINE_SETUP.md). Luồng demo đã được nghiệm thu trên máy Minh; chưa nghiệm thu máy sạch thứ hai hoặc CVAT thật. Kết quả mỗi lần chạy: `data/runs/latest.json`. Bản Import và nội dung prototype phía dưới được giữ để tham khảo lịch sử.
+
 ### 📊 Hệ Thống Tự Động Hóa Quản Trị & Báo Cáo Gán Nhãn Dữ Liệu AI (CVAT & GitHub Sync)
 #### *Mô Hình Hybrid: Python ETL Engine + Kho Dữ Liệu Medallion (SQLite) + Power BI 5-Page Dashboard*
 

@@ -1,0 +1,1258 @@
+{
+  "name": "AnnotationReporter",
+  "compatibilityLevel": 1606,
+  "model": {
+    "culture": "en-US",
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "sourceQueryCulture": "en-US",
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "expressions": [
+      {
+        "name": "SourceFolder",
+        "kind": "m",
+        "expression": "\"C:\\Users\\MINH\\vinai\\Build phase\\data\\processed\" meta [IsParameterQuery=true, Type=\"Text\", IsParameterQueryRequired=true]"
+      }
+    ],
+    "tables": [
+      {
+        "name": "dim_annotators",
+        "columns": [
+          {
+            "name": "annotator_id",
+            "dataType": "string",
+            "sourceColumn": "annotator_id",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "full_name",
+            "dataType": "string",
+            "sourceColumn": "full_name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "username",
+            "dataType": "string",
+            "sourceColumn": "username",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "role",
+            "dataType": "string",
+            "sourceColumn": "role",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "joined_date",
+            "dataType": "dateTime",
+            "sourceColumn": "joined_date",
+            "summarizeBy": "none",
+            "formatString": "yyyy-MM-dd"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "dim_annotators",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Pointer = Json.Document(File.Contents(SourceFolder & \"\\current.json\")),",
+                "    Bundle = SourceFolder & \"\\\" & Text.Replace(Pointer[relative_folder], \"/\", \"\\\"),",
+                "    Source = Csv.Document(File.Contents(Bundle & \"\\dim_annotators.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Nulls = Table.ReplaceValue(Headers, \"\", null, Replacer.ReplaceValue, Table.ColumnNames(Headers)),",
+                "    Typed = Table.TransformColumnTypes(Nulls, {{\"annotator_id\", type text}, {\"full_name\", type text}, {\"username\", type text}, {\"role\", type text}, {\"joined_date\", type date}}, \"en-US\")",
+                "in Typed"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "dim_reviewers",
+        "columns": [
+          {
+            "name": "reviewer_id",
+            "dataType": "string",
+            "sourceColumn": "reviewer_id",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "full_name",
+            "dataType": "string",
+            "sourceColumn": "full_name",
+            "summarizeBy": "none"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "dim_reviewers",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Pointer = Json.Document(File.Contents(SourceFolder & \"\\current.json\")),",
+                "    Bundle = SourceFolder & \"\\\" & Text.Replace(Pointer[relative_folder], \"/\", \"\\\"),",
+                "    Source = Csv.Document(File.Contents(Bundle & \"\\dim_reviewers.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Nulls = Table.ReplaceValue(Headers, \"\", null, Replacer.ReplaceValue, Table.ColumnNames(Headers)),",
+                "    Typed = Table.TransformColumnTypes(Nulls, {{\"reviewer_id\", type text}, {\"full_name\", type text}}, \"en-US\")",
+                "in Typed"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "dim_tasks_batches",
+        "columns": [
+          {
+            "name": "task_id",
+            "dataType": "int64",
+            "sourceColumn": "task_id",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "batch_id",
+            "dataType": "string",
+            "sourceColumn": "batch_id",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "task_name",
+            "dataType": "string",
+            "sourceColumn": "task_name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "total_frames_target",
+            "dataType": "int64",
+            "sourceColumn": "total_frames_target",
+            "summarizeBy": "none"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "dim_tasks_batches",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Pointer = Json.Document(File.Contents(SourceFolder & \"\\current.json\")),",
+                "    Bundle = SourceFolder & \"\\\" & Text.Replace(Pointer[relative_folder], \"/\", \"\\\"),",
+                "    Source = Csv.Document(File.Contents(Bundle & \"\\dim_tasks_batches.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Nulls = Table.ReplaceValue(Headers, \"\", null, Replacer.ReplaceValue, Table.ColumnNames(Headers)),",
+                "    Typed = Table.TransformColumnTypes(Nulls, {{\"task_id\", Int64.Type}, {\"batch_id\", type text}, {\"task_name\", type text}, {\"total_frames_target\", Int64.Type}}, \"en-US\")",
+                "in Typed"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "dim_classes_labels",
+        "columns": [
+          {
+            "name": "label_key",
+            "dataType": "string",
+            "sourceColumn": "label_key",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "label_id",
+            "dataType": "int64",
+            "sourceColumn": "label_id",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "task_id",
+            "dataType": "int64",
+            "sourceColumn": "task_id",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "label_name",
+            "dataType": "string",
+            "sourceColumn": "label_name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "color_hex",
+            "dataType": "string",
+            "sourceColumn": "color_hex",
+            "summarizeBy": "none"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "dim_classes_labels",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Pointer = Json.Document(File.Contents(SourceFolder & \"\\current.json\")),",
+                "    Bundle = SourceFolder & \"\\\" & Text.Replace(Pointer[relative_folder], \"/\", \"\\\"),",
+                "    Source = Csv.Document(File.Contents(Bundle & \"\\dim_classes_labels.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Nulls = Table.ReplaceValue(Headers, \"\", null, Replacer.ReplaceValue, Table.ColumnNames(Headers)),",
+                "    Typed = Table.TransformColumnTypes(Nulls, {{\"label_key\", type text}, {\"label_id\", Int64.Type}, {\"task_id\", Int64.Type}, {\"label_name\", type text}, {\"color_hex\", type text}}, \"en-US\")",
+                "in Typed"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "dim_date",
+        "columns": [
+          {
+            "name": "date_key",
+            "dataType": "dateTime",
+            "sourceColumn": "date_key",
+            "summarizeBy": "none",
+            "formatString": "yyyy-MM-dd"
+          },
+          {
+            "name": "year",
+            "dataType": "int64",
+            "sourceColumn": "year",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "month_num",
+            "dataType": "int64",
+            "sourceColumn": "month_num",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "month_name",
+            "dataType": "string",
+            "sourceColumn": "month_name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "day_name",
+            "dataType": "string",
+            "sourceColumn": "day_name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "week_num",
+            "dataType": "int64",
+            "sourceColumn": "week_num",
+            "summarizeBy": "none"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "dim_date",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Pointer = Json.Document(File.Contents(SourceFolder & \"\\current.json\")),",
+                "    Bundle = SourceFolder & \"\\\" & Text.Replace(Pointer[relative_folder], \"/\", \"\\\"),",
+                "    Source = Csv.Document(File.Contents(Bundle & \"\\dim_date.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Nulls = Table.ReplaceValue(Headers, \"\", null, Replacer.ReplaceValue, Table.ColumnNames(Headers)),",
+                "    Typed = Table.TransformColumnTypes(Nulls, {{\"date_key\", type date}, {\"year\", Int64.Type}, {\"month_num\", Int64.Type}, {\"month_name\", type text}, {\"day_name\", type text}, {\"week_num\", Int64.Type}}, \"en-US\")",
+                "in Typed"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "dim_jobs",
+        "columns": [
+          {
+            "name": "job_id",
+            "dataType": "int64",
+            "sourceColumn": "job_id",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "task_id",
+            "dataType": "int64",
+            "sourceColumn": "task_id",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "annotator_id",
+            "dataType": "string",
+            "sourceColumn": "annotator_id",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "stage",
+            "dataType": "string",
+            "sourceColumn": "stage",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "state",
+            "dataType": "string",
+            "sourceColumn": "state",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "frame_count",
+            "dataType": "int64",
+            "sourceColumn": "frame_count",
+            "summarizeBy": "none"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "dim_jobs",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Pointer = Json.Document(File.Contents(SourceFolder & \"\\current.json\")),",
+                "    Bundle = SourceFolder & \"\\\" & Text.Replace(Pointer[relative_folder], \"/\", \"\\\"),",
+                "    Source = Csv.Document(File.Contents(Bundle & \"\\dim_jobs.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Nulls = Table.ReplaceValue(Headers, \"\", null, Replacer.ReplaceValue, Table.ColumnNames(Headers)),",
+                "    Typed = Table.TransformColumnTypes(Nulls, {{\"job_id\", Int64.Type}, {\"task_id\", Int64.Type}, {\"annotator_id\", type text}, {\"stage\", type text}, {\"state\", type text}, {\"frame_count\", Int64.Type}}, \"en-US\")",
+                "in Typed"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "fact_job_sessions",
+        "columns": [
+          {
+            "name": "job_id",
+            "dataType": "int64",
+            "sourceColumn": "job_id",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "task_id",
+            "dataType": "int64",
+            "sourceColumn": "task_id",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "annotator_id",
+            "dataType": "string",
+            "sourceColumn": "annotator_id",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "date_key",
+            "dataType": "dateTime",
+            "sourceColumn": "date_key",
+            "summarizeBy": "none",
+            "formatString": "yyyy-MM-dd"
+          },
+          {
+            "name": "status",
+            "dataType": "string",
+            "sourceColumn": "status",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "total_frames",
+            "dataType": "int64",
+            "sourceColumn": "total_frames",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "total_objects",
+            "dataType": "int64",
+            "sourceColumn": "total_objects",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "active_time_hours",
+            "dataType": "double",
+            "sourceColumn": "active_time_hours",
+            "summarizeBy": "none"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "fact_job_sessions",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Pointer = Json.Document(File.Contents(SourceFolder & \"\\current.json\")),",
+                "    Bundle = SourceFolder & \"\\\" & Text.Replace(Pointer[relative_folder], \"/\", \"\\\"),",
+                "    Source = Csv.Document(File.Contents(Bundle & \"\\fact_job_sessions.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Nulls = Table.ReplaceValue(Headers, \"\", null, Replacer.ReplaceValue, Table.ColumnNames(Headers)),",
+                "    Typed = Table.TransformColumnTypes(Nulls, {{\"job_id\", Int64.Type}, {\"task_id\", Int64.Type}, {\"annotator_id\", type text}, {\"date_key\", type date}, {\"status\", type text}, {\"total_frames\", Int64.Type}, {\"total_objects\", Int64.Type}, {\"active_time_hours\", type number}}, \"en-US\")",
+                "in Typed"
+              ]
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "Total_Completed_Frames",
+            "expression": "COALESCE(CALCULATE(SUM(fact_job_sessions[total_frames]), fact_job_sessions[status] = \"completed\"), 0)",
+            "formatString": "#,0",
+            "displayFolder": "KPI"
+          },
+          {
+            "name": "Total_Objects_Created",
+            "expression": "IF(MAX(report_status[annotations_available]) = 1, COALESCE(COUNTROWS(fact_annotations), 0))",
+            "formatString": "#,0",
+            "displayFolder": "KPI"
+          },
+          {
+            "name": "Total_Active_Hours",
+            "expression": "IF(COUNTROWS(fact_job_sessions) > 0 && COUNT(fact_job_sessions[active_time_hours]) = COUNTROWS(fact_job_sessions), SUM(fact_job_sessions[active_time_hours]))",
+            "formatString": "0.00",
+            "displayFolder": "KPI"
+          },
+          {
+            "name": "Velocity_Frames_Per_Hour",
+            "expression": "DIVIDE([Total_Completed_Frames], [Total_Active_Hours])",
+            "formatString": "0.0",
+            "displayFolder": "KPI"
+          },
+          {
+            "name": "Velocity_Objects_Per_Hour",
+            "expression": "DIVIDE([Total_Objects_Created], [Total_Active_Hours])",
+            "formatString": "0.0",
+            "displayFolder": "KPI"
+          },
+          {
+            "name": "Avg_Time_Per_Frame_Mins",
+            "expression": "DIVIDE([Total_Active_Hours] * 60, [Total_Completed_Frames])",
+            "formatString": "0.00",
+            "displayFolder": "KPI"
+          },
+          {
+            "name": "Avg_Time_Per_Object_Secs",
+            "expression": "DIVIDE([Total_Active_Hours] * 3600, [Total_Objects_Created])",
+            "formatString": "0.00",
+            "displayFolder": "KPI"
+          },
+          {
+            "name": "First_Time_Pass_Rate",
+            "expression": "IF(MAX(report_status[reviews_available]) = 1, DIVIDE(COALESCE(CALCULATE(COUNTROWS(fact_qa_reviews), fact_qa_reviews[review_iteration] = 1, fact_qa_reviews[review_decision] = \"Accepted\"), 0), CALCULATE(COUNTROWS(fact_qa_reviews), fact_qa_reviews[review_iteration] = 1)))",
+            "formatString": "0.0%",
+            "displayFolder": "KPI"
+          },
+          {
+            "name": "Rejection_Rate",
+            "expression": "IF(MAX(report_status[reviews_available]) = 1, DIVIDE(COALESCE(CALCULATE(COUNTROWS(fact_qa_reviews), fact_qa_reviews[review_decision] = \"Rejected\"), 0), COUNTROWS(fact_qa_reviews)))",
+            "formatString": "0.0%",
+            "displayFolder": "KPI"
+          },
+          {
+            "name": "Total_Defects",
+            "expression": "IF(MAX(report_status[defects_available]) = 1, COALESCE(COUNTROWS(fact_qa_defects), 0))",
+            "formatString": "#,0",
+            "displayFolder": "KPI"
+          },
+          {
+            "name": "Defect_Density_Per_100F",
+            "expression": "DIVIDE([Total_Defects] * 100, [Total_Completed_Frames])",
+            "formatString": "0.00",
+            "displayFolder": "KPI"
+          },
+          {
+            "name": "Avg_Defects_Per_Job",
+            "expression": "DIVIDE([Total_Defects], DISTINCTCOUNT(fact_qa_reviews[job_id]))",
+            "formatString": "0.00",
+            "displayFolder": "KPI"
+          },
+          {
+            "name": "Avg_mIoU_Score",
+            "expression": "IF(MAX(report_status[gt_available]) = 1, AVERAGE(fact_ground_truth_eval[mean_iou]))",
+            "formatString": "0.000",
+            "displayFolder": "KPI"
+          },
+          {
+            "name": "Avg_F1_Score",
+            "expression": "IF(MAX(report_status[gt_available]) = 1, AVERAGE(fact_ground_truth_eval[f1_score]))",
+            "formatString": "0.000",
+            "displayFolder": "KPI"
+          },
+          {
+            "name": "Avg_Object_Area_Pixels",
+            "expression": "AVERAGE(fact_annotations[area_pixels])",
+            "formatString": "#,0.0",
+            "displayFolder": "KPI"
+          },
+          {
+            "name": "Avg_Area_Frame_Pct",
+            "expression": "DIVIDE(AVERAGE(fact_annotations[frame_area_pct]), 100)",
+            "formatString": "0.00%",
+            "displayFolder": "KPI"
+          },
+          {
+            "name": "Pct_Small_Objects",
+            "expression": "DIVIDE(COALESCE(CALCULATE(COUNTROWS(fact_annotations), fact_annotations[size_scale] = \"Small\"), 0), CALCULATE(COUNTROWS(fact_annotations), NOT ISBLANK(fact_annotations[size_scale])))",
+            "formatString": "0.0%",
+            "displayFolder": "KPI"
+          },
+          {
+            "name": "Count_At_Risk_Annotators",
+            "expression": "VAR People = ADDCOLUMNS(VALUES(dim_annotators[annotator_id]), \"F\", [First_Time_Pass_Rate], \"R\", [Rejection_Rate], \"G\", [Avg_F1_Score]) VAR Assessed = FILTER(People, NOT ISBLANK([F]) || NOT ISBLANK([R]) || NOT ISBLANK([G])) RETURN IF(COUNTROWS(Assessed) > 0, COALESCE(COUNTROWS(FILTER(Assessed, (NOT ISBLANK([F]) && [F] < 0.8) || (NOT ISBLANK([R]) && [R] >= 0.2) || (NOT ISBLANK([G]) && [G] < 0.85))), 0))",
+            "formatString": "#,0",
+            "displayFolder": "KPI"
+          },
+          {
+            "name": "System_Avg_Velocity",
+            "expression": "CALCULATE([Velocity_Frames_Per_Hour], REMOVEFILTERS(dim_annotators))",
+            "formatString": "0.0",
+            "displayFolder": "KPI"
+          },
+          {
+            "name": "Project_Progress_Pct",
+            "expression": "DIVIDE([Total_Completed_Frames], SUM(dim_tasks_batches[total_frames_target]))",
+            "formatString": "0.0%",
+            "displayFolder": "KPI"
+          },
+          {
+            "name": "Total_Target_Frames",
+            "expression": "SUM(dim_tasks_batches[total_frames_target])",
+            "formatString": "#,0",
+            "displayFolder": "Report helpers"
+          },
+          {
+            "name": "Frames_In_Annotation",
+            "expression": "COALESCE(CALCULATE(SUM(fact_job_sessions[total_frames]), fact_job_sessions[status] = \"annotation\"), 0)",
+            "formatString": "#,0",
+            "displayFolder": "Report helpers"
+          },
+          {
+            "name": "Frames_In_Validation",
+            "expression": "COALESCE(CALCULATE(SUM(fact_job_sessions[total_frames]), fact_job_sessions[status] = \"validation\"), 0)",
+            "formatString": "#,0",
+            "displayFolder": "Report helpers"
+          },
+          {
+            "name": "Daily_Completed_Frames",
+            "expression": "CALCULATE(SUM(fact_job_sessions[total_frames]), fact_job_sessions[status] = \"completed\")",
+            "formatString": "#,0",
+            "displayFolder": "Report helpers"
+          },
+          {
+            "name": "Total_Open_Edge_Cases",
+            "expression": "COALESCE(CALCULATE(COUNTROWS(fact_edge_cases), fact_edge_cases[state] = \"open\"), 0)",
+            "formatString": "#,0",
+            "displayFolder": "Report helpers"
+          },
+          {
+            "name": "Total_Blockers",
+            "expression": "COALESCE(CALCULATE(COUNTROWS(fact_edge_cases), fact_edge_cases[state] = \"open\", fact_edge_cases[severity] = \"Blocker\"), 0)",
+            "formatString": "#,0",
+            "displayFolder": "Report helpers"
+          },
+          {
+            "name": "Active_Annotators",
+            "expression": "COUNTROWS(FILTER(VALUES(dim_annotators[annotator_id]), CALCULATE(COUNTROWS(fact_job_sessions)) > 0))",
+            "formatString": "#,0",
+            "displayFolder": "Report helpers"
+          },
+          {
+            "name": "Source_Label",
+            "expression": "IF(MAX(report_status[is_demo]) = 1, \"DEMO / DỮ LIỆU GIẢ LẬP\", \"DỮ LIỆU NGUỒN\") & \"  |  \" & FORMAT(MAX(report_status[as_of]), \"dd/MM/yyyy\")",
+            "displayFolder": "Report helpers"
+          },
+          {
+            "name": "Data_Warnings",
+            "expression": "\"Nguồn: \" & IF(ISBLANK([Total_Active_Hours]), \"giờ làm chưa đủ\", \"có giờ làm\") & \" | \" & IF(MAX(report_status[reviews_available]) = 1, \"có review\", \"thiếu review\") & \" | \" & IF(MAX(report_status[gt_available]) = 1, \"có Ground Truth\", \"thiếu Ground Truth\") & UNICHAR(10) & \"KPI trống = chưa đủ dữ liệu. Frames hoàn thành là proxy theo trạng thái job, chưa đồng nghĩa QA pass.\"",
+            "displayFolder": "Report helpers"
+          },
+          {
+            "name": "Selected_Case",
+            "expression": "SELECTEDVALUE(fact_edge_cases[description], \"Chọn một ca trong bảng phía trên để đọc mô tả. Link example.org trong bản DEMO chỉ dùng minh họa.\")",
+            "displayFolder": "Report helpers"
+          },
+          {
+            "name": "Annotator_Segment",
+            "expression": "VAR V = [Velocity_Frames_Per_Hour] VAR F = [First_Time_Pass_Rate] VAR R = [Rejection_Rate] VAR G = [Avg_F1_Score] VAR Known = NOT ISBLANK(F) || NOT ISBLANK(R) || NOT ISBLANK(G) VAR Risk = (NOT ISBLANK(F) && F < .8) || (NOT ISBLANK(R) && R >= .2) || (NOT ISBLANK(G) && G < .85) RETURN SWITCH(TRUE(), ISBLANK(V) || NOT Known, \"Insufficient data\", Risk && V >= 60, \"Fast and faulty\", Risk && V < 20, \"Needs retraining\", Risk, \"Needs QA support\", V < 20, \"Slow but steady\", V >= 40, \"Star annotator\", \"Core performer\")",
+            "displayFolder": "Report helpers"
+          }
+        ]
+      },
+      {
+        "name": "fact_annotations",
+        "columns": [
+          {
+            "name": "annotation_id",
+            "dataType": "string",
+            "sourceColumn": "annotation_id",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "job_id",
+            "dataType": "int64",
+            "sourceColumn": "job_id",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "label_key",
+            "dataType": "string",
+            "sourceColumn": "label_key",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "frame_idx",
+            "dataType": "int64",
+            "sourceColumn": "frame_idx",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "shape_type",
+            "dataType": "string",
+            "sourceColumn": "shape_type",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "area_pixels",
+            "dataType": "double",
+            "sourceColumn": "area_pixels",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "frame_area_pct",
+            "dataType": "double",
+            "sourceColumn": "frame_area_pct",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "size_scale",
+            "dataType": "string",
+            "sourceColumn": "size_scale",
+            "summarizeBy": "none"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "fact_annotations",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Pointer = Json.Document(File.Contents(SourceFolder & \"\\current.json\")),",
+                "    Bundle = SourceFolder & \"\\\" & Text.Replace(Pointer[relative_folder], \"/\", \"\\\"),",
+                "    Source = Csv.Document(File.Contents(Bundle & \"\\fact_annotations.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Nulls = Table.ReplaceValue(Headers, \"\", null, Replacer.ReplaceValue, Table.ColumnNames(Headers)),",
+                "    Typed = Table.TransformColumnTypes(Nulls, {{\"annotation_id\", type text}, {\"job_id\", Int64.Type}, {\"label_key\", type text}, {\"frame_idx\", Int64.Type}, {\"shape_type\", type text}, {\"area_pixels\", type number}, {\"frame_area_pct\", type number}, {\"size_scale\", type text}}, \"en-US\")",
+                "in Typed"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "fact_qa_reviews",
+        "columns": [
+          {
+            "name": "review_id",
+            "dataType": "string",
+            "sourceColumn": "review_id",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "job_id",
+            "dataType": "int64",
+            "sourceColumn": "job_id",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "reviewer_id",
+            "dataType": "string",
+            "sourceColumn": "reviewer_id",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "review_iteration",
+            "dataType": "int64",
+            "sourceColumn": "review_iteration",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "review_decision",
+            "dataType": "string",
+            "sourceColumn": "review_decision",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "reviewed_at",
+            "dataType": "string",
+            "sourceColumn": "reviewed_at",
+            "summarizeBy": "none"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "fact_qa_reviews",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Pointer = Json.Document(File.Contents(SourceFolder & \"\\current.json\")),",
+                "    Bundle = SourceFolder & \"\\\" & Text.Replace(Pointer[relative_folder], \"/\", \"\\\"),",
+                "    Source = Csv.Document(File.Contents(Bundle & \"\\fact_qa_reviews.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Nulls = Table.ReplaceValue(Headers, \"\", null, Replacer.ReplaceValue, Table.ColumnNames(Headers)),",
+                "    Typed = Table.TransformColumnTypes(Nulls, {{\"review_id\", type text}, {\"job_id\", Int64.Type}, {\"reviewer_id\", type text}, {\"review_iteration\", Int64.Type}, {\"review_decision\", type text}, {\"reviewed_at\", type text}}, \"en-US\")",
+                "in Typed"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "fact_qa_defects",
+        "columns": [
+          {
+            "name": "defect_id",
+            "dataType": "string",
+            "sourceColumn": "defect_id",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "review_id",
+            "dataType": "string",
+            "sourceColumn": "review_id",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "job_id",
+            "dataType": "int64",
+            "sourceColumn": "job_id",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "label_key",
+            "dataType": "string",
+            "sourceColumn": "label_key",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "frame_idx",
+            "dataType": "int64",
+            "sourceColumn": "frame_idx",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "defect_type",
+            "dataType": "string",
+            "sourceColumn": "defect_type",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "severity",
+            "dataType": "string",
+            "sourceColumn": "severity",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "cvat_deep_link",
+            "dataType": "string",
+            "sourceColumn": "cvat_deep_link",
+            "summarizeBy": "none",
+            "dataCategory": "WebUrl"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "fact_qa_defects",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Pointer = Json.Document(File.Contents(SourceFolder & \"\\current.json\")),",
+                "    Bundle = SourceFolder & \"\\\" & Text.Replace(Pointer[relative_folder], \"/\", \"\\\"),",
+                "    Source = Csv.Document(File.Contents(Bundle & \"\\fact_qa_defects.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Nulls = Table.ReplaceValue(Headers, \"\", null, Replacer.ReplaceValue, Table.ColumnNames(Headers)),",
+                "    Typed = Table.TransformColumnTypes(Nulls, {{\"defect_id\", type text}, {\"review_id\", type text}, {\"job_id\", Int64.Type}, {\"label_key\", type text}, {\"frame_idx\", Int64.Type}, {\"defect_type\", type text}, {\"severity\", type text}, {\"cvat_deep_link\", type text}}, \"en-US\")",
+                "in Typed"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "fact_ground_truth_eval",
+        "columns": [
+          {
+            "name": "eval_id",
+            "dataType": "string",
+            "sourceColumn": "eval_id",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "job_id",
+            "dataType": "int64",
+            "sourceColumn": "job_id",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "mean_iou",
+            "dataType": "double",
+            "sourceColumn": "mean_iou",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "precision",
+            "dataType": "double",
+            "sourceColumn": "precision",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "recall",
+            "dataType": "double",
+            "sourceColumn": "recall",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "f1_score",
+            "dataType": "double",
+            "sourceColumn": "f1_score",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "evaluated_at",
+            "dataType": "string",
+            "sourceColumn": "evaluated_at",
+            "summarizeBy": "none"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "fact_ground_truth_eval",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Pointer = Json.Document(File.Contents(SourceFolder & \"\\current.json\")),",
+                "    Bundle = SourceFolder & \"\\\" & Text.Replace(Pointer[relative_folder], \"/\", \"\\\"),",
+                "    Source = Csv.Document(File.Contents(Bundle & \"\\fact_ground_truth_eval.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Nulls = Table.ReplaceValue(Headers, \"\", null, Replacer.ReplaceValue, Table.ColumnNames(Headers)),",
+                "    Typed = Table.TransformColumnTypes(Nulls, {{\"eval_id\", type text}, {\"job_id\", Int64.Type}, {\"mean_iou\", type number}, {\"precision\", type number}, {\"recall\", type number}, {\"f1_score\", type number}, {\"evaluated_at\", type text}}, \"en-US\")",
+                "in Typed"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "fact_edge_cases",
+        "columns": [
+          {
+            "name": "case_id",
+            "dataType": "string",
+            "sourceColumn": "case_id",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "number",
+            "dataType": "int64",
+            "sourceColumn": "number",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "task_id",
+            "dataType": "int64",
+            "sourceColumn": "task_id",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "job_id",
+            "dataType": "int64",
+            "sourceColumn": "job_id",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "title",
+            "dataType": "string",
+            "sourceColumn": "title",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "description",
+            "dataType": "string",
+            "sourceColumn": "description",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "labels",
+            "dataType": "string",
+            "sourceColumn": "labels",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "state",
+            "dataType": "string",
+            "sourceColumn": "state",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "severity",
+            "dataType": "string",
+            "sourceColumn": "severity",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "frame",
+            "dataType": "int64",
+            "sourceColumn": "frame",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "link_status",
+            "dataType": "string",
+            "sourceColumn": "link_status",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "cvat_deep_link",
+            "dataType": "string",
+            "sourceColumn": "cvat_deep_link",
+            "summarizeBy": "none",
+            "dataCategory": "WebUrl"
+          },
+          {
+            "name": "source_url",
+            "dataType": "string",
+            "sourceColumn": "source_url",
+            "summarizeBy": "none",
+            "dataCategory": "WebUrl"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "fact_edge_cases",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Pointer = Json.Document(File.Contents(SourceFolder & \"\\current.json\")),",
+                "    Bundle = SourceFolder & \"\\\" & Text.Replace(Pointer[relative_folder], \"/\", \"\\\"),",
+                "    Source = Csv.Document(File.Contents(Bundle & \"\\fact_edge_cases.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Nulls = Table.ReplaceValue(Headers, \"\", null, Replacer.ReplaceValue, Table.ColumnNames(Headers)),",
+                "    Typed = Table.TransformColumnTypes(Nulls, {{\"case_id\", type text}, {\"number\", Int64.Type}, {\"task_id\", Int64.Type}, {\"job_id\", Int64.Type}, {\"title\", type text}, {\"description\", type text}, {\"labels\", type text}, {\"state\", type text}, {\"severity\", type text}, {\"frame\", Int64.Type}, {\"link_status\", type text}, {\"cvat_deep_link\", type text}, {\"source_url\", type text}}, \"en-US\")",
+                "in Typed"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "report_status",
+        "columns": [
+          {
+            "name": "task_id",
+            "dataType": "int64",
+            "sourceColumn": "task_id",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "as_of",
+            "dataType": "dateTime",
+            "sourceColumn": "as_of",
+            "summarizeBy": "none",
+            "formatString": "yyyy-MM-dd"
+          },
+          {
+            "name": "is_demo",
+            "dataType": "int64",
+            "sourceColumn": "is_demo",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "source_snapshot",
+            "dataType": "string",
+            "sourceColumn": "source_snapshot",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "reviews_available",
+            "dataType": "int64",
+            "sourceColumn": "reviews_available",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "defects_available",
+            "dataType": "int64",
+            "sourceColumn": "defects_available",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "hours_available",
+            "dataType": "int64",
+            "sourceColumn": "hours_available",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "annotations_available",
+            "dataType": "int64",
+            "sourceColumn": "annotations_available",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "gt_available",
+            "dataType": "int64",
+            "sourceColumn": "gt_available",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "warnings",
+            "dataType": "string",
+            "sourceColumn": "warnings",
+            "summarizeBy": "none"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "report_status",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Pointer = Json.Document(File.Contents(SourceFolder & \"\\current.json\")),",
+                "    Bundle = SourceFolder & \"\\\" & Text.Replace(Pointer[relative_folder], \"/\", \"\\\"),",
+                "    Source = Csv.Document(File.Contents(Bundle & \"\\report_status.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Nulls = Table.ReplaceValue(Headers, \"\", null, Replacer.ReplaceValue, Table.ColumnNames(Headers)),",
+                "    Typed = Table.TransformColumnTypes(Nulls, {{\"task_id\", Int64.Type}, {\"as_of\", type date}, {\"is_demo\", Int64.Type}, {\"source_snapshot\", type text}, {\"reviews_available\", Int64.Type}, {\"defects_available\", Int64.Type}, {\"hours_available\", Int64.Type}, {\"annotations_available\", Int64.Type}, {\"gt_available\", Int64.Type}, {\"warnings\", type text}}, \"en-US\")",
+                "in Typed"
+              ]
+            }
+          }
+        ],
+        "isHidden": true
+      },
+      {
+        "name": "kpi_reconciliation",
+        "columns": [
+          {
+            "name": "metric",
+            "dataType": "string",
+            "sourceColumn": "metric",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "expected_value",
+            "dataType": "double",
+            "sourceColumn": "expected_value",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "unit",
+            "dataType": "string",
+            "sourceColumn": "unit",
+            "summarizeBy": "none"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "kpi_reconciliation",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Pointer = Json.Document(File.Contents(SourceFolder & \"\\current.json\")),",
+                "    Bundle = SourceFolder & \"\\\" & Text.Replace(Pointer[relative_folder], \"/\", \"\\\"),",
+                "    Source = Csv.Document(File.Contents(Bundle & \"\\kpi_reconciliation.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Nulls = Table.ReplaceValue(Headers, \"\", null, Replacer.ReplaceValue, Table.ColumnNames(Headers)),",
+                "    Typed = Table.TransformColumnTypes(Nulls, {{\"metric\", type text}, {\"expected_value\", type number}, {\"unit\", type text}}, \"en-US\")",
+                "in Typed"
+              ]
+            }
+          }
+        ],
+        "isHidden": true
+      }
+    ],
+    "relationships": [
+      {
+        "name": "e69b681c-a3c2-5c1e-96ae-4fc0838f6e2d",
+        "fromTable": "dim_jobs",
+        "fromColumn": "task_id",
+        "toTable": "dim_tasks_batches",
+        "toColumn": "task_id",
+        "crossFilteringBehavior": "oneDirection",
+        "fromCardinality": "many",
+        "toCardinality": "one"
+      },
+      {
+        "name": "93d67444-ffbe-5891-b568-cc93b6a26af2",
+        "fromTable": "dim_jobs",
+        "fromColumn": "annotator_id",
+        "toTable": "dim_annotators",
+        "toColumn": "annotator_id",
+        "crossFilteringBehavior": "oneDirection",
+        "fromCardinality": "many",
+        "toCardinality": "one"
+      },
+      {
+        "name": "3e063750-7437-55b4-b5de-d617604aeaa2",
+        "fromTable": "fact_job_sessions",
+        "fromColumn": "job_id",
+        "toTable": "dim_jobs",
+        "toColumn": "job_id",
+        "crossFilteringBehavior": "oneDirection",
+        "fromCardinality": "many",
+        "toCardinality": "one"
+      },
+      {
+        "name": "cc9ce231-ff22-5e4e-a57b-399ea4b48156",
+        "fromTable": "fact_annotations",
+        "fromColumn": "job_id",
+        "toTable": "dim_jobs",
+        "toColumn": "job_id",
+        "crossFilteringBehavior": "oneDirection",
+        "fromCardinality": "many",
+        "toCardinality": "one"
+      },
+      {
+        "name": "14f0b83c-c786-58fe-a9d1-19a05cd4fe24",
+        "fromTable": "fact_qa_reviews",
+        "fromColumn": "job_id",
+        "toTable": "dim_jobs",
+        "toColumn": "job_id",
+        "crossFilteringBehavior": "oneDirection",
+        "fromCardinality": "many",
+        "toCardinality": "one"
+      },
+      {
+        "name": "2fe0e1df-2032-52cc-a1b6-64295b5c8fa9",
+        "fromTable": "fact_qa_defects",
+        "fromColumn": "job_id",
+        "toTable": "dim_jobs",
+        "toColumn": "job_id",
+        "crossFilteringBehavior": "oneDirection",
+        "fromCardinality": "many",
+        "toCardinality": "one"
+      },
+      {
+        "name": "cb1cf8c4-3dd6-5c26-88ce-962bf73bda60",
+        "fromTable": "fact_ground_truth_eval",
+        "fromColumn": "job_id",
+        "toTable": "dim_jobs",
+        "toColumn": "job_id",
+        "crossFilteringBehavior": "oneDirection",
+        "fromCardinality": "many",
+        "toCardinality": "one"
+      },
+      {
+        "name": "f7f0185f-d06a-5035-b2b1-d263370aab6c",
+        "fromTable": "fact_job_sessions",
+        "fromColumn": "date_key",
+        "toTable": "dim_date",
+        "toColumn": "date_key",
+        "crossFilteringBehavior": "oneDirection",
+        "fromCardinality": "many",
+        "toCardinality": "one"
+      },
+      {
+        "name": "d9bd86a4-3c60-5a88-8a12-be3ad5f68d27",
+        "fromTable": "fact_annotations",
+        "fromColumn": "label_key",
+        "toTable": "dim_classes_labels",
+        "toColumn": "label_key",
+        "crossFilteringBehavior": "oneDirection",
+        "fromCardinality": "many",
+        "toCardinality": "one"
+      },
+      {
+        "name": "78d5de97-c75a-5a8c-ad2e-666bb198817a",
+        "fromTable": "fact_qa_defects",
+        "fromColumn": "label_key",
+        "toTable": "dim_classes_labels",
+        "toColumn": "label_key",
+        "crossFilteringBehavior": "oneDirection",
+        "fromCardinality": "many",
+        "toCardinality": "one"
+      },
+      {
+        "name": "e1956a18-6cd7-558a-818e-94d4e4762f10",
+        "fromTable": "fact_qa_reviews",
+        "fromColumn": "reviewer_id",
+        "toTable": "dim_reviewers",
+        "toColumn": "reviewer_id",
+        "crossFilteringBehavior": "oneDirection",
+        "fromCardinality": "many",
+        "toCardinality": "one"
+      },
+      {
+        "name": "58bca594-e811-53e5-b96f-d84a850660d9",
+        "fromTable": "fact_edge_cases",
+        "fromColumn": "task_id",
+        "toTable": "dim_tasks_batches",
+        "toColumn": "task_id",
+        "crossFilteringBehavior": "oneDirection",
+        "fromCardinality": "many",
+        "toCardinality": "one"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"dim_annotators\", \"dim_reviewers\", \"dim_tasks_batches\", \"dim_classes_labels\", \"dim_date\", \"dim_jobs\", \"fact_job_sessions\", \"fact_annotations\", \"fact_qa_reviews\", \"fact_qa_defects\", \"fact_ground_truth_eval\", \"fact_edge_cases\", \"report_status\", \"kpi_reconciliation\"]"
+      },
+      {
+        "name": "__PBI_TimeIntelligenceEnabled",
+        "value": "0"
+      }
+    ]
+  }
+}

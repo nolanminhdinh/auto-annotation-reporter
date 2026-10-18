@@ -145,6 +145,21 @@ def summarize_from_warehouse(
 ) -> Dict[str, Any]:
     """Trích xuất dữ liệu trực tiếp từ Database Medallion và tổng hợp thành báo cáo."""
     target_db = db_path or DEFAULT_DB_PATH
+    from src.generators.reporting_agent_adapter import read_canonical
+    canonical = read_canonical(target_db)
+    if canonical is not None:
+        if snapshot_id and snapshot_id != canonical['snapshot_id']:
+            raise ValueError('Requested snapshot is not the serving snapshot')
+        from src.generators.team_summary import synthesize
+        envelope = synthesize(canonical['team_reports'], provider='gemini' if api_key else 'offline',
+                              api_key=api_key,model=os.getenv('GEMINI_MODEL'))
+        summary = envelope['summary']
+        def items(group):
+            return ['['+', '.join(item['report_ids'])+'] '+item['text'] for item in summary[group]]
+        return {'executive_summary':summary['executive_summary'],'blockers':items('critical_blockers'),
+                'guideline_disputes':items('guideline_disputes'),'quality_warnings':[],
+                'suggested_agenda':items('suggested_mentor_agenda'),'source':envelope['provider'],
+                'snapshot_id':canonical['snapshot_id'],'review_required':True}
     if not target_db.exists():
         logger.warning(f"Database {target_db} không tồn tại; sử dụng dữ liệu rỗng.")
         return heuristic_summarize([])

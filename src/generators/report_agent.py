@@ -19,6 +19,10 @@ from typing import Any, Dict, List, Optional, Tuple
 
 logger = logging.getLogger(__name__)
 
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 DEFAULT_DB_PATH = Path(__file__).resolve().parents[2] / "data" / "annotation_warehouse.db"
 DEFAULT_REPORT_PATH = Path(__file__).resolve().parents[2] / "reports" / "MENTOR_REPORT_DRAFT.md"
 
@@ -65,6 +69,10 @@ class ReportReaderAgent:
 
     def get_database_kpis(self) -> Dict[str, Any]:
         """Truy vấn các chỉ số Gold Marts và Bronze Team Reports từ SQLite."""
+        from src.generators.reporting_agent_adapter import read_canonical
+        canonical = read_canonical(self.db_path)
+        if canonical is not None:
+            return canonical
         if not self.db_path.exists():
             return {}
 
@@ -100,6 +108,9 @@ class ReportReaderAgent:
     def verify_reconciliation(self) -> Dict[str, Any]:
         """ĐỐI SOÁT DỮ LIỆU: Kiểm tra tính nhất quán giữa nội dung Báo cáo Markdown và Database."""
         db_kpis = self.get_database_kpis()
+        if db_kpis.get('canonical'):
+            from src.generators.reporting_agent_adapter import reconcile
+            return reconcile(db_kpis,self.raw_report_text,self.report_path,self.db_path)
         checks: List[Dict[str, Any]] = []
 
         # 1. Kiểm tra Task Name & ID
@@ -155,6 +166,9 @@ class ReportReaderAgent:
     def generate_executive_briefing(self) -> str:
         """TẠO BẢN TÓM TẮT ĐIỀU HÀNH SIÊU NGẮN (Executive Briefing)."""
         db_data = self.get_database_kpis()
+        if db_data.get('canonical'):
+            from src.generators.reporting_agent_adapter import briefing
+            return briefing(db_data)
         prog = db_data.get("progress", {})
         qa = db_data.get("qa_metrics", {})
         edges = db_data.get("edge_cases", [])
@@ -200,6 +214,9 @@ class ReportReaderAgent:
         """TRẢ LỜI CÂU HỎI TƯƠNG TÁC về Báo cáo và Kho dữ liệu."""
         q_lower = question.lower()
         db_data = self.get_database_kpis()
+        if db_data.get('canonical'):
+            from src.generators.reporting_agent_adapter import briefing
+            return briefing(db_data)
         prog = db_data.get("progress", {})
         qa = db_data.get("qa_metrics", {})
         edges = db_data.get("edge_cases", [])

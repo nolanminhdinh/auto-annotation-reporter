@@ -1,0 +1,339 @@
+{
+  "schema_version": 1,
+  "availability": {
+    "reviews": true,
+    "defects": true,
+    "ground_truth": true
+  },
+  "job_times": [
+    {
+      "job_id": 7001,
+      "active_time_hours": 1.5,
+      "completed_at": "2026-10-10T10:00:00Z"
+    },
+    {
+      "job_id": 7002,
+      "active_time_hours": 2.2,
+      "completed_at": "2026-10-10T10:00:00Z"
+    },
+    {
+      "job_id": 7003,
+      "active_time_hours": 4,
+      "completed_at": "2026-10-10T10:00:00Z"
+    },
+    {
+      "job_id": 7004,
+      "active_time_hours": 1.8,
+      "completed_at": "2026-10-11T10:00:00Z"
+    },
+    {
+      "job_id": 7005,
+      "active_time_hours": 3,
+      "completed_at": "2026-10-11T10:00:00Z"
+    },
+    {
+      "job_id": 7006,
+      "active_time_hours": 1.5,
+      "completed_at": "2026-10-11T10:00:00Z"
+    },
+    {
+      "job_id": 7007,
+      "active_time_hours": 2.2,
+      "completed_at": "2026-10-12T10:00:00Z"
+    },
+    {
+      "job_id": 7008,
+      "active_time_hours": 4,
+      "completed_at": "2026-10-12T10:00:00Z"
+    },
+    {
+      "job_id": 7009,
+      "active_time_hours": 1.8,
+      "completed_at": "2026-10-12T10:00:00Z"
+    },
+    {
+      "job_id": 7010,
+      "active_time_hours": 3,
+      "completed_at": "2026-10-13T10:00:00Z"
+    },
+    {
+      "job_id": 7011,
+      "active_time_hours": 1.5,
+      "completed_at": null
+    },
+    {
+      "job_id": 7012,
+      "active_time_hours": 2.2,
+      "completed_at": null
+    },
+    {
+      "job_id": 7013,
+      "active_time_hours": 4,
+      "completed_at": null
+    },
+    {
+      "job_id": 7014,
+      "active_time_hours": 1.8,
+      "completed_at": null
+    },
+    {
+      "job_id": 7015,
+      "active_time_hours": 3,
+      "completed_at": null
+    }
+  ],
+  "reviews": [
+    {
+      "review_id": "R7001-1",
+      "job_id": 7001,
+      "reviewer_id": "qa-demo",
+      "reviewer_name": "Reviewer (demo)",
+      "review_iteration": 1,
+      "review_decision": "Rejected",
+      "reviewed_at": "2026-10-10T12:00:00Z"
+    },
+    {
+      "review_id": "R7001-2",
+      "job_id": 7001,
+      "reviewer_id": "qa-demo",
+      "reviewer_name": "Reviewer (demo)",
+      "review_iteration": 2,
+      "review_decision": "Accepted",
+      "reviewed_at": "2026-10-11T12:00:00Z"
+    },
+    {
+      "review_id": "R7002-1",
+      "job_id": 7002,
+      "reviewer_id": "qa-demo",
+      "reviewer_name": "Reviewer (demo)",
+      "review_iteration": 1,
+      "review_decision": "Accepted",
+      "reviewed_at": "2026-10-10T12:00:00Z"
+    },
+    {
+      "review_id": "R7003-1",
+      "job_id": 7003,
+      "reviewer_id": "qa-demo",
+      "reviewer_name": "Reviewer (demo)",
+      "review_iteration": 1,
+      "review_decision": "Rejected",
+      "reviewed_at": "2026-10-10T12:00:00Z"
+    },
+    {
+      "review_id": "R7003-2",
+      "job_id": 7003,
+      "reviewer_id": "qa-demo",
+      "reviewer_name": "Reviewer (demo)",
+      "review_iteration": 2,
+      "review_decision": "Accepted",
+      "reviewed_at": "2026-10-11T12:00:00Z"
+    },
+    {
+      "review_id": "R7004-1",
+      "job_id": 7004,
+      "reviewer_id": "qa-demo",
+      "reviewer_name": "Reviewer (demo)",
+      "review_iteration": 1,
+      "review_decision": "Accepted",
+      "reviewed_at": "2026-10-11T12:00:00Z"
+    },
+    {
+      "review_id": "R7005-1",
+      "job_id": 7005,
+      "reviewer_id": "qa-demo",
+      "reviewer_name": "Reviewer (demo)",
+      "review_iteration": 1,
+      "review_decision": "Accepted",
+      "reviewed_at": "2026-10-11T12:00:00Z"
+    },
+    {
+      "review_id": "R7006-1",
+      "job_id": 7006,
+      "reviewer_id": "qa-demo",
+      "reviewer_name": "Reviewer (demo)",
+      "review_iteration": 1,
+      "review_decision": "Rejected",
+      "reviewed_at": "2026-10-11T12:00:00Z"
+    },
+    {
+      "review_id": "R7006-2",
+      "job_id": 7006,
+      "reviewer_id": "qa-demo",
+      "reviewer_name": "Reviewer (demo)",
+      "review_iteration": 2,
+      "review_decision": "Accepted",
+      "reviewed_at": "2026-10-12T12:00:00Z"
+    },
+    {
+      "review_id": "R7007-1",
+      "job_id": 7007,
+      "reviewer_id": "qa-demo",
+      "reviewer_name": "Reviewer (demo)",
+      "review_iteration": 1,
+      "review_decision": "Accepted",
+      "reviewed_at": "2026-10-12T12:00:00Z"
+    },
+    {
+      "review_id": "R7008-1",
+      "job_id": 7008,
+      "reviewer_id": "qa-demo",
+      "reviewer_name": "Reviewer (demo)",
+      "review_iteration": 1,
+      "review_decision": "Rejected",
+      "reviewed_at": "2026-10-12T12:00:00Z"
+    },
+    {
+      "review_id": "R7008-2",
+      "job_id": 7008,
+      "reviewer_id": "qa-demo",
+      "reviewer_name": "Reviewer (demo)",
+      "review_iteration": 2,
+      "review_decision": "Accepted",
+      "reviewed_at": "2026-10-13T12:00:00Z"
+    },
+    {
+      "review_id": "R7009-1",
+      "job_id": 7009,
+      "reviewer_id": "qa-demo",
+      "reviewer_name": "Reviewer (demo)",
+      "review_iteration": 1,
+      "review_decision": "Accepted",
+      "reviewed_at": "2026-10-12T12:00:00Z"
+    },
+    {
+      "review_id": "R7010-1",
+      "job_id": 7010,
+      "reviewer_id": "qa-demo",
+      "reviewer_name": "Reviewer (demo)",
+      "review_iteration": 1,
+      "review_decision": "Accepted",
+      "reviewed_at": "2026-10-13T12:00:00Z"
+    }
+  ],
+  "defects": [
+    {
+      "defect_id": "D7001",
+      "review_id": "R7001-1",
+      "frame_idx": 3,
+      "label_id": 1,
+      "defect_type": "box_displacement",
+      "severity": "Major"
+    },
+    {
+      "defect_id": "D7003",
+      "review_id": "R7003-1",
+      "frame_idx": 203,
+      "label_id": 1,
+      "defect_type": "missing_object",
+      "severity": "Major"
+    },
+    {
+      "defect_id": "D7006",
+      "review_id": "R7006-1",
+      "frame_idx": 503,
+      "label_id": 1,
+      "defect_type": "box_displacement",
+      "severity": "Major"
+    },
+    {
+      "defect_id": "D7008",
+      "review_id": "R7008-1",
+      "frame_idx": 703,
+      "label_id": 1,
+      "defect_type": "missing_object",
+      "severity": "Major"
+    }
+  ],
+  "ground_truth_evals": [
+    {
+      "eval_id": "GT7001",
+      "job_id": 7001,
+      "mean_iou": 0.76,
+      "f1_score": 0.8,
+      "precision": 0.8,
+      "recall": 0.8,
+      "evaluated_at": "2026-10-10T13:00:00Z"
+    },
+    {
+      "eval_id": "GT7002",
+      "job_id": 7002,
+      "mean_iou": 0.94,
+      "f1_score": 0.95,
+      "precision": 0.95,
+      "recall": 0.95,
+      "evaluated_at": "2026-10-10T13:00:00Z"
+    },
+    {
+      "eval_id": "GT7003",
+      "job_id": 7003,
+      "mean_iou": 0.82,
+      "f1_score": 0.84,
+      "precision": 0.84,
+      "recall": 0.84,
+      "evaluated_at": "2026-10-10T13:00:00Z"
+    },
+    {
+      "eval_id": "GT7004",
+      "job_id": 7004,
+      "mean_iou": 0.96,
+      "f1_score": 0.97,
+      "precision": 0.97,
+      "recall": 0.97,
+      "evaluated_at": "2026-10-11T13:00:00Z"
+    },
+    {
+      "eval_id": "GT7005",
+      "job_id": 7005,
+      "mean_iou": 0.91,
+      "f1_score": 0.92,
+      "precision": 0.92,
+      "recall": 0.92,
+      "evaluated_at": "2026-10-11T13:00:00Z"
+    },
+    {
+      "eval_id": "GT7006",
+      "job_id": 7006,
+      "mean_iou": 0.76,
+      "f1_score": 0.8,
+      "precision": 0.8,
+      "recall": 0.8,
+      "evaluated_at": "2026-10-11T13:00:00Z"
+    },
+    {
+      "eval_id": "GT7007",
+      "job_id": 7007,
+      "mean_iou": 0.94,
+      "f1_score": 0.95,
+      "precision": 0.95,
+      "recall": 0.95,
+      "evaluated_at": "2026-10-12T13:00:00Z"
+    },
+    {
+      "eval_id": "GT7008",
+      "job_id": 7008,
+      "mean_iou": 0.82,
+      "f1_score": 0.84,
+      "precision": 0.84,
+      "recall": 0.84,
+      "evaluated_at": "2026-10-12T13:00:00Z"
+    },
+    {
+      "eval_id": "GT7009",
+      "job_id": 7009,
+      "mean_iou": 0.96,
+      "f1_score": 0.97,
+      "precision": 0.97,
+      "recall": 0.97,
+      "evaluated_at": "2026-10-12T13:00:00Z"
+    },
+    {
+      "eval_id": "GT7010",
+      "job_id": 7010,
+      "mean_iou": 0.91,
+      "f1_score": 0.92,
+      "precision": 0.92,
+      "recall": 0.92,
+      "evaluated_at": "2026-10-13T13:00:00Z"
+    }
+  ]
+}

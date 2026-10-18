@@ -1,0 +1,215 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "cases_table",
+  "position": {
+    "x": 24,
+    "y": 345,
+    "z": 41,
+    "height": 290,
+    "width": 1392,
+    "tabOrder": 41
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_edge_cases"
+                    }
+                  },
+                  "Property": "number"
+                }
+              },
+              "queryRef": "fact_edge_cases.number",
+              "nativeQueryRef": "number",
+              "displayName": "Mã ca"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_edge_cases"
+                    }
+                  },
+                  "Property": "title"
+                }
+              },
+              "queryRef": "fact_edge_cases.title",
+              "nativeQueryRef": "title",
+              "displayName": "Tiêu đề"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_edge_cases"
+                    }
+                  },
+                  "Property": "state"
+                }
+              },
+              "queryRef": "fact_edge_cases.state",
+              "nativeQueryRef": "state",
+              "displayName": "Trạng thái"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_edge_cases"
+                    }
+                  },
+                  "Property": "severity"
+                }
+              },
+              "queryRef": "fact_edge_cases.severity",
+              "nativeQueryRef": "severity",
+              "displayName": "Mức độ"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_edge_cases"
+                    }
+                  },
+                  "Property": "frame"
+                }
+              },
+              "queryRef": "fact_edge_cases.frame",
+              "nativeQueryRef": "frame",
+              "displayName": "Frame"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_edge_cases"
+                    }
+                  },
+                  "Property": "link_status"
+                }
+              },
+              "queryRef": "fact_edge_cases.link_status",
+              "nativeQueryRef": "link_status",
+              "displayName": "Trạng thái link"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_edge_cases"
+                    }
+                  },
+                  "Property": "cvat_deep_link"
+                }
+              },
+              "queryRef": "fact_edge_cases.cvat_deep_link",
+              "nativeQueryRef": "cvat_deep_link",
+              "displayName": "Mở CVAT"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_edge_cases"
+                    }
+                  },
+                  "Property": "source_url"
+                }
+              },
+              "queryRef": "fact_edge_cases.source_url",
+              "nativeQueryRef": "source_url",
+              "displayName": "Nguồn ca"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Chọn ca để đọc mô tả · DEMO dùng link minh họa'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "17D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#172B4D'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
