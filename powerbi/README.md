@@ -2,6 +2,8 @@
 
 Bản giao diện tiếng Việt: **project_desktop/AnnotationReporter.pbip**; bản Desktop đóng gói là **AnnotationReporter_Desktop.pbix**. Báo cáo có 5 trang, 43 visuals và 31 measures (20 KPI chính). Xem [hướng dẫn trình bày](DESKTOP_PRESENTATION.md). AnnotationReporter.pbix và project/ giữ bản trước để đối chiếu; các file Dashboard*.pbix và HTML cũ là prototype.
 
+**Bản tự cập nhật đã chạy được trên máy này:** bấm **START_AUTO.cmd**, mở **AnnotationReporter_Auto.pbix**. Cả 5 trang dùng DirectQuery và chu kỳ 10 giây; đã quan sát visual tự đổi 1.000 → 1.100 → 1.000 frames, không bấm Refresh/Save khi đổi dữ liệu. Hai tình huống đều khớp 20/20 KPI bằng engine Desktop. Xem [AUTO_DESKTOP.md](AUTO_DESKTOP.md). Phạm vi hiện tại là demo local, chạy khi khởi động launcher; chưa có lịch chạy nền hoặc kết nối CVAT thật.
+
 ## Chạy demo local
 
 Cách nhanh trên máy này: bấm đúp **START_DEMO.cmd** ở gốc repo. Sau khi xuất dữ liệu, chọn **Refresh → Save** trong Desktop. Hướng dẫn đầy đủ và cách xử lý lỗi: [END_TO_END_LOCAL.md](END_TO_END_LOCAL.md).

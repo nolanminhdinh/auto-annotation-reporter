@@ -4,12 +4,14 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 
-def create_demo(folder=None):
+def create_demo(folder=None, completed_jobs=10):
+    if not isinstance(completed_jobs,int) or not 0 <= completed_jobs <= 15:
+        raise ValueError('completed_jobs must be between 0 and 15')
     folder=Path(folder or ROOT/'sample_data'/'powerbi_demo'); folder.mkdir(parents=True,exist_ok=True)
     names=['Minh (demo)','Tu (demo)','Duy (demo)','Tuan (demo)','Ngoc (demo)']
     jobs=[]; annotations=[]; times=[]; reviews=[]; defects=[]; evals=[]
     for i in range(15):
-        jid=7001+i; person=i%5; done=i<10; day=10+i//3
+        jid=7001+i; person=i%5; done=i<completed_jobs; day=10+i//3
         jobs.append({'id':jid,'task_id':700,'type':'annotation','stage':'annotation' if i<12 else 'validation','state':'completed' if done else 'in progress','frame_count':100,'start_frame':i*100,'stop_frame':i*100+99,'assignee':{'id':person+1,'username':'demo_'+str(person+1),'first_name':names[person]}})
         shapes=[]
         for k in range(12+i):

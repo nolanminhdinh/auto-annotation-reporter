@@ -1,0 +1,190 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 402,
+        "y": 1120
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 470.52042458588573,
+            "y": 1225.278525163872
+          },
+          "nodeIndex": "dim_annotators",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1210.1907058534462,
+            "y": 583.05181298808589
+          },
+          "nodeIndex": "dim_classes_labels",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 287.83634659183394
+          },
+          "nodeIndex": "dim_date",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 483.02106245711144,
+            "y": 822.24050733462536
+          },
+          "nodeIndex": "dim_jobs",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 183.31337464047851,
+            "y": 1453.9691630296165
+          },
+          "nodeIndex": "dim_reviewers",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 622.396795991272,
+            "y": 220.18133780445328
+          },
+          "nodeIndex": "dim_tasks_batches",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 923.17728528719545,
+            "y": 773.956438549535
+          },
+          "nodeIndex": "fact_annotations",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 337.109017568238,
+            "y": -50
+          },
+          "nodeIndex": "fact_edge_cases",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 757.53644543165046,
+            "y": 1099.291194436473
+          },
+          "nodeIndex": "fact_ground_truth_eval",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 335.28992547343734,
+            "y": 417.28490096937185
+          },
+          "nodeIndex": "fact_job_sessions",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 781.24865547207071,
+            "y": 448.60591313437089
+          },
+          "nodeIndex": "fact_qa_defects",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 184.43621038383708,
+            "y": 1058.317551679992
+          },
+          "nodeIndex": "fact_qa_reviews",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1444.1907058534459,
+            "y": 739.98458151480827
+          },
+          "nodeIndex": "kpi_reconciliation",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1728.1907058534459,
+            "y": 665.98458151480827
+          },
+          "nodeIndex": "report_status",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

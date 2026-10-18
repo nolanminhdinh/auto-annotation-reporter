@@ -358,15 +358,29 @@ def _prepare_bundle(output_dir,sid,rows):
             writer.writeheader(); writer.writerows(rows[name])
         hashes[name+'.csv']=_file_digest(target)
     (staging/'bundle.json').write_text(json.dumps({'snapshot_id':sid,'sha256':hashes},indent=2),encoding='utf-8')
-    if bundle.exists():
+    if bundle.exists() and (bundle/'bundle.json').exists():
         for name,digest in hashes.items():
             if not (bundle/name).is_file() or _file_digest(bundle/name)!=digest:
                 raise ValueError('Existing CSV snapshot is incomplete or modified: '+sid)
-        # Only remove files created in this invocation, within the staging directory.
+    else:
+        # On Windows an indexer/editor can hold the directory without sharing
+        # deletion, preventing a directory rename. Readers only discover a new
+        # bundle through current.json, so publish its files first, marker last.
+        pointer=Path(output_dir)/'current.json'
+        current=read_json(pointer,{})
+        if bundle.exists() and current.get('snapshot_id')==sid:
+            for name,digest in hashes.items():
+                if not (bundle/name).is_file() or _file_digest(bundle/name)!=digest:
+                    raise ValueError('Current CSV snapshot is incomplete or modified: '+sid)
+        else:
+            bundle.mkdir(exist_ok=True)
+            for name in hashes: (staging/name).replace(bundle/name)
+        (staging/'bundle.json').replace(bundle/'bundle.json')
+    # Cleanup is best effort; a Windows directory handle must not fail a run.
+    try:
         for child in staging.iterdir(): child.unlink()
         staging.rmdir()
-    else:
-        staging.replace(bundle)
+    except OSError: pass
     return bundle
 
 
