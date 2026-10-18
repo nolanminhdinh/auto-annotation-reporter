@@ -140,7 +140,7 @@ def main(argv=None):
         (destination/'notification_receipt.json').write_text(json.dumps(receipt,ensure_ascii=False,indent=2),encoding='utf-8')
         finish_run(run_root,destination,result,receipt)
         print(json.dumps(result,ensure_ascii=False,indent=2))
-        print('Power BI: refresh AnnotationReporter; CSV bundle: '+str(args.powerbi_output/'current.json'))
+        print('CSV bundle: '+str(args.powerbi_output/'current.json')+' (Import reports require Refresh; DirectQuery is published by the Auto launcher).')
         return 0
     except (ValueError,OSError,KeyError,TypeError,sqlite3.Error) as error:
         if destination is not None and destination.is_dir():

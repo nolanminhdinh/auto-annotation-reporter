@@ -1,5 +1,7 @@
 # Báo cáo Power BI — đường chạy hiện tại
 
+**Dành cho máy mới:** [MULTI_MACHINE_SETUP.md](MULTI_MACHINE_SETUP.md). `START_AUTO.cmd` tự chuẩn bị `.venv` và thư viện; `SETUP_AUTO.cmd` chỉ chuẩn bị runtime. Cấu hình `config/desktop.local.json` chọn demo/offline/live, cổng và chu kỳ refresh. Chạy `START_AUTO.cmd --doctor` để chẩn đoán. Cần cài sẵn Python, Docker, Power BI và đăng nhập PostgreSQL lần đầu trên từng máy.
+
 Bản giao diện tiếng Việt: **project_desktop/AnnotationReporter.pbip**; bản Desktop đóng gói là **AnnotationReporter_Desktop.pbix**. Báo cáo có 5 trang, 43 visuals và 31 measures (20 KPI chính). Xem [hướng dẫn trình bày](DESKTOP_PRESENTATION.md). AnnotationReporter.pbix và project/ giữ bản trước để đối chiếu; các file Dashboard*.pbix và HTML cũ là prototype.
 
 **Bản tự cập nhật đã chạy được trên máy này:** bấm **START_AUTO.cmd**, mở **AnnotationReporter_Auto.pbix**. Cả 5 trang dùng DirectQuery và chu kỳ 10 giây; đã quan sát visual tự đổi 1.000 → 1.100 → 1.000 frames, không bấm Refresh/Save khi đổi dữ liệu. Hai tình huống đều khớp 20/20 KPI bằng engine Desktop. Xem [AUTO_DESKTOP.md](AUTO_DESKTOP.md). Phạm vi hiện tại là demo local, chạy khi khởi động launcher; chưa có lịch chạy nền hoặc kết nối CVAT thật.

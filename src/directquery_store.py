@@ -45,7 +45,7 @@ def load_bundle(folder=None):
 
 def connect(config,reader=False):
     import pg8000.dbapi
-    return pg8000.dbapi.connect(host='127.0.0.1',port=55432,database='annotation_reporting',
+    return pg8000.dbapi.connect(host='127.0.0.1',port=config.get('port',55432),database='annotation_reporting',
                                user='annotation_reader' if reader else 'annotation_owner',
                                password=config['reader_password' if reader else 'owner_password'],timeout=15)
 
@@ -102,4 +102,4 @@ def publish(config,folder=None):
         cursor.execute("SELECT has_table_privilege(current_user,'gold_dim_jobs','INSERT'),has_schema_privilege(current_user,'public','CREATE')")
         if any(cursor.fetchone()): raise ValueError('Desktop reader has unexpected write privileges')
     finally: reader.close()
-    return {'snapshot_id':sid,'tables':{name:len(rows) for name,rows in tables.items()},'database':'annotation_reporting','endpoint':'127.0.0.1:55432','reader_verified':True,'row_counts_verified':True}
+    return {'snapshot_id':sid,'tables':{name:len(rows) for name,rows in tables.items()},'database':'annotation_reporting','endpoint':'127.0.0.1:'+str(config.get('port',55432)),'reader_verified':True,'row_counts_verified':True}

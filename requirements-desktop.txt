@@ -1,0 +1,13 @@
+# Versions used by the accepted local Desktop demo; includes transitive dependencies.
+# These pins do not constitute acceptance on a second machine.
+requests==2.34.2
+python-dotenv==1.2.4
+pg8000==1.31.5
+asn1crypto==1.5.1
+scramp==1.4.17
+python-dateutil==2.9.0.post0
+six==1.17.0
+certifi==2026.7.22
+charset-normalizer==3.5.2
+idna==3.20
+urllib3==2.8.0

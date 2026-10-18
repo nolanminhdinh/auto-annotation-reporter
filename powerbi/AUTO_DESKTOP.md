@@ -1,5 +1,7 @@
 # Luồng tự động với Power BI Desktop DirectQuery
 
+**Máy mới và cấu hình demo/offline/live:** xem [MULTI_MACHINE_SETUP.md](MULTI_MACHINE_SETUP.md). Đây là hướng dẫn bàn giao hiện tại; các bằng chứng nghiệm thu bên dưới thuộc máy Minh.
+
 ## Kiến trúc
 
 Đã hoàn tất thiết lập trên máy Minh ngày 18/10/2026: lưu `AnnotationReporter_Auto.pbix`, 14 bảng DirectQuery, 5 trang tự cập nhật mỗi 10 giây. Đã quan sát Tổng quan đổi 1.000 → 1.100 → 1.000 frames mà không Refresh/Save khi dữ liệu đổi; PBIX giữ nguyên thời gian sửa. Cả hai snapshot khớp 20/20 KPI với engine Desktop (reports/POWERBI_AUTO_DAX_RECONCILIATION*.json).
@@ -10,11 +12,11 @@ SQLite vẫn lưu audit/history của pipeline. PostgreSQL là tầng phục v�
 
 ## Thiết lập một lần
 
-1. Windows có Python 3.10+, Docker Desktop đang chạy và Power BI Desktop đã cài. Tạo `.venv` nếu máy chưa có.
-2. Chạy `START_AUTO.cmd`. Lần đầu cài driver từ requirements-auto.txt nếu thiếu, tạo credentials ngẫu nhiên trong `data/directquery` và khởi tạo PostgreSQL.
-3. Power BI mở `project_auto/AnnotationReporter.pbip`. Khi yêu cầu đăng nhập, dùng thông tin trong `data/directquery/powerbi_connection.json`. Tài khoản `annotation_reader` chỉ được SELECT các serving views; mật khẩu không được ghi vào PBIP hoặc Git.
+1. Windows có Python 3.10+, Docker Desktop đang chạy và Power BI Desktop đã cài.
+2. Chạy `START_AUTO.cmd`. Bootstrap tự tạo `.venv`, cài bộ phiên bản requirements-desktop.txt, tạo cấu hình local nếu thiếu, tạo credentials ngẫu nhiên trong `data/directquery` và khởi tạo PostgreSQL.
+3. Power BI mở bản Auto PBIX nếu có, hoặc PBIP phù hợp cấu hình. Khi yêu cầu đăng nhập, dùng thông tin trong `data/directquery/powerbi_connection.json`. Tài khoản `annotation_reader` chỉ được SELECT các serving views; mật khẩu không được ghi vào PBIP hoặc Git.
 4. Project được tạo sẵn Automatic page refresh 10 giây cho cả 5 trang. Hoàn tất kết nối trong Desktop, kiểm tra Page refresh đang On; lưu một lần thành `powerbi/AnnotationReporter_Auto.pbix`.
-5. Chỉ đánh dấu `data/directquery/desktop_ready.json` sau khi đã quan sát dữ liệu thay đổi trên visual mà không bấm Refresh. File này là bằng chứng thiết lập trên máy hiện tại, không dùng chung giữa các máy.
+5. Chỉ chạy `START_AUTO.cmd --confirm-desktop` sau khi chính bạn đã quan sát dữ liệu thay đổi trên visual mà không bấm Refresh. Lệnh ghi nhận xác nhận người dùng vào `data/directquery/desktop_ready.json`, không thay thế kiểm tra DAX. File chỉ dùng cho máy hiện tại.
 
 Trạng thái hiện tại được ghi trong data/directquery/latest.json. Có database mới chưa đồng nghĩa các trang đã tự cập nhật; nếu chưa có desktop_ready.json, launcher vẫn thông báo thiết lập đang chờ.
 
@@ -34,7 +36,7 @@ Tham số chấp nhận 0–15 jobs hoàn thành; mặc định 10. Đây là d�
 
 ## Phạm vi
 
-- Tự động hiện tại dành cho dữ liệu giả lập local, không gửi bot và không gọi Gemini thật.
+- Mặc định dữ liệu giả lập local; chọn offline/live qua config hoặc CLI. Live cần credentials/nguồn thật, chưa nghiệm thu API thật trên máy thứ hai. Launcher không gửi bot và không gọi Gemini thật.
 - Lệnh chạy khi được khởi động, chưa tự tạo lịch chạy nền. Docker có restart policy cho container, nhưng vẫn cần Docker Desktop hoạt động.
 - Credentials chỉ có trong các file runtime đã gitignore. Không commit hoặc chia sẻ thư mục data/directquery.
 - Không xóa Docker volume để sửa lỗi đăng nhập: volume chứa dữ liệu và role đã tạo. Giữ connection.json/postgres.env đồng bộ với container.

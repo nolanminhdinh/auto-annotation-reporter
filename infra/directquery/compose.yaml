@@ -9,7 +9,7 @@ services:
       POSTGRES_USER: annotation_owner
       POSTGRES_PASSWORD: ${ANNOTATION_PG_OWNER_PASSWORD:?Run src.auto_desktop --setup first}
     ports:
-      - "127.0.0.1:55432:5432"
+      - "127.0.0.1:${ANNOTATION_PG_PORT:-55432}:5432"
     volumes:
       - reporting-data:/var/lib/postgresql/data
     healthcheck:
