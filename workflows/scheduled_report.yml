@@ -113,4 +113,4 @@ print('Pipeline Scheduled Run Triggered at', datetime.datetime.now())
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
           echo "📨 Bắn thông báo hoàn tất pipeline đến nhóm trưởng/kênh chat..."
-          # Webhook logic được gọi qua script hoặc curl dự phòng
+          python -m src.notifiers.bot

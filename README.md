@@ -37,6 +37,31 @@
 
 ---
 
+## ⚡ Quickstart 1-Click: Chạy Ngay Trên Mọi Máy (Zero-Config)
+
+Bất kỳ ai (Mentor, Tech Lead, Giám khảo hoặc Thành viên mới) clone repository về máy đều có thể khởi tạo và chạy ngay toàn bộ pipeline chỉ với **1 cú click hoặc 1 lệnh duy nhất**:
+
+### 💻 Trên Windows (Khuyên dùng):
+Nhấp đúp chuột vào file [`quickstart.bat`](quickstart.bat) hoặc mở PowerShell/CMD gõ:
+```cmd
+.\quickstart.bat
+```
+
+### 🐧 Trên Linux / macOS:
+Mở Terminal tại thư mục gốc và chạy:
+```bash
+chmod +x quickstart.sh && ./quickstart.sh
+```
+
+> 💡 **Hệ thống tự động thực hiện 5 bước khép kín trong ~15 giây:**
+> 1. ✅ **Môi trường**: Tự động phát hiện Python 3.10+, tự tạo `.env` chuẩn từ mẫu `.env.example`.
+> 2. ✅ **Kiểm thử**: Chạy xác minh toàn bộ **80/80 Unit Tests PASS 100%**.
+> 3. ✅ **Kho Medallion**: Tự động tạo và nạp dữ liệu vật lý vào SQLite Database (`data/annotation_warehouse.db`).
+> 4. ✅ **Mô hình AI / LLM**: Phân tích văn bản thô từ 3 tổ gán nhãn, trích xuất Blockers, Tranh chấp quy tắc và đề xuất Agenda họp Mentor.
+> 5. ✅ **Đa kênh đầu ra**: Render báo cáo điều hành [`reports/MENTOR_REPORT_DRAFT.md`](reports/MENTOR_REPORT_DRAFT.md) kèm Deep Link CVAT frame-level, xuất dữ liệu Power BI và phát tin nhắn Telegram Bot Preview!
+
+---
+
 ## 📑 Mục Lục
 1. [Bối cảnh & Vấn đề giải quyết](#-1-bối-cảnh--vấn-đề-giải-quyết)
 2. [Sơ đồ Kiến trúc & Luồng Dữ liệu Hiện tại](#-2-sơ-đồ-kiến-trúc--luồng-dữ-liệu-hiện-tại)
