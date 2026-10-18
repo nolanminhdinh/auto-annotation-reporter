@@ -51,7 +51,7 @@ Nguồn CVAT có thể success dù một job annotations failed. Đọc thêm fa
 và annotations.status trong report_data. counts.annotations đếm các **bản ghi
 theo job**, không đếm shapes/tracks. Nguồn failed không xuất file dữ liệu giả rỗng.
 
-Đây là cấu trúc của src/sync.py theo bản main refactor. Lỗi comments/Quality Reports đang có thể bị bỏ qua, nên trạng thái success chưa chứng minh dữ liệu tùy chọn đầy đủ. API chạy lại trên Cloud vẫn cần kiểm chứng riêng.
+Đây là cấu trúc của src/sync.py theo bản main refactor. Từ bản kiểm tra 18/10/2026, manifest.sources.cvat bổ sung optional_sources và quality_reports_status. Raw cvat.json ghi issues/comments/media_metadata trong optional_sources, và quality_reports_data có list_sources theo target task/job, status, reports và HTTP status nếu có. success của nguồn chính vẫn chưa chứng minh dữ liệu tùy chọn đầy đủ; consumer phải đọc các cờ này. API thật trên Cloud/self-hosted vẫn cần nghiệm thu riêng.
 
 ## 3. report_data.json — đầu vào chính
 

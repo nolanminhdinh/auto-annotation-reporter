@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Báo Cáo Power BI — Auto Annotation Reporter</title>
+  <!-- Load Local Chart.js or Fallback to CDN -->
+  <script src="assets/chart.umd.min.js"></script>
+  <script>
+    if (typeof Chart === 'undefined') {
+      document.write('<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"><\/script>');
+    }
+  </script>
+  <style>
+    :root {
+      --pbi-yellow: #f2c811;
+      --pbi-gold-dark: #d9b106;
+      --bg-main: #f3f4f6;
+      --bg-card: #ffffff;
+      --text-main: #1f2937;
+      --text-muted: #6b7280;
+      --border-color: #e5e7eb;
+      --accent-blue: #2563eb;
+      --accent-green: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-red: #ef4444;
+      --accent-purple: #8b5cf6;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg-main); color: var(--text-main); display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+
+    /* Top Ribbon Header */
+    header {
+      background: #1e293b;
+      color: #fff;
+      padding: 10px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      flex-shrink: 0;
+    }
+    .header-title { display: flex; align-items: center; gap: 12px; }
+    .pbi-badge {
+      background: var(--pbi-yellow);
+      color: #111;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+    }
+    .header-text h1 { font-size: 17px; font-weight: 700; color: #f8fafc; }
+    .header-text p { font-size: 12px; color: #94a3b8; }
+    .header-actions { display: flex; gap: 10px; align-items: center; }
+    .btn {
+      padding: 6px 14px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: #334155;
+      color: #f8fafc;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: #475569; }
+    .btn-primary { background: var(--pbi-yellow); color: #111; border-color: var(--pbi-yellow); }
+    .btn-primary:hover { background: var(--pbi-gold-dark); }
+
+    /* Navigation Bar / Tabs */
+    nav {
+      background: #0f172a;
+      display: flex;
+      padding: 0 24px;
+      gap: 4px;
+      border-bottom: 2px solid #334155;
+      flex-shrink: 0;
+    }
+    .nav-tab {
+      padding: 11px 18px;
+      color: #94a3b8;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-tab:hover { color: #f1f5f9; background: rgba(255,255,255,0.03); }
+    .nav-tab.active {
+      color: var(--pbi-yellow);
+      border-bottom-color: var(--pbi-yellow);
+      background: rgba(242, 200, 17, 0.08);
+    }
+
+    /* Filter Bar */
+    .filter-bar {
+      background: #ffffff;
+      padding: 8px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 1px solid var(--border-color);
+      flex-shrink: 0;
+      font-size: 13px;
+    }
+    .filter-item { display: flex; align-items: center; gap: 8px; }
+    .filter-label { font-weight: 600; color: var(--text-muted); font-size: 12px; text-transform: uppercase; }
+    select {
+      padding: 5px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 13px;
+      background: #fff;
+      color: var(--text-main);
+      outline: none;
+      cursor: pointer;
+    }
+    select:focus { border-color: var(--accent-blue); }
+
+    /* Main Content Area */
+    main {
+      flex: 1;
+      padding: 16px 24px;
+      overflow-y: auto;
+      background: var(--bg-main);
+    }
+    .page-content { display: none; }
+    .page-content.active { display: block; animation: fadeIn 0.25s ease-in-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* KPI Cards Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .kpi-card {
+      background: var(--bg-card);
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+    .kpi-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 4px;
+      background: var(--card-accent, var(--pbi-yellow));
+    }
+    .kpi-title { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; }
+    .kpi-value { font-size: 26px; font-weight: 800; color: var(--text-main); line-height: 1.1; margin-bottom: 6px; }
+    .kpi-sub { font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
+    .kpi-badge-pill {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .badge-green { background: #d1fae5; color: #065f46; }
+    .badge-blue { background: #dbeafe; color: #1e40af; }
+    .badge-amber { background: #fef3c7; color: #92400e; }
+    .badge-red { background: #fee2e2; color: #991b1b; }
+
+    /* Visuals Grid */
+    .visual-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .visual-grid-3 {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .visual-card {
+      background: var(--bg-card);
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+    }
+    .visual-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .visual-title { font-size: 14px; font-weight: 700; color: var(--text-main); }
+    .visual-subtitle { font-size: 11px; color: var(--text-muted); }
+    .chart-container { position: relative; height: 260px; width: 100%; }
+
+    /* Data Tables */
+    .table-responsive { width: 100%; overflow-x: auto; margin-top: 6px; }
+    table { width: 100%; border-collapse: collapse; font-size: 12.5px; text-align: left; }
+    th {
+      background: #f8fafc;
+      color: #475569;
+      font-weight: 700;
+      padding: 10px 12px;
+      border-bottom: 2px solid var(--border-color);
+      white-space: nowrap;
+    }
+    td { padding: 9px 12px; border-bottom: 1px solid var(--border-color); color: var(--text-main); }
+    tr:hover td { background-color: #f8fafc; }
+    .url-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+    }
+    .url-link:hover { background: #dbeafe; text-decoration: underline; }
+
+    /* Status Pills */
+    .pill { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+    .pill-completed { background: #d1fae5; color: #047857; }
+    .pill-progress { background: #fef3c7; color: #b45309; }
+    .pill-danger { background: #fee2e2; color: #b91c1c; }
+    .pill-gray { background: #e2e8f0; color: #475569; }
+
+    /* Edge Case Detail Box */
+    .detail-box {
+      margin-top: 14px;
+      padding: 14px;
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 6px;
+    }
+    .detail-box h4 { font-size: 13px; font-weight: 700; margin-bottom: 6px; color: #334155; }
+    .detail-box p { font-size: 12px; color: #475569; line-height: 1.5; white-space: pre-line; }
+
+    /* Bottom Status Bar */
+    footer {
+      background: #1e293b;
+      color: #94a3b8;
+      padding: 6px 24px;
+      font-size: 11.5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+      border-top: 1px solid #334155;
+    }
+    .footer-left { display: flex; gap: 16px; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Ribbon Header -->
+  <header>
+    <div class="header-title">
+      <span class="pbi-badge">POWER BI</span>
+      <div class="header-text">
+        <h1>Báo Cáo Quản Trị & Đánh Giá Chất Lượng Gán Nhãn CVAT</h1>
+        <p>Hệ thống auto-annotation-reporter • Snapshot: Task 217 & Synthetic Benchmark • Đinh Công Minh</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn" onclick="location.reload()">🔄 Làm mới</button>
+      <button class="btn" onclick="window.print()">🖨️ In / PDF</button>
+      <button class="btn btn-primary" onclick="alert('Đã sẵn sàng! File Dashboard.pbix nằm tại: powerbi/Dashboard_Configured.pbix')">📁 Mở trong PBI Desktop</button>
+    </div>
+  </header>
+
+  <!-- 5-Page Navigation Tabs -->
+  <nav>
+    <div class="nav-tab active" onclick="switchPage('exec_360', this)">📊 1. Executive 360</div>
+    <div class="nav-tab" onclick="switchPage('qa_deepdive', this)">🎯 2. QA & Quality Deep-Dive</div>
+    <div class="nav-tab" onclick="switchPage('annotator_matrix', this)">👥 3. Annotator Matrix</div>
+    <div class="nav-tab" onclick="switchPage('data_geometry', this)">📐 4. Data Geometry</div>
+    <div class="nav-tab" onclick="switchPage('edge_cases', this)">🔍 5. Edge-Case Explorer</div>
+  </nav>
+
+  <!-- Interactive Filter Slicers -->
+  <div class="filter-bar">
+    <div class="filter-item">
+      <span class="filter-label">Batch:</span>
+      <select id="slicer-batch" onchange="applyFilters()">
+        <option value="all">Tất cả các Batch (Toàn bộ)</option>
+        <option value="217" selected>Batch-01 (Task 217 - Đà Nẵng)</option>
+        <option value="1001">Batch-02 (Task 1001 - Demo)</option>
+      </select>
+    </div>
+    <div class="filter-item">
+      <span class="filter-label">Annotator:</span>
+      <select id="slicer-annotator" onchange="applyFilters()">
+        <option value="all" selected>Tất cả thành viên</option>
+        <option value="101">Nguyễn Minh Tú (ID: 101)</option>
+        <option value="102">Vũ Trường Duy (ID: 102)</option>
+        <option value="103">Phạm Nguyễn Tuân (ID: 103)</option>
+      </select>
+    </div>
+    <div class="filter-item" style="margin-left: auto; color: var(--text-muted); font-size: 12px;">
+      ⚡ Model Star Schema: <b>12 Bảng VertiPaq</b> • Tương thích <b>100% 20 DAX Measures</b>
+    </div>
+  </div>
+
+  <!-- Main Multi-Page Container -->
+  <main>
+
+    <!-- ============================================================ -->
+    <!-- TRANG 1: EXECUTIVE 360                                        -->
+    <!-- ============================================================ -->
+    <div id="page-exec_360" class="page-content active">
+      <div class="kpi-grid">
+        <div class="kpi-card" style="--card-accent: var(--accent-blue)">
+          <div class="kpi-title">Tổng Frame Đã Hoàn Thành</div>
+          <div class="kpi-value" id="kpi-completed-frames">300 <span style="font-size: 16px; color: var(--text-muted)">/ 500</span></div>
+          <div class="kpi-sub"><span class="kpi-badge-pill badge-blue">DAX #1</span> 3 trên 5 Jobs kiểm định xong</div>
+        </div>
+        <div class="kpi-card" style="--card-accent: var(--accent-green)">
+          <div class="kpi-title">Tiến Độ Dự Án (% Milestone)</div>
+          <div class="kpi-value" id="kpi-progress-pct">60.0%</div>
+          <div class="kpi-sub"><span class="kpi-badge-pill badge-green">DAX #20</span> Hạn chót: 18/10/2026</div>
+        </div>
+        <div class="kpi-card" style="--card-accent: var(--pbi-yellow)">
+          <div class="kpi-title">Vận Tốc Gán Nhãn Đội Ngũ</div>
+          <div class="kpi-value" id="kpi-velocity">44.8 <span style="font-size: 15px; color: var(--text-muted)">f/h</span></div>
+          <div class="kpi-sub"><span class="kpi-badge-pill badge-amber">DAX #4</span> Đạt chuẩn định mức (>40 f/h)</div>
+        </div>
+        <div class="kpi-card" style="--card-accent: var(--accent-purple)">
+          <div class="kpi-title">Tỷ Lệ Duyệt Vòng Đầu (FTPR)</div>
+          <div class="kpi-value" id="kpi-ftpr">80.0%</div>
+          <div class="kpi-sub"><span class="kpi-badge-pill badge-green">DAX #8</span> 4/5 lượt review duyệt ngay</div>
+        </div>
+      </div>
+
+      <div class="visual-grid-2">
+        <div class="visual-card">
+          <div class="visual-header">
+            <div>
+              <div class="visual-title">Tiến Độ Hoàn Thành Theo Batch</div>
+              <div class="visual-subtitle">Phân tách: Hoàn tất (Completed) vs Đang gán (Annotation) vs Chưa giao</div>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="chart-batch-progress"></canvas>
+          </div>
+        </div>
+
+        <div class="visual-card">
+          <div class="visual-header">
+            <div>
+              <div class="visual-title">Sản Lượng Hoàn Thành Theo Ngày</div>
+              <div class="visual-subtitle">Xu hướng số khung hình được nghiệm thu theo ngày (dim_date)</div>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="chart-daily-production"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Summary Table -->
+      <div class="visual-card">
+        <div class="visual-header">
+          <div class="visual-title">Bảng Tổng Hợp Chi Tiết Từng Lô Dữ Liệu (Tasks & Batches)</div>
+        </div>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Batch ID</th>
+                <th>Task ID</th>
+                <th>Tên Task</th>
+                <th>Mục Tiêu Frames</th>
+                <th>Đã Hoàn Thành</th>
+                <th>Còn Lại</th>
+                <th>% Tiến Độ</th>
+                <th>Trạng Thái</th>
+                <th>Hạn Chót</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>Batch-01</b></td>
+                <td>217</td>
+                <td>Batch-01 Vehicle Detection - Da Nang 2026</td>
+                <td>500</td>
+                <td><b>300</b></td>
+                <td>200</td>
+                <td><span class="pill pill-completed">60.0%</span></td>
+                <td><span class="pill pill-progress">In Progress</span></td>
+                <td>18/10/2026</td>
+              </tr>
+              <tr>
+                <td><b>Batch-02</b></td>
+                <td>1001</td>
+                <td>Batch-02 Synthetic Demonstration & Edge Cases</td>
+                <td>200</td>
+                <td><b>10</b></td>
+                <td>190</td>
+                <td><span class="pill pill-gray">5.0%</span></td>
+                <td><span class="pill pill-gray">Planned</span></td>
+                <td>25/10/2026</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TRANG 2: QA & QUALITY DEEP-DIVE                              -->
+    <!-- ============================================================ -->
+    <div id="page-qa_deepdive" class="page-content">
+      <div class="kpi-grid">
+        <div class="kpi-card" style="--card-accent: var(--accent-amber)">
+          <div class="kpi-title">Tỷ Lệ Trả Về Làm Lại (Rejection)</div>
+          <div class="kpi-value">20.0%</div>
+          <div class="kpi-sub"><span class="kpi-badge-pill badge-amber">DAX #9</span> 1/5 lượt review bị yêu cầu sửa</div>
+        </div>
+        <div class="kpi-card" style="--card-accent: var(--accent-red)">
+          <div class="kpi-title">Mật Độ Lỗi / 100 Frames</div>
+          <div class="kpi-value">1.00 <span style="font-size: 15px; color: var(--text-muted)">lỗi/100f</span></div>
+          <div class="kpi-sub"><span class="kpi-badge-pill badge-green">DAX #11</span> Đạt ngưỡng kiểm soát (&lt; 2.5)</div>
+        </div>
+        <div class="kpi-card" style="--card-accent: var(--accent-blue)">
+          <div class="kpi-title">Điểm mIoU Đối Chiếu Ground Truth</div>
+          <div class="kpi-value">0.897</div>
+          <div class="kpi-sub"><span class="kpi-badge-pill badge-blue">DAX #13</span> Benchmark AI chất lượng cao</div>
+        </div>
+        <div class="kpi-card" style="--card-accent: var(--accent-green)">
+          <div class="kpi-title">Điểm F1-Score Trung Bình</div>
+          <div class="kpi-value">0.914</div>
+          <div class="kpi-sub"><span class="kpi-badge-pill badge-green">DAX #14</span> Độ chuẩn xác & bao phủ &gt; 90%</div>
+        </div>
+      </div>
+
+      <div class="visual-grid-2">
+        <div class="visual-card">
+          <div class="visual-header">
+            <div>
+              <div class="visual-title">Cơ Cấu 4 Nhóm Lỗi Chuẩn Hóa (Defect Taxonomy)</div>
+              <div class="visual-subtitle">Phân bổ tỷ trọng các lỗi do Reviewer ghi nhận</div>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="chart-defect-donut"></canvas>
+          </div>
+        </div>
+
+        <div class="visual-card">
+          <div class="visual-header">
+            <div>
+              <div class="visual-title">Mức Độ Nghiêm Trọng Theo Class Đối Tượng</div>
+              <div class="visual-subtitle">Blocker (Đỏ) vs Major (Vàng) vs Minor (Xanh)</div>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="chart-defect-severity"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="visual-card">
+        <div class="visual-header">
+          <div class="visual-title">Nhật Ký Các Đợt Thẩm Định & Lỗi Phát Hiện (Review Log)</div>
+        </div>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Mã Lỗi</th>
+                <th>Mã Review</th>
+                <th>Job ID</th>
+                <th>Frame</th>
+                <th>Nhãn Lỗi</th>
+                <th>Loại Lỗi</th>
+                <th>Mức Độ</th>
+                <th>Mô Tả Chi Tiết</th>
+                <th>Deep Link CVAT</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>DEF_001</b></td>
+                <td>REV_3002_1</td>
+                <td>3002</td>
+                <td>5</td>
+                <td>car</td>
+                <td><span class="pill pill-progress">box_displacement</span></td>
+                <td><span class="pill pill-progress">Major</span></td>
+                <td>Bounding box xe hơi bị lệch 8px so với đuôi xe</td>
+                <td><a href="https://cvat.example.org/tasks/217/jobs/3002?frame=5" target="_blank" class="url-link">🔗 Frame 5</a></td>
+              </tr>
+              <tr>
+                <td><b>DEF_002</b></td>
+                <td>REV_3002_1</td>
+                <td>3002</td>
+                <td>8</td>
+                <td>motorbike</td>
+                <td><span class="pill pill-progress">wrong_class</span></td>
+                <td><span class="pill pill-progress">Major</span></td>
+                <td>Gán nhầm xe máy thành xe tải nhỏ</td>
+                <td><a href="https://cvat.example.org/tasks/217/jobs/3002?frame=8" target="_blank" class="url-link">🔗 Frame 8</a></td>
+              </tr>
+              <tr>
+                <td><b>DEF_003</b></td>
+                <td>REV_3002_1</td>
+                <td>3002</td>
+                <td>12</td>
+                <td>pedestrian</td>
+                <td><span class="pill pill-danger">missing_object</span></td>
+                <td><span class="pill pill-danger">Blocker</span></td>
+                <td>Bỏ sót người đi bộ tại góc khuất</td>
+                <td><a href="https://cvat.example.org/tasks/217/jobs/3002?frame=12" target="_blank" class="url-link">🔗 Frame 12</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TRANG 3: ANNOTATOR MATRIX                                     -->
+    <!-- ============================================================ -->
+    <div id="page-annotator_matrix" class="page-content">
+      <div class="kpi-grid">
+        <div class="kpi-card" style="--card-accent: var(--accent-blue)">
+          <div class="kpi-title">Tổng Số Nhân Sự Tham Gia</div>
+          <div class="kpi-value">2 <span style="font-size: 15px; color: var(--text-muted)">thành viên active</span></div>
+          <div class="kpi-sub">Nguyễn Minh Tú & Vũ Trường Duy</div>
+        </div>
+        <div class="kpi-card" style="--card-accent: var(--accent-green)">
+          <div class="kpi-title">Vận Tốc Chuẩn Benchmark</div>
+          <div class="kpi-value">40.0 <span style="font-size: 15px; color: var(--text-muted)">f/h</span></div>
+          <div class="kpi-sub"><span class="kpi-badge-pill badge-green">DAX #19</span> Ngưỡng hoàn thành chỉ tiêu</div>
+        </div>
+        <div class="kpi-card" style="--card-accent: var(--accent-red)">
+          <div class="kpi-title">Nhân Sự Rủi Ro Cao (At-Risk)</div>
+          <div class="kpi-value">0 <span style="font-size: 15px; color: var(--text-muted)">thành viên</span></div>
+          <div class="kpi-sub"><span class="kpi-badge-pill badge-green">DAX #18</span> Không có ai bị Reject &ge; 20% liên tục</div>
+        </div>
+      </div>
+
+      <div class="visual-grid-3">
+        <div class="visual-card">
+          <div class="visual-header">
+            <div>
+              <div class="visual-title">Ma Trận Phân Khúc 2x2: Vận Tốc vs Tỷ Lệ Đạt FTPR</div>
+              <div class="visual-subtitle">Trục X: Vận tốc (f/h) • Trục Y: % Đạt lần đầu (FTPR) • 4 Góc phần tư</div>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="chart-annotator-scatter"></canvas>
+          </div>
+        </div>
+
+        <div class="visual-card">
+          <div class="visual-header">
+            <div class="visual-title">Quy Tắc 4 Góc Phần Tư</div>
+          </div>
+          <div style="font-size: 12px; line-height: 1.6; display: flex; flex-direction: column; gap: 8px;">
+            <div style="padding: 8px; background: #ecfdf5; border-left: 3px solid #10b981; border-radius: 4px;">
+              <b>⭐ Ngôi sao (Star):</b> Vận tốc cao & FTPR &gt; 80%. Khen thưởng, giao ca khó.
+            </div>
+            <div style="padding: 8px; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 4px;">
+              <b>🛡️ Cầu toàn quá mức (Slow & Steady):</b> FTPR &gt; 90% nhưng tốc độ &lt; 40f/h. Hỗ trợ phím tắt, công cụ AI.
+            </div>
+            <div style="padding: 8px; background: #fffbeb; border-left: 3px solid #f59e0b; border-radius: 4px;">
+              <b>⚠️ Nguy cơ gán ẩu (Fast & Faulty):</b> Tốc độ rất nhanh nhưng Reject cao. Đình chỉ batch mới, rà soát 100%.
+            </div>
+            <div style="padding: 8px; background: #fef2f2; border-left: 3px solid #ef4444; border-radius: 4px;">
+              <b>🚨 Cần đào tạo lại:</b> Tốc độ chậm & FTPR &lt; 80%. Đào tạo 1-on-1 với Mentor.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="visual-card">
+        <div class="visual-header">
+          <div class="visual-title">Bảng Xếp Hạng & Khuyến Nghị Hành Động Can Thiệp (Leaderboard & Action)</div>
+        </div>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Mã ID</th>
+                <th>Họ Tên Thành Viên</th>
+                <th>Jobs Xong</th>
+                <th>Frames Xong</th>
+                <th>Tổng Objects</th>
+                <th>FTPR</th>
+                <th>Vận Tốc</th>
+                <th>Phân Khúc Cuối Cùng</th>
+                <th>Khuyến Nghị Hành Động Quản Trị</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>101</b></td>
+                <td><b>Nguyễn Minh Tú</b></td>
+                <td>2</td>
+                <td>200</td>
+                <td>16</td>
+                <td><b>75.0%</b></td>
+                <td>43.5 f/h</td>
+                <td><span class="pill pill-progress">Cầu toàn quá mức</span></td>
+                <td>Hướng dẫn phím tắt CVAT; hỗ trợ AI Pre-annotation để đẩy tốc độ.</td>
+              </tr>
+              <tr>
+                <td><b>102</b></td>
+                <td><b>Vũ Trường Duy</b></td>
+                <td>1</td>
+                <td>100</td>
+                <td>7</td>
+                <td><b>100.0%</b></td>
+                <td>31.2 f/h</td>
+                <td><span class="pill pill-completed">Cầu toàn quá mức</span></td>
+                <td>Chất lượng tuyệt đối; cần tăng tốc độ bằng cách dùng AI Tracking.</td>
+              </tr>
+              <tr>
+                <td><b>103</b></td>
+                <td><b>Phạm Nguyễn Tuân</b></td>
+                <td>1</td>
+                <td>10</td>
+                <td>4</td>
+                <td><b>100.0%</b></td>
+                <td>25.0 f/h</td>
+                <td><span class="pill pill-gray">Nhân sự nền tảng</span></td>
+                <td>Duy trì tiến độ; chuyển trọng tâm sang ETL Pipeline.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TRANG 4: DATA GEOMETRY                                        -->
+    <!-- ============================================================ -->
+    <div id="page-data_geometry" class="page-content">
+      <div class="kpi-grid">
+        <div class="kpi-card" style="--card-accent: var(--accent-blue)">
+          <div class="kpi-title">Tổng Số Đối Tượng Gán Nhãn</div>
+          <div class="kpi-value">23 <span style="font-size: 15px; color: var(--text-muted)">objects</span></div>
+          <div class="kpi-sub"><span class="kpi-badge-pill badge-blue">DAX #2</span> Bbox & Polygons thực tế</div>
+        </div>
+        <div class="kpi-card" style="--card-accent: var(--accent-green)">
+          <div class="kpi-title">Diện Tích Đối Tượng Trung Bình</div>
+          <div class="kpi-value">15,240 <span style="font-size: 15px; color: var(--text-muted)">px²</span></div>
+          <div class="kpi-sub"><span class="kpi-badge-pill badge-green">DAX #15</span> Chiếm 0.73% diện tích khung hình</div>
+        </div>
+        <div class="kpi-card" style="--card-accent: var(--accent-amber)">
+          <div class="kpi-title">Tỷ Lệ Vật Thể Nhỏ (Small &lt; 1024px²)</div>
+          <div class="kpi-value">13.0%</div>
+          <div class="kpi-sub"><span class="kpi-badge-pill badge-amber">DAX #17</span> 3/23 vật thể kích thước nhỏ</div>
+        </div>
+      </div>
+
+      <div class="visual-grid-2">
+        <div class="visual-card">
+          <div class="visual-header">
+            <div>
+              <div class="visual-title">Phân Bổ Tần Suất Theo Class Đối Tượng</div>
+              <div class="visual-subtitle">Kiểm tra mức độ mất cân bằng nhãn (Class Imbalance)</div>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="chart-class-distribution"></canvas>
+          </div>
+        </div>
+
+        <div class="visual-card">
+          <div class="visual-header">
+            <div>
+              <div class="visual-title">Phân Bổ Kích Thước Theo Chuẩn COCO Scale</div>
+              <div class="visual-subtitle">Small (&lt;32x32) • Medium (32-96) • Large (&gt;96x96)</div>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="chart-coco-scale"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TRANG 5: EDGE-CASE EXPLORER                                  -->
+    <!-- ============================================================ -->
+    <div id="page-edge_cases" class="page-content">
+      <div class="kpi-grid">
+        <div class="kpi-card" style="--card-accent: var(--accent-red)">
+          <div class="kpi-title">Tổng Số Ca Khó Đang Mở (Open Issues)</div>
+          <div class="kpi-value">4 <span style="font-size: 15px; color: var(--text-muted)">issues</span></div>
+          <div class="kpi-sub">Cần Mentor/Lead phản hồi trước phiên review</div>
+        </div>
+        <div class="kpi-card" style="--card-accent: var(--accent-green)">
+          <div class="kpi-title">Số Ca Tắc Nghẽn (Blockers)</div>
+          <div class="kpi-value">0 <span style="font-size: 15px; color: var(--text-muted)">ca blocker</span></div>
+          <div class="kpi-sub"><span class="kpi-badge-pill badge-green">An toàn</span> Không có ca cản trở bàn giao</div>
+        </div>
+      </div>
+
+      <div class="visual-card">
+        <div class="visual-header">
+          <div>
+            <div class="visual-title">Danh Sách Ca Khó Cần Mentor Hỗ Trợ (Bấm link để mở trực tiếp Frame CVAT)</div>
+            <div class="visual-subtitle">Tích hợp Deep-Link xác thực giữa GitHub Issues và CVAT Workspace</div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Issue #</th>
+                <th>Tiêu Đề Ca Khó</th>
+                <th>Nhãn Gán</th>
+                <th>Trạng Thái</th>
+                <th>Mức Độ</th>
+                <th>Task ID</th>
+                <th>Job ID</th>
+                <th>Frame</th>
+                <th>Deep Link CVAT</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr onclick="showCaseDetail(2, 'DEMO: occluded vehicle', 'Xe tải bị cây cối che khuất hơn 60% diện tích thân xe tại giao lộ.\nCâu hỏi: Có cần vẽ bao trùm phần bị che khuất hay tách thành 2 bounding box riêng biệt?\nĐề xuất: Tuân thủ quy định che khuất (Occlusion) mục 4.2 trong Annotation Guideline.')" style="cursor: pointer;">
+                <td><b>#2</b></td>
+                <td><b>DEMO: occluded vehicle</b></td>
+                <td><span class="pill pill-progress">ca-kho</span></td>
+                <td><span class="pill pill-progress">open</span></td>
+                <td><span class="pill pill-progress">Major</span></td>
+                <td>1001</td>
+                <td>2002</td>
+                <td>142</td>
+                <td><a href="https://example.com/tasks/1001/jobs/2002?frame=142" target="_blank" class="url-link">🔗 Mở Frame 142 CVAT</a></td>
+              </tr>
+              <tr onclick="showCaseDetail(3, 'DEMO: guideline question', 'Phiên bản guideline v1.2 có bổ sung quy tắc cho xe ba gác tự chế.\nCâu hỏi: Xếp xe ba gác vào class motorbike hay truck?')" style="cursor: pointer;">
+                <td><b>#3</b></td>
+                <td>DEMO: guideline question</td>
+                <td><span class="pill pill-gray">mentor-question</span></td>
+                <td><span class="pill pill-progress">open</span></td>
+                <td><span class="pill pill-gray">Minor</span></td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td><span style="color: var(--text-muted)">Unlinked</span></td>
+              </tr>
+              <tr onclick="showCaseDetail(4, 'DEMO: different task', 'Xe cứu thương đang bật đèn ưu tiên nhưng góc quay camera bị lóa sáng ban đêm.\nĐề xuất: Gán class car kèm thuộc tính emergency_vehicle = true.')" style="cursor: pointer;">
+                <td><b>#4</b></td>
+                <td>DEMO: different task</td>
+                <td><span class="pill pill-gray">mentor-question</span></td>
+                <td><span class="pill pill-progress">open</span></td>
+                <td><span class="pill pill-gray">Minor</span></td>
+                <td>9999</td>
+                <td>9998</td>
+                <td>—</td>
+                <td><a href="https://example.com/tasks/9999/jobs/9998" target="_blank" class="url-link">🔗 Mở Job 9998</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="detail-box" id="case-detail-box">
+          <h4 id="detail-title">📌 Chi Tiết Ca Khó: #2 - DEMO: occluded vehicle</h4>
+          <p id="detail-desc">Xe tải bị cây cối che khuất hơn 60% diện tích thân xe tại giao lộ.
+Câu hỏi: Có cần vẽ bao trùm phần bị che khuất hay tách thành 2 bounding box riêng biệt?
+Đề xuất: Tuân thủ quy định che khuất (Occlusion) mục 4.2 trong Annotation Guideline.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Bottom Status Bar -->
+  <footer>
+    <div class="footer-left">
+      <span>Trạng thái: <b>Connected (Star Schema)</b></span>
+      <span>Số bản ghi nạp: <b>16 Files CSV</b></span>
+      <span>Engine: <b>VertiPaq Memory Model</b></span>
+    </div>
+    <div>Được xây dựng tự động bởi <b>Google Antigravity AI</b> cho Project Lead Đinh Công Minh</div>
+  </footer>
+
+  <!-- Chart Configuration Script -->
+  <script>
+    let charts = {};
+
+    function switchPage(pageId, tabElement) {
+      document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+      
+      const targetPage = document.getElementById('page-' + pageId);
+      if (targetPage) targetPage.classList.add('active');
+      if (tabElement) tabElement.classList.add('active');
+
+      // Trigger resize for charts in newly visible tab
+      setTimeout(() => {
+        for (let k in charts) {
+          if (charts[k]) charts[k].resize();
+        }
+      }, 50);
+    }
+
+    function showCaseDetail(num, title, desc) {
+      document.getElementById('detail-title').innerText = '📌 Chi Tiết Ca Khó: #' + num + ' - ' + title;
+      document.getElementById('detail-desc').innerText = desc;
+    }
+
+    function applyFilters() {
+      const batch = document.getElementById('slicer-batch').value;
+      if (batch === '217') {
+        document.getElementById('kpi-completed-frames').innerHTML = '300 <span style="font-size: 16px; color: var(--text-muted)">/ 500</span>';
+        document.getElementById('kpi-progress-pct').innerText = '60.0%';
+      } else if (batch === '1001') {
+        document.getElementById('kpi-completed-frames').innerHTML = '10 <span style="font-size: 16px; color: var(--text-muted)">/ 200</span>';
+        document.getElementById('kpi-progress-pct').innerText = '5.0%';
+      } else {
+        document.getElementById('kpi-completed-frames').innerHTML = '310 <span style="font-size: 16px; color: var(--text-muted)">/ 700</span>';
+        document.getElementById('kpi-progress-pct').innerText = '44.3%';
+      }
+    }
+
+    // Initialize all Charts on DOM Load
+    window.addEventListener('DOMContentLoaded', () => {
+      // 1. Batch Progress (Horizontal Stacked Bar)
+      const ctxBatch = document.getElementById('chart-batch-progress');
+      if (ctxBatch) {
+        charts.batch = new Chart(ctxBatch, {
+          type: 'bar',
+          data: {
+            labels: ['Batch-01 (Task 217)', 'Batch-02 (Task 1001)'],
+            datasets: [
+              { label: 'Completed (Khung hình xong)', data: [300, 10], backgroundColor: '#10b981' },
+              { label: 'In Progress / Annotation', data: [100, 10], backgroundColor: '#f59e0b' },
+              { label: 'Unassigned / Backlog', data: [100, 180], backgroundColor: '#cbd5e1' }
+            ]
+          },
+          options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: { x: { stacked: true }, y: { stacked: true } },
+            plugins: { legend: { position: 'bottom' } }
+          }
+        });
+      }
+
+      // 2. Daily Production (Line Chart)
+      const ctxDaily = document.getElementById('chart-daily-production');
+      if (ctxDaily) {
+        charts.daily = new Chart(ctxDaily, {
+          type: 'line',
+          data: {
+            labels: ['09/10', '10/10', '11/10', '12/10', '13/10', '14/10'],
+            datasets: [
+              {
+                label: 'Sản lượng hoàn thành (Frames)',
+                data: [100, 100, 100, 0, 0, 0],
+                borderColor: '#2563eb',
+                backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                fill: true,
+                tension: 0.3,
+                borderWidth: 3,
+                pointRadius: 5
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom' } },
+            scales: { y: { beginAtZero: true, suggestedMax: 120 } }
+          }
+        });
+      }
+
+      // 3. Defect Donut
+      const ctxDefect = document.getElementById('chart-defect-donut');
+      if (ctxDefect) {
+        charts.defect = new Chart(ctxDefect, {
+          type: 'doughnut',
+          data: {
+            labels: ['Lệch Bounding Box (box_displacement)', 'Sai Nhãn Class (wrong_class)', 'Bỏ Sót Vật Thể (missing_object)'],
+            datasets: [{
+              data: [1, 1, 1],
+              backgroundColor: ['#f59e0b', '#3b82f6', '#ef4444']
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom' } }
+          }
+        });
+      }
+
+      // 4. Defect Severity Bar
+      const ctxSev = document.getElementById('chart-defect-severity');
+      if (ctxSev) {
+        charts.sev = new Chart(ctxSev, {
+          type: 'bar',
+          data: {
+            labels: ['car', 'motorbike', 'pedestrian', 'truck'],
+            datasets: [
+              { label: 'Blocker (Nghiêm trọng)', data: [0, 0, 1, 0], backgroundColor: '#ef4444' },
+              { label: 'Major (Đáng kể)', data: [1, 1, 0, 0], backgroundColor: '#f59e0b' },
+              { label: 'Minor (Nhẹ)', data: [0, 0, 0, 0], backgroundColor: '#10b981' }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true, stepSize: 1 } },
+            plugins: { legend: { position: 'bottom' } }
+          }
+        });
+      }
+
+      // 5. Annotator Scatter Plot (Matrix 2x2)
+      const ctxScatter = document.getElementById('chart-annotator-scatter');
+      if (ctxScatter) {
+        charts.scatter = new Chart(ctxScatter, {
+          type: 'scatter',
+          data: {
+            datasets: [
+              {
+                label: 'Nguyễn Minh Tú',
+                data: [{ x: 43.5, y: 75.0 }],
+                backgroundColor: '#f59e0b',
+                pointRadius: 9
+              },
+              {
+                label: 'Vũ Trường Duy',
+                data: [{ x: 31.2, y: 100.0 }],
+                backgroundColor: '#10b981',
+                pointRadius: 9
+              },
+              {
+                label: 'Phạm Nguyễn Tuân',
+                data: [{ x: 25.0, y: 100.0 }],
+                backgroundColor: '#3b82f6',
+                pointRadius: 9
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: {
+                title: { display: true, text: 'Vận Tốc Gán Nhãn (Frames / Giờ) — Benchmark = 40 f/h' },
+                min: 10,
+                max: 60
+              },
+              y: {
+                title: { display: true, text: 'Tỷ Lệ Đạt Vòng Đầu FTPR (%) — Ngưỡng Chuẩn = 80%' },
+                min: 50,
+                max: 105
+              }
+            },
+            plugins: {
+              legend: { position: 'bottom' }
+            }
+          }
+        });
+      }
+
+      // 6. Class Distribution
+      const ctxClass = document.getElementById('chart-class-distribution');
+      if (ctxClass) {
+        charts.classDist = new Chart(ctxClass, {
+          type: 'bar',
+          data: {
+            labels: ['car (Ô tô)', 'motorbike (Xe máy)', 'pedestrian (Người đi bộ)', 'truck (Xe tải)'],
+            datasets: [{
+              label: 'Số lượng Instances đã vẽ',
+              data: [12, 4, 3, 4],
+              backgroundColor: ['#2080E9', '#18A058', '#F0A020', '#D03050']
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } }
+          }
+        });
+      }
+
+      // 7. COCO Scale
+      const ctxCoco = document.getElementById('chart-coco-scale');
+      if (ctxCoco) {
+        charts.coco = new Chart(ctxCoco, {
+          type: 'doughnut',
+          data: {
+            labels: ['Small (< 1024 px²)', 'Medium (1024 - 9216 px²)', 'Large (> 9216 px²)'],
+            datasets: [{
+              data: [3, 8, 12],
+              backgroundColor: ['#f59e0b', '#3b82f6', '#10b981']
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom' } }
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

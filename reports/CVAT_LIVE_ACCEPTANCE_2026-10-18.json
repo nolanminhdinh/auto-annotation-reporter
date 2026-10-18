@@ -1,0 +1,61 @@
+{
+  "status": "passed_with_limitations",
+  "task_id": 2679097,
+  "checks": {
+    "task_identity": true,
+    "has_annotation_jobs": true,
+    "all_annotation_jobs_downloaded": true,
+    "expected_task_frames": true,
+    "expected_saved_shapes": true,
+    "three_distinct_frames": true,
+    "all_vehicle_rectangles": true,
+    "positive_boxes_within_image": true,
+    "three_images_640x360": true
+  },
+  "counts": {
+    "jobs": 1,
+    "labels": 1,
+    "issues": 0,
+    "comments": 0,
+    "annotations": 1,
+    "media_metadata": 1
+  },
+  "quality_reports_status": "unavailable",
+  "quality_list_sources": {
+    "task": {
+      "status": "success",
+      "count": 0
+    },
+    "job": {
+      "status": "success",
+      "count": 0
+    }
+  },
+  "ui_comparison": {
+    "status": "observed",
+    "task_name": "DEMO - API live acceptance",
+    "job_id": 4599943,
+    "frames": [
+      0,
+      1,
+      2
+    ],
+    "shapes_per_frame": [
+      1,
+      1,
+      1
+    ],
+    "label": "vehicle",
+    "saved_in_cvat_ui": true,
+    "api_readback_after_save": true
+  },
+  "scope_limits": [
+    "Synthetic content on live CVAT Cloud",
+    "No issues available, so comments endpoint was not exercised",
+    "Quality list endpoints succeeded with zero reports; report data endpoint was not exercised",
+    "No multipage dataset, Analytics, GT mapping, warehouse or Power BI acceptance in this run"
+  ],
+  "raw_sha256": "e3ba559825fad55e0e8a9ff7081c4b1613fc5035ac79b3bebf3dc72ed507c478",
+  "checked_at": "2026-10-18T08:19:01.343920+00:00",
+  "evidence_folder": "data/live_acceptance/cvat/20261018T081815375167Z"
+}

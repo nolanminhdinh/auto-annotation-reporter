@@ -1,0 +1,46 @@
+table dim_annotators
+	lineageTag: 007569ec-9132-4e2b-b5f6-ec801f69e69a
+
+	column annotator_id
+		dataType: string
+		isHidden
+		lineageTag: 98c88c6c-762d-4cc8-872f-bd1457792251
+		summarizeBy: none
+		sourceColumn: annotator_id
+
+	column full_name
+		dataType: string
+		lineageTag: 09e2b923-fda2-41d8-a4c4-142aa0f2ecf7
+		summarizeBy: none
+		sourceColumn: full_name
+
+	column username
+		dataType: string
+		lineageTag: a308f59b-b974-47fe-9289-01e0d6db35b6
+		summarizeBy: none
+		sourceColumn: username
+
+	column role
+		dataType: string
+		lineageTag: 80ac60e2-61b7-444c-91f1-edbf6fae7a9b
+		summarizeBy: none
+		sourceColumn: role
+
+	column joined_date
+		dataType: dateTime
+		formatString: yyyy-MM-dd
+		sourceProviderType: date
+		lineageTag: ff17b024-b215-4c17-8131-1b064696b5a1
+		summarizeBy: none
+		sourceColumn: joined_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition dim_annotators = m
+		mode: directQuery
+		source =
+				let
+				    Database = PostgreSQL.Database("127.0.0.1:55432", "annotation_reporting", [CreateNavigationProperties=false]),
+				    Source = Database{[Schema="public", Item="pbi_dim_annotators"]}[Data]
+				in Source
+

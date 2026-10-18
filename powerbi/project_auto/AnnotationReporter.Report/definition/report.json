@@ -11,6 +11,21 @@
       "type": "SharedResources"
     }
   },
+  "objects": {
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
   "resourcePackages": [
     {
       "name": "SharedResources",
@@ -25,6 +40,7 @@
     }
   ],
   "settings": {
-    "useEnhancedTooltips": false
+    "useEnhancedTooltips": false,
+    "pauseQueries": true
   }
 }

@@ -77,7 +77,7 @@ Total_Blockers =
 COALESCE(CALCULATE(COUNTROWS(fact_edge_cases), fact_edge_cases[state] = "open", fact_edge_cases[severity] = "Blocker"), 0)
 
 Active_Annotators =
-COUNTROWS(FILTER(VALUES(dim_annotators[annotator_id]), CALCULATE(COUNTROWS(fact_job_sessions)) > 0))
+COALESCE(COUNTROWS(FILTER(VALUES(dim_annotators[annotator_id]), NOT ISBLANK(dim_annotators[annotator_id]) && CALCULATE(COUNTROWS(fact_job_sessions)) > 0)), 0)
 
 Source_Label =
 IF(MAX(report_status[is_demo]) = 1, "DEMO / DỮ LIỆU GIẢ LẬP", "DỮ LIỆU NGUỒN") & "  |  " & FORMAT(MAX(report_status[as_of]), "dd/MM/yyyy")
@@ -89,4 +89,4 @@ Selected_Case =
 SELECTEDVALUE(fact_edge_cases[description], "Chọn một ca trong bảng phía trên để đọc mô tả. Link example.org trong bản DEMO chỉ dùng minh họa.")
 
 Annotator_Segment =
-VAR V = [Velocity_Frames_Per_Hour] VAR F = [First_Time_Pass_Rate] VAR R = [Rejection_Rate] VAR G = [Avg_F1_Score] VAR Known = NOT ISBLANK(F) || NOT ISBLANK(R) || NOT ISBLANK(G) VAR Risk = (NOT ISBLANK(F) && F < .8) || (NOT ISBLANK(R) && R >= .2) || (NOT ISBLANK(G) && G < .85) RETURN SWITCH(TRUE(), ISBLANK(V) || NOT Known, "Insufficient data", Risk && V >= 60, "Fast and faulty", Risk && V < 20, "Needs retraining", Risk, "Needs QA support", V < 20, "Slow but steady", V >= 40, "Star annotator", "Core performer")
+IF(HASONEVALUE(dim_annotators[annotator_id]) && NOT ISBLANK(SELECTEDVALUE(dim_annotators[annotator_id])), (VAR V = [Velocity_Frames_Per_Hour] VAR F = [First_Time_Pass_Rate] VAR R = [Rejection_Rate] VAR G = [Avg_F1_Score] VAR Known = NOT ISBLANK(F) || NOT ISBLANK(R) || NOT ISBLANK(G) VAR Risk = (NOT ISBLANK(F) && F < .8) || (NOT ISBLANK(R) && R >= .2) || (NOT ISBLANK(G) && G < .85) RETURN SWITCH(TRUE(), ISBLANK(V) || NOT Known, "Insufficient data", Risk && V >= 60, "Fast and faulty", Risk && V < 20, "Needs retraining", Risk, "Needs QA support", V < 20, "Slow but steady", V >= 40, "Star annotator", "Core performer")))

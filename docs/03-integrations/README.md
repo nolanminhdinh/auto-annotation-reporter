@@ -1,6 +1,6 @@
 # Tích hợp CVAT–GitHub và bản nháp báo cáo mentor
 
-> **Phạm vi tài liệu:** PR này chỉ thay đổi docs/03-integrations/. Code và cấu hình main được giữ nguyên. CVAT Cloud PAT cần Bearer nhưng extractor trên main hiện vẫn dùng Token; bản sửa nằm ở nhánh feature/cvat-github-integration và cần review riêng trước khi chạy live với PAT. Offline vẫn chạy được.
+> **Cập nhật module CVAT 18/10/2026:** extractor trên main dùng PAT `Bearer`. Đã sửa phân trang/origin, lấy Quality Reports theo target task/job và ghi rõ lỗi nguồn tùy chọn. Xem [biên bản kiểm tra](../../reports/CVAT_MODULE_REVIEW_2026-10-18.md). Bảng trạng thái phía dưới mô tả integration v1 lịch sử; hướng dẫn launcher hiện tại ở [MULTI_MACHINE_SETUP.md](../../powerbi/MULTI_MACHINE_SETUP.md). Chưa nghiệm thu API thật trên máy khác.
 
 **Đề tài: Tự động soạn báo cáo trước phiên mentor.**
 

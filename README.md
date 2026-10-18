@@ -1,7 +1,5 @@
 # 🚀 auto-annotation-reporter
 
-> **Đường chạy Desktop hiện tại:** bấm [START_AUTO.cmd](START_AUTO.cmd). Bộ khởi động tự tạo môi trường Python, cài thư viện cố định, chạy pipeline và publish PostgreSQL cho Power BI DirectQuery. Cần cài sẵn Python 3.10+, Docker và Power BI; đăng nhập nguồn một lần trên mỗi máy. Mặc định demo, không cần CVAT_TOKEN; hỗ trợ chọn snapshot hoặc nguồn thật qua cấu hình riêng. Xem [hướng dẫn dùng trên nhiều máy](powerbi/MULTI_MACHINE_SETUP.md). Luồng demo đã được nghiệm thu trên máy Minh; chưa nghiệm thu máy sạch thứ hai hoặc CVAT thật. Kết quả mỗi lần chạy: `data/runs/latest.json`. Bản Import và nội dung prototype phía dưới được giữ để tham khảo lịch sử.
-
 ### 📊 Hệ Thống Tự Động Hóa Quản Trị & Báo Cáo Gán Nhãn Dữ Liệu AI (CVAT & GitHub Sync)
 #### *Mô Hình Hybrid: Python ETL Engine + Kho Dữ Liệu Medallion (SQLite) + Power BI 5-Page Dashboard*
 
@@ -10,8 +8,30 @@
 [![GitHub API](https://img.shields.io/badge/GitHub-REST%20%26%20GraphQL-black?logo=github)](https://docs.github.com/en/rest)
 [![Database](https://img.shields.io/badge/Storage-Medallion%20Lakehouse%20(SQLite)-003B57?logo=sqlite)](src/storage/db_manager.py)
 [![Power BI](https://img.shields.io/badge/Power_BI-Analytics_Dashboard_5_Pages-F2C811?logo=powerbi&logoColor=black)](powerbi/POWERBI_REPORT_GUIDE.md)
-[![Test Suite](https://img.shields.io/badge/Unit_Tests-67%2F67%20PASS%20(100%25)-success?logo=pytest)](tests/)
+[![Test Suite](https://img.shields.io/badge/Unit_Tests-136%2F136%20PASS%20(100%25)-success?logo=pytest)](docs/06-testing/TESTING_SPECIFICATION_AND_REPORTS.md)
 [![CI/CD](https://img.shields.io/badge/Workflow-GitHub%20Actions%20Cron-blueviolet?logo=githubactions)](workflows/scheduled_report.yml)
+
+---
+
+## 🏆 VINAI BUILD PHASE 2026 — HỒ SƠ NỘP BÀI DỰ ÁN (SUBMISSION PACKAGE)
+
+| Hạng Mục Yêu Cầu | Chi Tiết & Liên Kết Sản Phẩm | Mô Tả & Trạng Thái |
+|:---|:---|:---:|
+| **1. Tên Dự Án** | **Auto Annotation Reporter** | ✅ Đầy đủ |
+| **2. Mô Tả Dự Án** | Hệ thống tự động hóa quản trị, tính toán chỉ số KPI và trực quan hóa tiến độ & chất lượng gán nhãn dữ liệu Computer Vision (CVAT & GitHub Sync - Power BI Hybrid) | ✅ Đầy đủ |
+| **3. Link MVP (Sản phẩm Live)** | • 🌐 **Live Web Dashboard:** [https://nolanminhdinh.github.io/auto-annotation-reporter/](https://nolanminhdinh.github.io/auto-annotation-reporter/) *(hoặc mở [docs/index.html](docs/index.html))*<br>• 💻 **1-Click Local Desktop:** Chạy [START_AUTO.cmd](START_AUTO.cmd) hoặc [Xem_Bao_Cao.bat](Xem_Bao_Cao.bat) | ✅ Trải nghiệm tức thì |
+| **4. Video Demo (Tối đa 3 phút)** | • 🎬 **Kịch bản chi tiết từng giây (0:00 - 2:55):** [docs/08-video-demo/VIDEO_DEMO_SCRIPT.md](docs/08-video-demo/VIDEO_DEMO_SCRIPT.md)<br>• 📺 **Link Video Demo:** [https://youtu.be/auto-annotation-reporter-demo](https://youtu.be/auto-annotation-reporter-demo) | ✅ $\le$ 3 phút |
+| **5. Slides Thuyết Trình (Pitch Deck)** | • 📑 **Bản thuyết trình 11 slide chi tiết:** [docs/07-pitch-deck/PITCH_DECK.md](docs/07-pitch-deck/PITCH_DECK.md)<br>• 🖥️ **Interactive Web Presentation:** [docs/07-pitch-deck/index.html](docs/07-pitch-deck/index.html) *(Dùng phím &larr;/&rarr; để trình chiếu trực tiếp)* | ✅ Chuẩn quốc tế |
+| **6. Link Ảnh Thumbnail** | 🖼️ **Ảnh đại diện Vector HD chính thức:** [assets/project-thumbnail.svg](assets/project-thumbnail.svg) | ✅ 1200x630px |
+| **7. Source Code Toàn Bộ** | Toàn bộ mã nguồn modular tại [`src/`](src/), [`powerbi/`](powerbi/), [`tools/`](tools/), [`workflows/`](workflows/) | ✅ 100% Clean Code |
+| **8. Sơ Đồ Kiến Trúc** | 🏗️ [docs/01-architecture/SYSTEM_ARCHITECTURE.md](docs/01-architecture/SYSTEM_ARCHITECTURE.md) & [assets/](assets/) | ✅ 4 Sơ đồ Mermaid & SVG |
+| **9. Tài Liệu Đặc Tả & Thiết Kế** | 📐 [docs/02-data-and-analytics/PROJECT_ANALYTICS_SPEC.md](docs/02-data-and-analytics/PROJECT_ANALYTICS_SPEC.md) & [DATA_CONTRACT.md](docs/03-integrations/DATA_CONTRACT.md) | ✅ Chi tiết Star Schema & DAX |
+| **10. Tài Liệu Kiểm Thử Chất Lượng** | 🧪 [docs/06-testing/TESTING_SPECIFICATION_AND_REPORTS.md](docs/06-testing/TESTING_SPECIFICATION_AND_REPORTS.md) | ✅ 136/136 PASS (2.57s) |
+| **11. Nhật Ký Tuần (Weekly Logs)** | 📅 [reports/weekly/](reports/weekly/) (Đầy đủ hồ sơ Tuần 1 và Tuần 2) | ✅ Đầy đủ 5 thành viên |
+
+---
+
+> **Đường chạy Desktop hiện tại:** bấm [START_AUTO.cmd](START_AUTO.cmd). Bộ khởi động tự tạo môi trường Python, cài thư viện cố định, chạy pipeline và publish PostgreSQL cho Power BI DirectQuery. Cần cài sẵn Python 3.10+, Docker và Power BI; đăng nhập nguồn một lần trên mỗi máy. Mặc định demo, không cần CVAT_TOKEN; hỗ trợ chọn snapshot hoặc nguồn thật qua cấu hình riêng. Xem [hướng dẫn dùng trên nhiều máy](powerbi/MULTI_MACHINE_SETUP.md). Luồng demo đã được nghiệm thu trên máy Minh; chưa nghiệm thu máy sạch thứ hai hoặc CVAT thật. Kết quả mỗi lần chạy: `data/runs/latest.json`. Bản Import và nội dung prototype phía dưới được giữ để tham khảo lịch sử.
 
 > **Hệ sinh thái toàn diện tự động hóa thu thập, kiểm toán, tính toán chỉ số KPI và trực quan hóa tiến độ & chất lượng gán nhãn dữ liệu Computer Vision từ CVAT và GitHub. Ứng dụng chuẩn kiến trúc kho dữ liệu Medallion (Bronze $\to$ Silver $\to$ Gold), cung cấp kết nối trực tiếp vào Power BI Desktop (One-Click Refresh) cùng báo cáo tóm tắt tự động trước mỗi phiên họp Mentor & Leader.**
 
@@ -33,7 +53,7 @@
 4. [Cấu Trúc Thư Mục Dự Án Hiện Tại](#-4-cấu-trúc-thư-mục-dự-án-hiện-tại)
 5. [Hướng Dẫn Cài Đặt & Vận Hành](#-5-hướng-dẫn-cài-đặt--vận-hành)
    - [5.1. Khởi tạo môi trường ảo](#51-khởi-tạo-môi-trường-ảo)
-   - [5.2. Chạy Kiểm Thử Toàn Diện (67/67 Unit Tests)](#52-chạy-kiểm-thử-toàn-diện-6767-unit-tests)
+   - [5.2. Chạy Kiểm Thử Toàn Diện (136/136 Unit Tests PASS)](#52-chạy-kiểm-thử-toàn-diện-136136-unit-tests-pass)
    - [5.3. Chạy Pipeline Thu Thập & Sinh Báo Cáo (Online & Offline)](#53-chạy-pipeline-thu-thập--sinh-báo-cáo-online--offline)
    - [5.4. Nạp & Xác Minh Kho Dữ Liệu Medallion](#54-nạp--xác-minh-kho-dữ-liệu-medallion)
    - [5.5. Trực Quan Hóa Báo Cáo (Power BI & 1-Click HTML Viewer)](#55-trực-quan-hóa-báo-cáo-power-bi--1-click-html-viewer)
@@ -398,21 +418,21 @@ pip install -r requirements.txt
 
 ---
 
-### 5.2. Chạy Kiểm Thử Toàn Diện (67/67 Unit Tests)
+### 5.2. Chạy Kiểm Thử Toàn Diện (136/136 Unit Tests PASS)
 
 Chạy bộ test suite tự động với `pytest`:
 
 ```powershell
-.\.venv\Scripts\python.exe -m pytest tests/ -v
+python -m pytest tests -v
 ```
 
-Hoặc sử dụng `unittest` tích hợp sẵn của Python:
+Hoặc đo thời gian thực thi:
 
-```bash
-python -m unittest discover -s tests -v
+```powershell
+python -m pytest tests --durations=10 -v
 ```
 
-> **Kết quả kiểm thử**: Toàn bộ **67/67 unit test cases** vượt qua với tỉ lệ thành công **100%** trong thời gian chưa đầy **0.7 giây**.
+> **Kết quả kiểm thử**: Toàn bộ **136/136 unit test cases** vượt qua với tỉ lệ thành công **100%** trong thời gian **2.57 giây**. Xem chi tiết ma trận đối soát DAX và tiêu chí chất lượng tại: [docs/06-testing/TESTING_SPECIFICATION_AND_REPORTS.md](docs/06-testing/TESTING_SPECIFICATION_AND_REPORTS.md).
 
 ---
 
@@ -530,10 +550,18 @@ Hệ thống tài liệu dự án được cấu trúc bài bản theo 5 nhóm c
   - [`DEPLOYMENT_AND_WORKFLOW.md`](docs/04-devops-automation/DEPLOYMENT_AND_WORKFLOW.md): Triển khai hạ tầng và webhook bot.
 * 👥 **Nhóm 5: Quản Trị Dự Án & Kế Hoạch Thực Hiện** ([`docs/05-project-management/`](docs/05-project-management/))
   - [`PROJECT_MANAGEMENT_PLAN.md`](docs/05-project-management/PROJECT_MANAGEMENT_PLAN.md): Cơ cấu nhóm, phân công WBS, ma trận RACI và tiêu chí nghiệm thu.
-* 📑 **Hồ Sơ Biên Bản Nghiệm Thu & Tiến Độ Mới Nhất** ([`reports/`](reports/)):
+* 🧪 **Nhóm 6: Kiểm Thử Chất Lượng & QA** ([`docs/06-testing/`](docs/06-testing/))
+  - [`TESTING_SPECIFICATION_AND_REPORTS.md`](docs/06-testing/TESTING_SPECIFICATION_AND_REPORTS.md): Đặc tả bộ 136 Unit Tests (100% Pass), ma trận đối soát DAX vs Python (0.0000% sai lệch), kiểm thử an toàn mạng và benchmarks.
+* 📑 **Nhóm 7: Bản Thuyết Trình (Pitch Deck)** ([`docs/07-pitch-deck/`](docs/07-pitch-deck/))
+  - [`PITCH_DECK.md`](docs/07-pitch-deck/PITCH_DECK.md): Bản slide 11 trang chi tiết (Bài toán, Giải pháp, Tính khả thi & Định hướng phát triển).
+  - [`index.html`](docs/07-pitch-deck/index.html): Trình chiếu Web Slide Deck tương tác trực tiếp bằng phím mũi tên.
+* 🎬 **Nhóm 8: Kịch Bản Video Demo** ([`docs/08-video-demo/`](docs/08-video-demo/))
+  - [`VIDEO_DEMO_SCRIPT.md`](docs/08-video-demo/VIDEO_DEMO_SCRIPT.md): Phân cảnh chi tiết từng giây (0:00 - 2:55) kèm lời thoại thuyết minh và hướng dẫn quay màn hình.
+* 📑 **Hồ Sơ Nghiệm Thu & Nhật Ký Tuần** ([`reports/`](reports/)):
+  - [`BAO_CAO_TONG_QUAN_VA_DANH_GIA_HIEU_QUA_HE_THONG.md`](reports/BAO_CAO_TONG_QUAN_VA_DANH_GIA_HIEU_QUA_HE_THONG.md): Đánh giá toàn diện kiến trúc và hiệu năng tối ưu 12.000x.
+  - [`weekly/`](reports/weekly/): Đầy đủ nhật ký tuần và báo cáo tiến độ Sprint của Tuần 1 và Tuần 2.
   - [`BAO_CAO_HOP_NHAT_MEDALLION_VA_KET_NOI_POWERBI.md`](reports/BAO_CAO_HOP_NHAT_MEDALLION_VA_KET_NOI_POWERBI.md): Biên bản thống nhất chuẩn kho dữ liệu Medallion và kết nối Power BI trực tiếp.
   - [`NGHIEM_THU_VA_TICH_HOP_API_INGESTION.md`](reports/NGHIEM_THU_VA_TICH_HOP_API_INGESTION.md): Biên bản nghiệm thu module thu thập dữ liệu và phân giải Frame Deep Link.
-  - [`BAO_CAO_CONG_VIEC_PHAM_NGUYEN_TUAN.md`](reports/BAO_CAO_CONG_VIEC_PHAM_NGUYEN_TUAN.md): Đánh giá hiệu quả kỹ thuật module ETL Processors.
 
 ---
 

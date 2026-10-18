@@ -1,0 +1,37 @@
+table dim_tasks_batches
+	lineageTag: 9db1590a-ddbd-4cac-9523-10489ce5bc36
+
+	column task_id
+		dataType: int64
+		isHidden
+		lineageTag: 6121ac64-20c9-4145-a88b-208e11f261be
+		summarizeBy: none
+		sourceColumn: task_id
+
+	column batch_id
+		dataType: string
+		isHidden
+		lineageTag: d8e4704b-1a70-4cfa-8eca-51b9d47d5104
+		summarizeBy: none
+		sourceColumn: batch_id
+
+	column task_name
+		dataType: string
+		lineageTag: 4dddb421-aca5-4eeb-a237-79da04aa9760
+		summarizeBy: none
+		sourceColumn: task_name
+
+	column total_frames_target
+		dataType: int64
+		lineageTag: 41f24a2c-eb09-4e55-9584-912b08d89d64
+		summarizeBy: none
+		sourceColumn: total_frames_target
+
+	partition dim_tasks_batches = m
+		mode: directQuery
+		source =
+				let
+				    Database = PostgreSQL.Database("127.0.0.1:55432", "annotation_reporting", [CreateNavigationProperties=false]),
+				    Source = Database{[Schema="public", Item="pbi_dim_tasks_batches"]}[Data]
+				in Source
+

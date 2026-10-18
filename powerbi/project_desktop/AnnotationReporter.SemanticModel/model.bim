@@ -575,7 +575,7 @@
           },
           {
             "name": "Active_Annotators",
-            "expression": "COUNTROWS(FILTER(VALUES(dim_annotators[annotator_id]), CALCULATE(COUNTROWS(fact_job_sessions)) > 0))",
+            "expression": "COALESCE(COUNTROWS(FILTER(VALUES(dim_annotators[annotator_id]), NOT ISBLANK(dim_annotators[annotator_id]) && CALCULATE(COUNTROWS(fact_job_sessions)) > 0)), 0)",
             "formatString": "#,0",
             "displayFolder": "Report helpers"
           },
@@ -596,7 +596,7 @@
           },
           {
             "name": "Annotator_Segment",
-            "expression": "VAR V = [Velocity_Frames_Per_Hour] VAR F = [First_Time_Pass_Rate] VAR R = [Rejection_Rate] VAR G = [Avg_F1_Score] VAR Known = NOT ISBLANK(F) || NOT ISBLANK(R) || NOT ISBLANK(G) VAR Risk = (NOT ISBLANK(F) && F < .8) || (NOT ISBLANK(R) && R >= .2) || (NOT ISBLANK(G) && G < .85) RETURN SWITCH(TRUE(), ISBLANK(V) || NOT Known, \"Insufficient data\", Risk && V >= 60, \"Fast and faulty\", Risk && V < 20, \"Needs retraining\", Risk, \"Needs QA support\", V < 20, \"Slow but steady\", V >= 40, \"Star annotator\", \"Core performer\")",
+            "expression": "IF(HASONEVALUE(dim_annotators[annotator_id]) && NOT ISBLANK(SELECTEDVALUE(dim_annotators[annotator_id])), (VAR V = [Velocity_Frames_Per_Hour] VAR F = [First_Time_Pass_Rate] VAR R = [Rejection_Rate] VAR G = [Avg_F1_Score] VAR Known = NOT ISBLANK(F) || NOT ISBLANK(R) || NOT ISBLANK(G) VAR Risk = (NOT ISBLANK(F) && F < .8) || (NOT ISBLANK(R) && R >= .2) || (NOT ISBLANK(G) && G < .85) RETURN SWITCH(TRUE(), ISBLANK(V) || NOT Known, \"Insufficient data\", Risk && V >= 60, \"Fast and faulty\", Risk && V < 20, \"Needs retraining\", Risk, \"Needs QA support\", V < 20, \"Slow but steady\", V >= 40, \"Star annotator\", \"Core performer\")))",
             "displayFolder": "Report helpers"
           }
         ]

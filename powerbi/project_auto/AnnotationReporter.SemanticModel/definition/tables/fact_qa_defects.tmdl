@@ -1,0 +1,64 @@
+table fact_qa_defects
+	lineageTag: 2972021f-f625-4176-9c9c-c1d05f8c6f0c
+
+	column defect_id
+		dataType: string
+		isHidden
+		lineageTag: 76d49a2e-50fe-4aeb-9631-a8d7a9b2d591
+		summarizeBy: none
+		sourceColumn: defect_id
+
+	column review_id
+		dataType: string
+		isHidden
+		lineageTag: 22f87a67-8ff3-49da-a726-39c8f0eb79e5
+		summarizeBy: none
+		sourceColumn: review_id
+
+	column job_id
+		dataType: int64
+		isHidden
+		lineageTag: b8a7f6e7-1f85-41af-8548-a4d8f5c50504
+		summarizeBy: none
+		sourceColumn: job_id
+
+	column label_key
+		dataType: string
+		isHidden
+		lineageTag: 19a9d805-4c75-4979-b33b-7ef9b919da06
+		summarizeBy: none
+		sourceColumn: label_key
+
+	column frame_idx
+		dataType: int64
+		lineageTag: 00a94c0d-2cf7-489b-9ef0-b56e3437c57f
+		summarizeBy: none
+		sourceColumn: frame_idx
+
+	column defect_type
+		dataType: string
+		lineageTag: 3ec9da43-ddad-450f-a3af-4ef361fd8293
+		summarizeBy: none
+		sourceColumn: defect_type
+
+	column severity
+		dataType: string
+		lineageTag: 9fdeb7b1-12b1-43db-9799-c3705a08ab13
+		summarizeBy: none
+		sourceColumn: severity
+
+	column cvat_deep_link
+		dataType: string
+		lineageTag: 25913d74-f1c0-4a68-8a9f-f15aab6e7d61
+		dataCategory: WebUrl
+		summarizeBy: none
+		sourceColumn: cvat_deep_link
+
+	partition fact_qa_defects = m
+		mode: directQuery
+		source =
+				let
+				    Database = PostgreSQL.Database("127.0.0.1:55432", "annotation_reporting", [CreateNavigationProperties=false]),
+				    Source = Database{[Schema="public", Item="pbi_fact_qa_defects"]}[Data]
+				in Source
+

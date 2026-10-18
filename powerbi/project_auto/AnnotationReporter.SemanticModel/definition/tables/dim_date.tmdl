@@ -1,0 +1,51 @@
+table dim_date
+	lineageTag: 4115125c-2b9b-4250-b17d-e4bdbb9ca7a2
+
+	column date_key
+		dataType: dateTime
+		formatString: yyyy-MM-dd
+		sourceProviderType: date
+		lineageTag: 30e67437-f2a4-412e-b898-67030131fb59
+		summarizeBy: none
+		sourceColumn: date_key
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column year
+		dataType: int64
+		lineageTag: 0eb072c7-aaf9-43ec-badb-249f9e629b44
+		summarizeBy: none
+		sourceColumn: year
+
+	column month_num
+		dataType: int64
+		lineageTag: 58a589b7-6c1b-4cbc-bf9d-6cd6234e1e28
+		summarizeBy: none
+		sourceColumn: month_num
+
+	column month_name
+		dataType: string
+		lineageTag: fe0fedae-afa7-4ee6-83ff-0a2ea837016d
+		summarizeBy: none
+		sourceColumn: month_name
+
+	column day_name
+		dataType: string
+		lineageTag: 6093ca00-2685-416e-8b5a-fcf2a665b278
+		summarizeBy: none
+		sourceColumn: day_name
+
+	column week_num
+		dataType: int64
+		lineageTag: ec588731-6694-41ac-a82b-a651b05ddb97
+		summarizeBy: none
+		sourceColumn: week_num
+
+	partition dim_date = m
+		mode: directQuery
+		source =
+				let
+				    Database = PostgreSQL.Database("127.0.0.1:55432", "annotation_reporting", [CreateNavigationProperties=false]),
+				    Source = Database{[Schema="public", Item="pbi_dim_date"]}[Data]
+				in Source
+

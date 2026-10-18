@@ -96,6 +96,7 @@ def check_port(port):
 
 def pipeline_arguments(settings):
     arguments=['--llm-summary','--verify','--no-brief','--notify','preview']
+    if settings['demo_source']: arguments.append('--demo-source')
     mode=settings['mode']
     if mode=='demo':
         from powerbi.create_demo_snapshot import create_demo
@@ -192,13 +193,14 @@ def main():
     parser.add_argument('--snapshot')
     parser.add_argument('--task-id',type=int)
     parser.add_argument('--repo')
+    parser.add_argument('--demo-source',action='store_true',default=None)
     parser.add_argument('--operations')
     parser.add_argument('--team-reports')
     args=parser.parse_args()
     STATE.mkdir(parents=True,exist_ok=True)
     stage='startup'
     try:
-        settings=load_settings(args.config,{key:getattr(args,key) for key in ('mode','port','refresh_seconds','completed_jobs','snapshot','task_id','repo','operations','team_reports')})
+        settings=load_settings(args.config,{key:getattr(args,key) for key in ('mode','port','refresh_seconds','completed_jobs','snapshot','task_id','repo','operations','team_reports','demo_source')})
         if args.doctor: return doctor(settings)
         if args.confirm_desktop:
             with publication_lock(STATE/'.auto-run.lock'):

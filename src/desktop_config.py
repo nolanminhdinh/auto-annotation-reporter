@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONFIG = ROOT / 'config/desktop.local.json'
 DEFAULTS = {'version': 1, 'mode': 'demo', 'port': 55432, 'refresh_seconds': 10,
             'completed_jobs': 10, 'snapshot': None, 'task_id': None, 'repo': None,
-            'operations': None, 'team_reports': None}
+            'operations': None, 'team_reports': None, 'demo_source':False}
 
 
 def load_settings(path=None, overrides=None):
@@ -21,6 +21,7 @@ def load_settings(path=None, overrides=None):
     settings = {**DEFAULTS, **supplied, **{k: v for k, v in (overrides or {}).items() if v is not None}}
     if type(settings['version']) is not int or settings['version'] != 1 or settings['mode'] not in ('demo', 'offline', 'live'):
         raise ValueError('Use config version 1 and mode demo, offline or live')
+    if type(settings['demo_source']) is not bool: raise ValueError('demo_source must be true or false')
     for key, low, high in [('port', 1024, 65535), ('refresh_seconds', 1, 3600), ('completed_jobs', 0, 15)]:
         if type(settings[key]) is not int or not low <= settings[key] <= high:
             raise ValueError(f'{key} must be an integer between {low} and {high}')

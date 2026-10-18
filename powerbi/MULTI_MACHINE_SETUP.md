@@ -42,6 +42,7 @@ File mẫu: `config/desktop.example.json`. File sử dụng: **config/desktop.lo
 | Trường | Ý nghĩa |
 |---|---|
 | `mode` | `demo` (mặc định), `offline` hoặc `live` |
+| `demo_source` | true nếu nguồn API/snapshot chứa dữ liệu giả lập; giữ nhãn DEMO dù mode=live |
 | `port` | Cổng PostgreSQL local, mặc định 55432; phạm vi 1024–65535 |
 | `refresh_seconds` | Chu kỳ trang đang xem, mặc định 10; phạm vi 1–3600 |
 | `completed_jobs` | Tình huống demo 0–15, mặc định 10 |

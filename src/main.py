@@ -46,6 +46,7 @@ def main(argv=None):
     parser.add_argument('--task-id',type=int)
     parser.add_argument('--repo')
     parser.add_argument('--session',default='Mentor report')
+    parser.add_argument('--demo-source',action='store_true',help='Explicitly label synthetic content obtained through live APIs as DEMO')
     parser.add_argument('--operations',type=Path,help='Optional validated time/review/GT supplement')
     parser.add_argument('--team-reports',type=Path,help='Optional team_reports.json')
     parser.add_argument('--llm-summary',action='store_true',help='Include evidence-linked team synthesis (offline extraction by default)')
@@ -91,6 +92,11 @@ def main(argv=None):
         if code:
             atomic_json(destination/'run_status.json',{'status':'source_failed','exit_code':code})
             return code
+        if args.demo_source:
+            manifest=read_json(destination/'manifest.json',{})
+            manifest['fixture']=True
+            manifest['content_provenance']='synthetic_content_via_'+args.mode
+            atomic_json(destination/'manifest.json',manifest)
         if args.team_reports: shutil.copyfile(args.team_reports,destination/'team_reports.json')
         team_summary=None
         if args.llm_summary:

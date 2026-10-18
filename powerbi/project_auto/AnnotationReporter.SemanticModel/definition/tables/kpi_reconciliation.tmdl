@@ -1,0 +1,30 @@
+table kpi_reconciliation
+	isHidden
+	lineageTag: 33b91d23-fa3b-4fc9-ac04-0d8646832154
+
+	column metric
+		dataType: string
+		lineageTag: f9d0e7f7-da42-4f4c-9bf3-eda495454cf1
+		summarizeBy: none
+		sourceColumn: metric
+
+	column expected_value
+		dataType: double
+		lineageTag: 9cbea964-f5d7-434e-a95f-4b3b7c8f042c
+		summarizeBy: none
+		sourceColumn: expected_value
+
+	column unit
+		dataType: string
+		lineageTag: 36ff777d-9f58-431e-9296-516ba0cb5c2b
+		summarizeBy: none
+		sourceColumn: unit
+
+	partition kpi_reconciliation = m
+		mode: directQuery
+		source =
+				let
+				    Database = PostgreSQL.Database("127.0.0.1:55432", "annotation_reporting", [CreateNavigationProperties=false]),
+				    Source = Database{[Schema="public", Item="pbi_kpi_reconciliation"]}[Data]
+				in Source
+

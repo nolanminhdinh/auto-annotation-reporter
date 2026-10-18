@@ -1,0 +1,48 @@
+relationship e69b681c-a3c2-5c1e-96ae-4fc0838f6e2d
+	fromColumn: dim_jobs.task_id
+	toColumn: dim_tasks_batches.task_id
+
+relationship 93d67444-ffbe-5891-b568-cc93b6a26af2
+	fromColumn: dim_jobs.annotator_id
+	toColumn: dim_annotators.annotator_id
+
+relationship 3e063750-7437-55b4-b5de-d617604aeaa2
+	fromColumn: fact_job_sessions.job_id
+	toColumn: dim_jobs.job_id
+
+relationship cc9ce231-ff22-5e4e-a57b-399ea4b48156
+	fromColumn: fact_annotations.job_id
+	toColumn: dim_jobs.job_id
+
+relationship 14f0b83c-c786-58fe-a9d1-19a05cd4fe24
+	fromColumn: fact_qa_reviews.job_id
+	toColumn: dim_jobs.job_id
+
+relationship 2fe0e1df-2032-52cc-a1b6-64295b5c8fa9
+	fromColumn: fact_qa_defects.job_id
+	toColumn: dim_jobs.job_id
+
+relationship cb1cf8c4-3dd6-5c26-88ce-962bf73bda60
+	fromColumn: fact_ground_truth_eval.job_id
+	toColumn: dim_jobs.job_id
+
+relationship f7f0185f-d06a-5035-b2b1-d263370aab6c
+	fromColumn: fact_job_sessions.date_key
+	toColumn: dim_date.date_key
+
+relationship d9bd86a4-3c60-5a88-8a12-be3ad5f68d27
+	fromColumn: fact_annotations.label_key
+	toColumn: dim_classes_labels.label_key
+
+relationship 78d5de97-c75a-5a8c-ad2e-666bb198817a
+	fromColumn: fact_qa_defects.label_key
+	toColumn: dim_classes_labels.label_key
+
+relationship e1956a18-6cd7-558a-818e-94d4e4762f10
+	fromColumn: fact_qa_reviews.reviewer_id
+	toColumn: dim_reviewers.reviewer_id
+
+relationship 58bca594-e811-53e5-b96f-d84a850660d9
+	fromColumn: fact_edge_cases.task_id
+	toColumn: dim_tasks_batches.task_id
+

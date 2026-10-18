@@ -1,0 +1,44 @@
+table dim_classes_labels
+	lineageTag: ad86d150-8a6d-4d8f-aef4-8d1057506dc9
+
+	column label_key
+		dataType: string
+		isHidden
+		lineageTag: a3fc4ad6-d62d-4a66-8196-eb3b4fe7db4d
+		summarizeBy: none
+		sourceColumn: label_key
+
+	column label_id
+		dataType: int64
+		isHidden
+		lineageTag: 57ceed8f-3f7c-4f71-a280-eeb467bbface
+		summarizeBy: none
+		sourceColumn: label_id
+
+	column task_id
+		dataType: int64
+		isHidden
+		lineageTag: b0b4cb0d-c165-4277-aa65-5c3ea38e8cbf
+		summarizeBy: none
+		sourceColumn: task_id
+
+	column label_name
+		dataType: string
+		lineageTag: 73b5ac26-caec-4f0c-a27d-7220b731f4bf
+		summarizeBy: none
+		sourceColumn: label_name
+
+	column color_hex
+		dataType: string
+		lineageTag: 2e933b1b-7296-402a-a087-c8d12319c700
+		summarizeBy: none
+		sourceColumn: color_hex
+
+	partition dim_classes_labels = m
+		mode: directQuery
+		source =
+				let
+				    Database = PostgreSQL.Database("127.0.0.1:55432", "annotation_reporting", [CreateNavigationProperties=false]),
+				    Source = Database{[Schema="public", Item="pbi_dim_classes_labels"]}[Data]
+				in Source
+

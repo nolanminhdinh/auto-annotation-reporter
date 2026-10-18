@@ -149,6 +149,8 @@ def run_pipeline(
                 "successful_jobs": sum(1 for r in cvat_payload.get("annotations", []) if r.get("status") == "success"),
                 "failed_jobs": sum(1 for r in cvat_payload.get("annotations", []) if r.get("status") == "failed"),
             },
+            'optional_sources':cvat_payload.get('optional_sources',{}),
+            'quality_reports_status':cvat_payload.get('quality_reports_data',{}).get('status','unavailable'),
         }
         print("  ✓ CVAT extraction succeeded.")
     except Exception as err:
@@ -188,20 +190,24 @@ def run_pipeline(
 
     # 3. Verify Links
     links_payload = []
-    if gh_payload and "issues" in gh_payload:
-        print("🔗 Verifying CVAT references in GitHub issues...")
-        cvat_jobs = cvat_payload.get("jobs", []) if cvat_payload else []
-        links_payload = gh_ext.link_issues(gh_payload["issues"], cvat_ext, cvat_jobs)
-        write_json_file(target_folder / "links.json", links_payload)
+    try:
+        if gh_payload and "issues" in gh_payload:
+            print("🔗 Verifying CVAT references in GitHub issues...")
+            cvat_jobs = cvat_payload.get("jobs", []) if cvat_payload else []
+            links_payload = gh_ext.link_issues(gh_payload["issues"], cvat_ext, cvat_jobs)
+            write_json_file(target_folder / "links.json", links_payload)
 
-        status_counts = {
-            st: sum(1 for r in links_payload if r.get("status") == st)
-            for st in ("verified", "mismatch", "unlinked", "invalid_reference", "verification_failed")
-        }
-        manifest["links"] = {"file": "links.json", "counts": status_counts}
-        print(f"  ✓ Links verified: {status_counts}")
-    else:
-        manifest["links"] = {"status": "skipped", "reason": "GitHub source extraction failed"}
+            status_counts = {
+                st: sum(1 for r in links_payload if r.get("status") == st)
+                for st in ("verified", "mismatch", "unlinked", "invalid_reference", "verification_failed")
+            }
+            manifest["links"] = {"file": "links.json", "counts": status_counts}
+            print(f"  ✓ Links verified: {status_counts}")
+        else:
+            manifest["links"] = {"status": "skipped", "reason": "GitHub source extraction failed"}
+    finally:
+        cvat_ext.close()
+        gh_ext.client.close()
 
     manifest["finished_at"] = datetime.now(timezone.utc).isoformat()
     write_json_file(target_folder / "manifest.json", manifest)

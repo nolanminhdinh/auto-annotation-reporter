@@ -1,6 +1,7 @@
 {
   "version": 1,
   "mode": "demo",
+  "demo_source": false,
   "port": 55432,
   "refresh_seconds": 10,
   "completed_jobs": 10,

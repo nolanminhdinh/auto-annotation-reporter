@@ -1,0 +1,55 @@
+table fact_ground_truth_eval
+	lineageTag: 73bf601e-3c52-42d8-870c-186cc5a61136
+
+	column eval_id
+		dataType: string
+		isHidden
+		lineageTag: 34b0b092-39ff-40c5-aaef-503e6d154b61
+		summarizeBy: none
+		sourceColumn: eval_id
+
+	column job_id
+		dataType: int64
+		isHidden
+		lineageTag: ed16cc07-2402-4c4f-a053-fb1515829761
+		summarizeBy: none
+		sourceColumn: job_id
+
+	column mean_iou
+		dataType: double
+		lineageTag: 8d734d45-733d-4bda-bb61-5330bf9f9aaa
+		summarizeBy: none
+		sourceColumn: mean_iou
+
+	column precision
+		dataType: double
+		lineageTag: 79581188-4a3a-4693-99dd-f5cdce3af1ad
+		summarizeBy: none
+		sourceColumn: precision
+
+	column recall
+		dataType: double
+		lineageTag: 68adf47a-d3fe-4f9a-bc00-9e01cf0a0f23
+		summarizeBy: none
+		sourceColumn: recall
+
+	column f1_score
+		dataType: double
+		lineageTag: 08b3fded-79f2-4039-9091-686bc3780523
+		summarizeBy: none
+		sourceColumn: f1_score
+
+	column evaluated_at
+		dataType: string
+		lineageTag: 836c7fda-32fb-46cf-81b4-b696234866bf
+		summarizeBy: none
+		sourceColumn: evaluated_at
+
+	partition fact_ground_truth_eval = m
+		mode: directQuery
+		source =
+				let
+				    Database = PostgreSQL.Database("127.0.0.1:55432", "annotation_reporting", [CreateNavigationProperties=false]),
+				    Source = Database{[Schema="public", Item="pbi_fact_ground_truth_eval"]}[Data]
+				in Source
+

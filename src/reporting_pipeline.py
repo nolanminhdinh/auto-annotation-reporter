@@ -23,7 +23,7 @@ from src.processors.quality import first_time_pass_rate, rejection_rate, avg_mio
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_DB = ROOT / 'data' / 'annotation_reporting.db'
 SCHEMA_VERSION = 2
-TRANSFORM_VERSION = '2026-10-17.3'
+TRANSFORM_VERSION = '2026-10-18.1'
 
 # Canonical serving contract. CSVs, SQL views, M and DAX use these names.
 TABLES = {

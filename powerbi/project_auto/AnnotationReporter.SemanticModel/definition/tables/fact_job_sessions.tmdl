@@ -1,0 +1,217 @@
+table fact_job_sessions
+	lineageTag: 8ef2d9b1-227a-4eb1-97c6-666bbb6b276c
+
+	measure Total_Completed_Frames = COALESCE(CALCULATE(SUM(fact_job_sessions[total_frames]), fact_job_sessions[status] = "completed"), 0)
+		formatString: #,0
+		displayFolder: KPI
+		lineageTag: 95be4b43-7b45-4e3b-9806-8cdb79e6b6bb
+
+	measure Total_Objects_Created = IF(MAX(report_status[annotations_available]) = 1, COALESCE(COUNTROWS(fact_annotations), 0))
+		formatString: #,0
+		displayFolder: KPI
+		lineageTag: c23d11aa-b3a3-4b2b-a35a-220fcbb69772
+
+	measure Total_Active_Hours = IF(COUNTROWS(fact_job_sessions) > 0 && COUNT(fact_job_sessions[active_time_hours]) = COUNTROWS(fact_job_sessions), SUM(fact_job_sessions[active_time_hours]))
+		formatString: 0.00
+		displayFolder: KPI
+		lineageTag: ddd159e5-f2b3-478d-99ea-fef25625ff8c
+
+	measure Velocity_Frames_Per_Hour = DIVIDE([Total_Completed_Frames], [Total_Active_Hours])
+		formatString: 0.0
+		displayFolder: KPI
+		lineageTag: c14edd15-1f03-4311-8661-e990b45aa746
+
+	measure Velocity_Objects_Per_Hour = DIVIDE([Total_Objects_Created], [Total_Active_Hours])
+		formatString: 0.0
+		displayFolder: KPI
+		lineageTag: 3c57d310-8cd3-491e-8e39-019abb2fe01d
+
+	measure Avg_Time_Per_Frame_Mins = DIVIDE([Total_Active_Hours] * 60, [Total_Completed_Frames])
+		formatString: 0.00
+		displayFolder: KPI
+		lineageTag: 095f355e-ac16-4dee-9f12-0c0ca561c168
+
+	measure Avg_Time_Per_Object_Secs = DIVIDE([Total_Active_Hours] * 3600, [Total_Objects_Created])
+		formatString: 0.00
+		displayFolder: KPI
+		lineageTag: 42b21907-e7ac-4ba7-a4d7-83c427eb77ea
+
+	measure First_Time_Pass_Rate = IF(MAX(report_status[reviews_available]) = 1, DIVIDE(COALESCE(CALCULATE(COUNTROWS(fact_qa_reviews), fact_qa_reviews[review_iteration] = 1, fact_qa_reviews[review_decision] = "Accepted"), 0), CALCULATE(COUNTROWS(fact_qa_reviews), fact_qa_reviews[review_iteration] = 1)))
+		formatString: 0.0%
+		displayFolder: KPI
+		lineageTag: 194b3010-ad3f-48c5-8bd0-cc7baf6ecff7
+
+	measure Rejection_Rate = IF(MAX(report_status[reviews_available]) = 1, DIVIDE(COALESCE(CALCULATE(COUNTROWS(fact_qa_reviews), fact_qa_reviews[review_decision] = "Rejected"), 0), COUNTROWS(fact_qa_reviews)))
+		formatString: 0.0%
+		displayFolder: KPI
+		lineageTag: 5e19b208-f630-46b2-a837-c08a219fdf5c
+
+	measure Total_Defects = IF(MAX(report_status[defects_available]) = 1, COALESCE(COUNTROWS(fact_qa_defects), 0))
+		formatString: #,0
+		displayFolder: KPI
+		lineageTag: 05074b32-6c92-466d-8ee5-b0b1742d3550
+
+	measure Defect_Density_Per_100F = DIVIDE([Total_Defects] * 100, [Total_Completed_Frames])
+		formatString: 0.00
+		displayFolder: KPI
+		lineageTag: 137c5797-5a05-4ccb-aed0-2b7ecd375d47
+
+	measure Avg_Defects_Per_Job = DIVIDE([Total_Defects], DISTINCTCOUNT(fact_qa_reviews[job_id]))
+		formatString: 0.00
+		displayFolder: KPI
+		lineageTag: 2b331ae4-20ae-4b02-92b3-89c8cb76ebd4
+
+	measure Avg_mIoU_Score = IF(MAX(report_status[gt_available]) = 1, AVERAGE(fact_ground_truth_eval[mean_iou]))
+		formatString: 0.000
+		displayFolder: KPI
+		lineageTag: 3d929e39-7ac6-4f0c-b99f-89961cc8329f
+
+	measure Avg_F1_Score = IF(MAX(report_status[gt_available]) = 1, AVERAGE(fact_ground_truth_eval[f1_score]))
+		formatString: 0.000
+		displayFolder: KPI
+		lineageTag: d8073e82-e3bf-4e1e-9402-5cf72d2e24ac
+
+	measure Avg_Object_Area_Pixels = AVERAGE(fact_annotations[area_pixels])
+		formatString: #,0.0
+		displayFolder: KPI
+		lineageTag: 5a252470-370c-4a97-8bdf-e420e09211cb
+
+	measure Avg_Area_Frame_Pct = DIVIDE(AVERAGE(fact_annotations[frame_area_pct]), 100)
+		formatString: 0.00%
+		displayFolder: KPI
+		lineageTag: 48164950-e020-4648-a157-3b0b8fd2704a
+
+	measure Pct_Small_Objects = DIVIDE(COALESCE(CALCULATE(COUNTROWS(fact_annotations), fact_annotations[size_scale] = "Small"), 0), CALCULATE(COUNTROWS(fact_annotations), NOT ISBLANK(fact_annotations[size_scale])))
+		formatString: 0.0%
+		displayFolder: KPI
+		lineageTag: 4cd02e74-2e59-446f-bce6-a7e73e1cc87d
+
+	measure Count_At_Risk_Annotators = VAR People = ADDCOLUMNS(VALUES(dim_annotators[annotator_id]), "F", [First_Time_Pass_Rate], "R", [Rejection_Rate], "G", [Avg_F1_Score]) VAR Assessed = FILTER(People, NOT ISBLANK([F]) || NOT ISBLANK([R]) || NOT ISBLANK([G])) RETURN IF(COUNTROWS(Assessed) > 0, COALESCE(COUNTROWS(FILTER(Assessed, (NOT ISBLANK([F]) && [F] < 0.8) || (NOT ISBLANK([R]) && [R] >= 0.2) || (NOT ISBLANK([G]) && [G] < 0.85))), 0))
+		formatString: #,0
+		displayFolder: KPI
+		lineageTag: c21455e5-648b-4d90-bbe3-e9d8d892957d
+
+	measure System_Avg_Velocity = CALCULATE([Velocity_Frames_Per_Hour], REMOVEFILTERS(dim_annotators))
+		formatString: 0.0
+		displayFolder: KPI
+		lineageTag: e6d8e38f-c0d8-4b41-a985-a267003131c3
+
+	measure Project_Progress_Pct = DIVIDE([Total_Completed_Frames], SUM(dim_tasks_batches[total_frames_target]))
+		formatString: 0.0%
+		displayFolder: KPI
+		lineageTag: af9b90b5-44e1-47f9-b717-1a2c6c61ca93
+
+	measure Total_Target_Frames = SUM(dim_tasks_batches[total_frames_target])
+		formatString: #,0
+		displayFolder: Report helpers
+		lineageTag: 23364527-ae84-412c-84af-301c1c22d2ab
+
+	measure Frames_In_Annotation = COALESCE(CALCULATE(SUM(fact_job_sessions[total_frames]), fact_job_sessions[status] = "annotation"), 0)
+		formatString: #,0
+		displayFolder: Report helpers
+		lineageTag: 512d7506-09d8-4a50-8f68-f97e0533f5eb
+
+	measure Frames_In_Validation = COALESCE(CALCULATE(SUM(fact_job_sessions[total_frames]), fact_job_sessions[status] = "validation"), 0)
+		formatString: #,0
+		displayFolder: Report helpers
+		lineageTag: e4f71d0e-ec56-4717-8149-e2f6699dba64
+
+	measure Daily_Completed_Frames = CALCULATE(SUM(fact_job_sessions[total_frames]), fact_job_sessions[status] = "completed")
+		formatString: #,0
+		displayFolder: Report helpers
+		lineageTag: 1004220f-1f91-4820-a20f-8ddb47d54443
+
+	measure Total_Open_Edge_Cases = COALESCE(CALCULATE(COUNTROWS(fact_edge_cases), fact_edge_cases[state] = "open"), 0)
+		formatString: #,0
+		displayFolder: Report helpers
+		lineageTag: ce3f1da5-87f5-4bc8-8dd0-533afb3aed46
+
+	measure Total_Blockers = COALESCE(CALCULATE(COUNTROWS(fact_edge_cases), fact_edge_cases[state] = "open", fact_edge_cases[severity] = "Blocker"), 0)
+		formatString: #,0
+		displayFolder: Report helpers
+		lineageTag: 8fe70e6d-61d8-4d56-be73-6bc4552485ca
+
+	measure Active_Annotators = COALESCE(COUNTROWS(FILTER(VALUES(dim_annotators[annotator_id]), NOT ISBLANK(dim_annotators[annotator_id]) && CALCULATE(COUNTROWS(fact_job_sessions)) > 0)), 0)
+		formatString: #,0
+		displayFolder: Report helpers
+		lineageTag: 2ecdf108-5550-4a10-89d9-404a31100d23
+
+	measure Source_Label = IF(MAX(report_status[is_demo]) = 1, "DEMO / DỮ LIỆU GIẢ LẬP", "DỮ LIỆU NGUỒN") & "  |  " & FORMAT(MAX(report_status[as_of]), "dd/MM/yyyy")
+		displayFolder: Report helpers
+		lineageTag: 6c2bca46-29a7-45f0-a083-dea687fddf2e
+
+	measure Data_Warnings = "Nguồn: " & IF(ISBLANK([Total_Active_Hours]), "giờ làm chưa đủ", "có giờ làm") & " | " & IF(MAX(report_status[reviews_available]) = 1, "có review", "thiếu review") & " | " & IF(MAX(report_status[gt_available]) = 1, "có Ground Truth", "thiếu Ground Truth") & UNICHAR(10) & "KPI trống = chưa đủ dữ liệu. Frames hoàn thành là proxy theo trạng thái job, chưa đồng nghĩa QA pass."
+		displayFolder: Report helpers
+		lineageTag: 197210e0-a63a-40a6-b783-dd3118b8feb9
+
+	measure Selected_Case = SELECTEDVALUE(fact_edge_cases[description], "Chọn một ca trong bảng phía trên để đọc mô tả. Link example.org trong bản DEMO chỉ dùng minh họa.")
+		displayFolder: Report helpers
+		lineageTag: 8b1a7f7a-894c-4cad-b8cc-473cf3c25403
+
+	measure Annotator_Segment = IF(HASONEVALUE(dim_annotators[annotator_id]) && NOT ISBLANK(SELECTEDVALUE(dim_annotators[annotator_id])), (VAR V = [Velocity_Frames_Per_Hour] VAR F = [First_Time_Pass_Rate] VAR R = [Rejection_Rate] VAR G = [Avg_F1_Score] VAR Known = NOT ISBLANK(F) || NOT ISBLANK(R) || NOT ISBLANK(G) VAR Risk = (NOT ISBLANK(F) && F < .8) || (NOT ISBLANK(R) && R >= .2) || (NOT ISBLANK(G) && G < .85) RETURN SWITCH(TRUE(), ISBLANK(V) || NOT Known, "Insufficient data", Risk && V >= 60, "Fast and faulty", Risk && V < 20, "Needs retraining", Risk, "Needs QA support", V < 20, "Slow but steady", V >= 40, "Star annotator", "Core performer")))
+		displayFolder: Report helpers
+		lineageTag: 892407c9-e018-4eb8-a881-20949477d6d0
+
+	column job_id
+		dataType: int64
+		isHidden
+		lineageTag: a37c08ab-24d6-49a3-93af-2a232940d6a9
+		summarizeBy: none
+		sourceColumn: job_id
+
+	column task_id
+		dataType: int64
+		isHidden
+		lineageTag: 6be7e108-fc25-40c6-9128-5fa81da34de8
+		summarizeBy: none
+		sourceColumn: task_id
+
+	column annotator_id
+		dataType: string
+		isHidden
+		lineageTag: 2aade463-baf9-47a0-83cb-e420999cc49a
+		summarizeBy: none
+		sourceColumn: annotator_id
+
+	column date_key
+		dataType: dateTime
+		formatString: yyyy-MM-dd
+		sourceProviderType: date
+		lineageTag: 01c56025-d535-4cd3-8327-294c82ebc7a9
+		summarizeBy: none
+		sourceColumn: date_key
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column status
+		dataType: string
+		lineageTag: 30b2d65e-4976-4ee4-a8c8-c6f25be34142
+		summarizeBy: none
+		sourceColumn: status
+
+	column total_frames
+		dataType: int64
+		lineageTag: fa759804-5707-460b-9f43-35a1ec2f6db0
+		summarizeBy: none
+		sourceColumn: total_frames
+
+	column total_objects
+		dataType: int64
+		lineageTag: a167c501-5526-4fc2-9b89-24d13faee2ec
+		summarizeBy: none
+		sourceColumn: total_objects
+
+	column active_time_hours
+		dataType: double
+		lineageTag: 5371da1a-119f-47bc-b603-42c5c0a1cd48
+		summarizeBy: none
+		sourceColumn: active_time_hours
+
+	partition fact_job_sessions = m
+		mode: directQuery
+		source =
+				let
+				    Database = PostgreSQL.Database("127.0.0.1:55432", "annotation_reporting", [CreateNavigationProperties=false]),
+				    Source = Database{[Schema="public", Item="pbi_fact_job_sessions"]}[Data]
+				in Source
+

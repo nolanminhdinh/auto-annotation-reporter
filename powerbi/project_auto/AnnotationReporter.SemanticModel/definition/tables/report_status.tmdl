@@ -1,0 +1,77 @@
+table report_status
+	isHidden
+	lineageTag: bf057983-3ebc-41c9-bd3f-22f5f2e043d2
+
+	column task_id
+		dataType: int64
+		isHidden
+		lineageTag: 6822c07c-7408-4970-8602-cd41dfda78a4
+		summarizeBy: none
+		sourceColumn: task_id
+
+	column as_of
+		dataType: dateTime
+		formatString: yyyy-MM-dd
+		sourceProviderType: date
+		lineageTag: 75ee35d9-fc94-4afa-b492-c9769fefa26e
+		summarizeBy: none
+		sourceColumn: as_of
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column is_demo
+		dataType: int64
+		lineageTag: 07549b5e-b7ef-49e6-8982-3cae0c5b803b
+		summarizeBy: none
+		sourceColumn: is_demo
+
+	column source_snapshot
+		dataType: string
+		lineageTag: 97f77f75-e95a-4823-bb5f-eac77abd8b3e
+		summarizeBy: none
+		sourceColumn: source_snapshot
+
+	column reviews_available
+		dataType: int64
+		lineageTag: 027e1012-297b-404b-b257-1fa849eb376c
+		summarizeBy: none
+		sourceColumn: reviews_available
+
+	column defects_available
+		dataType: int64
+		lineageTag: 8e1aee70-df8c-44d1-86f4-0aee1ea28ba4
+		summarizeBy: none
+		sourceColumn: defects_available
+
+	column hours_available
+		dataType: int64
+		lineageTag: e1c4eeff-7235-4b6f-af83-609beee094cc
+		summarizeBy: none
+		sourceColumn: hours_available
+
+	column annotations_available
+		dataType: int64
+		lineageTag: 891860fa-64eb-46a4-a988-0a94d3aa7aba
+		summarizeBy: none
+		sourceColumn: annotations_available
+
+	column gt_available
+		dataType: int64
+		lineageTag: ba4fa67d-85b4-4732-b3fa-237bcfac5c9a
+		summarizeBy: none
+		sourceColumn: gt_available
+
+	column warnings
+		dataType: string
+		lineageTag: 3bf33293-c1ba-49d2-b274-2db3a18f9a96
+		summarizeBy: none
+		sourceColumn: warnings
+
+	partition report_status = m
+		mode: directQuery
+		source =
+				let
+				    Database = PostgreSQL.Database("127.0.0.1:55432", "annotation_reporting", [CreateNavigationProperties=false]),
+				    Source = Database{[Schema="public", Item="pbi_report_status"]}[Data]
+				in Source
+

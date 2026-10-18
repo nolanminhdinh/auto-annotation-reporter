@@ -1,0 +1,94 @@
+table fact_edge_cases
+	lineageTag: 7c8be8c9-e446-463d-9cf4-53bd3bea8413
+
+	column case_id
+		dataType: string
+		isHidden
+		lineageTag: 7e4e5502-da82-4354-8531-bee49895f9b3
+		summarizeBy: none
+		sourceColumn: case_id
+
+	column number
+		dataType: int64
+		lineageTag: 8cd049f7-4cc2-48e3-abd4-d0d94f74e9ef
+		summarizeBy: none
+		sourceColumn: number
+
+	column task_id
+		dataType: int64
+		isHidden
+		lineageTag: ec355046-b496-465b-95ae-81433ae18495
+		summarizeBy: none
+		sourceColumn: task_id
+
+	column job_id
+		dataType: int64
+		isHidden
+		lineageTag: 49153380-1723-4a9d-9f3b-61d0c3395dc2
+		summarizeBy: none
+		sourceColumn: job_id
+
+	column title
+		dataType: string
+		lineageTag: bb11124d-b986-4786-aff0-0f0267ee6f09
+		summarizeBy: none
+		sourceColumn: title
+
+	column description
+		dataType: string
+		lineageTag: 39eccc9d-34f9-4824-a5c6-5f53fdfad6d1
+		summarizeBy: none
+		sourceColumn: description
+
+	column labels
+		dataType: string
+		lineageTag: cef0c970-e1ad-4391-9299-f37118e6623b
+		summarizeBy: none
+		sourceColumn: labels
+
+	column state
+		dataType: string
+		lineageTag: 666a91a1-77a6-4d93-97ba-3449d7868c2e
+		summarizeBy: none
+		sourceColumn: state
+
+	column severity
+		dataType: string
+		lineageTag: 691018b2-f9c7-41b2-ad76-4e465044a80d
+		summarizeBy: none
+		sourceColumn: severity
+
+	column frame
+		dataType: int64
+		lineageTag: 9bbb88b9-5f97-4704-b312-53f7ac8711d3
+		summarizeBy: none
+		sourceColumn: frame
+
+	column link_status
+		dataType: string
+		lineageTag: 09d82aeb-c720-439f-a345-63b92b75cc9d
+		summarizeBy: none
+		sourceColumn: link_status
+
+	column cvat_deep_link
+		dataType: string
+		lineageTag: 91efe80e-668b-46c6-beee-b1baec9d03fa
+		dataCategory: WebUrl
+		summarizeBy: none
+		sourceColumn: cvat_deep_link
+
+	column source_url
+		dataType: string
+		lineageTag: 21a65695-53a4-41dd-b2ca-6325b557a19f
+		dataCategory: WebUrl
+		summarizeBy: none
+		sourceColumn: source_url
+
+	partition fact_edge_cases = m
+		mode: directQuery
+		source =
+				let
+				    Database = PostgreSQL.Database("127.0.0.1:55432", "annotation_reporting", [CreateNavigationProperties=false]),
+				    Source = Database{[Schema="public", Item="pbi_fact_edge_cases"]}[Data]
+				in Source
+

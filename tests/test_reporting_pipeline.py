@@ -122,6 +122,16 @@ class ReportingPipelineTests(unittest.TestCase):
         ext=CVATExtractor('https://example.org','fake-test-token')
         self.assertEqual(ext.client.session.headers['Authorization'],'Bearer fake-test-token')
 
+    def test_explicit_demo_source_labels_api_fixture_without_modifying_source(self):
+        from src.main import main
+        self.edit('manifest.json',lambda d:d.pop('fixture',None))
+        before=(self.source/'manifest.json').read_bytes()
+        with contextlib.redirect_stdout(io.StringIO()):
+            code=main(['--snapshot',str(self.source),'--demo-source','--db',str(self.db),'--output',str(self.root/'runs'),'--powerbi-output',str(self.out)])
+        self.assertEqual(code,0)
+        self.assertEqual(before,(self.source/'manifest.json').read_bytes())
+        self.assertEqual(self.query('SELECT is_demo FROM pbi_report_status'),[(1,)])
+
     def test_offline_summary_and_notification_preview_without_network(self):
         from src.main import main
         with patch('requests.post') as post, contextlib.redirect_stdout(io.StringIO()):

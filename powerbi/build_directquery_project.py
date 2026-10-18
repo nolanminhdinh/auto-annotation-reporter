@@ -8,6 +8,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path: sys.path.insert(0,str(ROOT))
+from powerbi.build_project import MEASURES, assigned_people_filter
 
 
 def build(output=None,port=55432,refresh_seconds=10):
@@ -29,9 +30,16 @@ def build(output=None,port=55432,refresh_seconds=10):
             'in Source',
         ]}}]
         for measure in table.get('measures',[]):
-            if measure['name']=='Annotator_Segment':
-                measure['expression']='IF(HASONEVALUE(dim_annotators[annotator_id]), ('+measure['expression']+'))'
+            if measure['name'] in ('Active_Annotators', 'Annotator_Segment'):
+                measure['expression']=MEASURES[measure['name']][0]
     model_path.write_text(json.dumps(model,ensure_ascii=False,indent=2),encoding='utf-8')
+    for name in ('leaderboard', 'matrix'):
+        path = output / 'AnnotationReporter.Report/definition/pages/people/visuals' / name / 'visual.json'
+        visual = json.loads(path.read_text(encoding='utf-8'))
+        filters = visual.setdefault('filterConfig', {}).setdefault('filters', [])
+        filters[:] = [f for f in filters if f.get('name') != 'assigned_people_' + name]
+        filters.append(assigned_people_filter('assigned_people_' + name))
+        path.write_text(json.dumps(visual, ensure_ascii=False, indent=2), encoding='utf-8')
     configure_page_refresh(output,refresh_seconds)
     return output/'AnnotationReporter.pbip'
 

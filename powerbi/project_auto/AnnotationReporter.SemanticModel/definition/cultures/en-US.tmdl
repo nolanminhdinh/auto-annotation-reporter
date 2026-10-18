@@ -1,0 +1,893 @@
+cultureInfo en-US
+
+	linguisticMetadata =
+			{
+			  "Version": "2.0.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "dim_annotators.full_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_annotators",
+			          "ConceptualProperty": "full_name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Người gán nhãn": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "dim_classes_labels.label_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_classes_labels",
+			          "ConceptualProperty": "label_name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Lớp đối tượng": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "dim_date.date_key": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_date",
+			          "ConceptualProperty": "date_key"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Ngày hoàn thành": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "dim_tasks_batches.task_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_tasks_batches",
+			          "ConceptualProperty": "task_name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Task": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_annotations.size_scale": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_annotations",
+			          "ConceptualProperty": "size_scale"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Kích thước": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_edge_cases.cvat_deep_link": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_edge_cases",
+			          "ConceptualProperty": "cvat_deep_link"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Mở CVAT": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_edge_cases.frame": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_edge_cases",
+			          "ConceptualProperty": "frame"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Frame": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_edge_cases.link_status": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_edge_cases",
+			          "ConceptualProperty": "link_status"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Trạng thái link": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_edge_cases.number": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_edge_cases",
+			          "ConceptualProperty": "number"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Mã ca": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_edge_cases.severity": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_edge_cases",
+			          "ConceptualProperty": "severity"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Mức độ": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_edge_cases.source_url": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_edge_cases",
+			          "ConceptualProperty": "source_url"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Nguồn ca": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_edge_cases.state": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_edge_cases",
+			          "ConceptualProperty": "state"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Trạng thái": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_edge_cases.title": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_edge_cases",
+			          "ConceptualProperty": "title"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Tiêu đề": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_job_sessions.active_annotators": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_job_sessions",
+			          "ConceptualProperty": "Active_Annotators"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Active_Annotators": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_job_sessions.annotator_segment": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_job_sessions",
+			          "ConceptualProperty": "Annotator_Segment"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Phân khúc theo bộ lọc": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_job_sessions.avg_area_frame_pct": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_job_sessions",
+			          "ConceptualProperty": "Avg_Area_Frame_Pct"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Avg_Area_Frame_Pct": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_job_sessions.avg_f1_score": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_job_sessions",
+			          "ConceptualProperty": "Avg_F1_Score"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Avg_F1_Score": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_job_sessions.avg_miou_score": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_job_sessions",
+			          "ConceptualProperty": "Avg_mIoU_Score"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Avg_mIoU_Score": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_job_sessions.avg_object_area_pixels": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_job_sessions",
+			          "ConceptualProperty": "Avg_Object_Area_Pixels"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Avg_Object_Area_Pixels": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_job_sessions.count_at_risk_annotators": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_job_sessions",
+			          "ConceptualProperty": "Count_At_Risk_Annotators"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Count_At_Risk_Annotators": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_job_sessions.daily_completed_frames": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_job_sessions",
+			          "ConceptualProperty": "Daily_Completed_Frames"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Frames hoàn thành": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_job_sessions.data_warnings": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_job_sessions",
+			          "ConceptualProperty": "Data_Warnings"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Data_Warnings": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_job_sessions.defect_density_per_100f": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_job_sessions",
+			          "ConceptualProperty": "Defect_Density_Per_100F"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Defect_Density_Per_100F": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_job_sessions.first_time_pass_rate": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_job_sessions",
+			          "ConceptualProperty": "First_Time_Pass_Rate"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "FTPR": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_job_sessions.frames_in_annotation": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_job_sessions",
+			          "ConceptualProperty": "Frames_In_Annotation"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Đang gán nhãn": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_job_sessions.frames_in_validation": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_job_sessions",
+			          "ConceptualProperty": "Frames_In_Validation"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Đang kiểm tra": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_job_sessions.pct_small_objects": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_job_sessions",
+			          "ConceptualProperty": "Pct_Small_Objects"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Pct_Small_Objects": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_job_sessions.project_progress_pct": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_job_sessions",
+			          "ConceptualProperty": "Project_Progress_Pct"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Project_Progress_Pct": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_job_sessions.rejection_rate": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_job_sessions",
+			          "ConceptualProperty": "Rejection_Rate"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Rejection_Rate": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_job_sessions.selected_case": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_job_sessions",
+			          "ConceptualProperty": "Selected_Case"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Selected_Case": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_job_sessions.source_label": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_job_sessions",
+			          "ConceptualProperty": "Source_Label"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Source_Label": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_job_sessions.total_blockers": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_job_sessions",
+			          "ConceptualProperty": "Total_Blockers"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Total_Blockers": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_job_sessions.total_completed_frames": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_job_sessions",
+			          "ConceptualProperty": "Total_Completed_Frames"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Frames hoàn thành": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_job_sessions.total_defects": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_job_sessions",
+			          "ConceptualProperty": "Total_Defects"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Số lỗi": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_job_sessions.total_objects_created": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_job_sessions",
+			          "ConceptualProperty": "Total_Objects_Created"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Bản ghi hình vẽ": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_job_sessions.total_open_edge_cases": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_job_sessions",
+			          "ConceptualProperty": "Total_Open_Edge_Cases"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Total_Open_Edge_Cases": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_job_sessions.velocity_frames_per_hour": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_job_sessions",
+			          "ConceptualProperty": "Velocity_Frames_Per_Hour"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Frames/giờ": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_qa_defects.defect_type": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_qa_defects",
+			          "ConceptualProperty": "defect_type"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Loại lỗi": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_qa_reviews.job_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_qa_reviews",
+			          "ConceptualProperty": "job_id"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Job": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_qa_reviews.review_decision": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_qa_reviews",
+			          "ConceptualProperty": "review_decision"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Kết quả": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_qa_reviews.review_iteration": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_qa_reviews",
+			          "ConceptualProperty": "review_iteration"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Lượt review": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_qa_reviews.reviewed_at": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_qa_reviews",
+			          "ConceptualProperty": "reviewed_at"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Thời điểm review": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    }
+			  }
+			}
+		contentType: json
+

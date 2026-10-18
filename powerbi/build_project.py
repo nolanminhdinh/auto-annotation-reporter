@@ -41,12 +41,25 @@ MEASURES={
  'Daily_Completed_Frames':('CALCULATE(SUM(fact_job_sessions[total_frames]), fact_job_sessions[status] = "completed")','#,0'),
  'Total_Open_Edge_Cases':('COALESCE(CALCULATE(COUNTROWS(fact_edge_cases), fact_edge_cases[state] = "open"), 0)','#,0'),
  'Total_Blockers':('COALESCE(CALCULATE(COUNTROWS(fact_edge_cases), fact_edge_cases[state] = "open", fact_edge_cases[severity] = "Blocker"), 0)','#,0'),
- 'Active_Annotators':('COUNTROWS(FILTER(VALUES(dim_annotators[annotator_id]), CALCULATE(COUNTROWS(fact_job_sessions)) > 0))','#,0'),
+ 'Active_Annotators':('COALESCE(COUNTROWS(FILTER(VALUES(dim_annotators[annotator_id]), NOT ISBLANK(dim_annotators[annotator_id]) && CALCULATE(COUNTROWS(fact_job_sessions)) > 0)), 0)','#,0'),
  'Source_Label':('IF(MAX(report_status[is_demo]) = 1, "DEMO / DỮ LIỆU GIẢ LẬP", "DỮ LIỆU NGUỒN") & "  |  " & FORMAT(MAX(report_status[as_of]), "dd/MM/yyyy")',None),
  'Data_Warnings':('"Nguồn: " & IF(ISBLANK([Total_Active_Hours]), "giờ làm chưa đủ", "có giờ làm") & " | " & IF(MAX(report_status[reviews_available]) = 1, "có review", "thiếu review") & " | " & IF(MAX(report_status[gt_available]) = 1, "có Ground Truth", "thiếu Ground Truth") & UNICHAR(10) & "KPI trống = chưa đủ dữ liệu. Frames hoàn thành là proxy theo trạng thái job, chưa đồng nghĩa QA pass."',None),
  'Selected_Case':('SELECTEDVALUE(fact_edge_cases[description], "Chọn một ca trong bảng phía trên để đọc mô tả. Link example.org trong bản DEMO chỉ dùng minh họa.")',None),
  'Annotator_Segment':('VAR V = [Velocity_Frames_Per_Hour] VAR F = [First_Time_Pass_Rate] VAR R = [Rejection_Rate] VAR G = [Avg_F1_Score] VAR Known = NOT ISBLANK(F) || NOT ISBLANK(R) || NOT ISBLANK(G) VAR Risk = (NOT ISBLANK(F) && F < .8) || (NOT ISBLANK(R) && R >= .2) || (NOT ISBLANK(G) && G < .85) RETURN SWITCH(TRUE(), ISBLANK(V) || NOT Known, "Insufficient data", Risk && V >= 60, "Fast and faulty", Risk && V < 20, "Needs retraining", Risk, "Needs QA support", V < 20, "Slow but steady", V >= 40, "Star annotator", "Core performer")',None),
 }
+
+# A relationship's synthetic blank member represents an unassigned job, not a person.
+MEASURES['Annotator_Segment'] = (
+    'IF(HASONEVALUE(dim_annotators[annotator_id]) && NOT ISBLANK(SELECTEDVALUE(dim_annotators[annotator_id])), ('
+    + MEASURES['Annotator_Segment'][0] + '))', None)
+
+
+def assigned_people_filter(name):
+    column = {'Column': {'Expression': {'SourceRef': {'Source': 'a'}}, 'Property': 'annotator_id'}}
+    return {'name': name, 'field': {'Column': {'Expression': {'SourceRef': {'Entity': 'dim_annotators'}}, 'Property': 'annotator_id'}},
+            'type': 'Advanced', 'howCreated': 'User',
+            'filter': {'Version': 2, 'From': [{'Name': 'a', 'Entity': 'dim_annotators', 'Type': 0}],
+                       'Where': [{'Condition': {'Not': {'Expression': {'In': {'Expressions': [column], 'Values': [[{'Literal': {'Value': 'null'}}]]}}}}}]}}
 
 TITLES = {
     'Task / batch': 'Task / đợt dữ liệu', 'Annotator': 'Người gán nhãn',
@@ -170,6 +183,8 @@ def build(output=None,source_folder=None):
         if kind=='card':
             font=22 if name=='source' else (17 if name=='warnings' else (19 if name=='description' else 34))
             v['visual']['objects']={'labels':[{'properties':{'fontSize':lit(font),'displayUnits':lit(1)}}],'categoryLabels':[{'properties':{'show':lit(False)}}]}
+        if page == 'people' and name in ('leaderboard', 'matrix'):
+            v['filterConfig'] = {'filters': [assigned_people_filter('assigned_people_' + name)]}
         write_json(definition/'pages'/page/'visuals'/name/'visual.json',v);count+=1
     def m(name):return ('fact_job_sessions',name,True)
     def c(t,col):return (t,col,False)

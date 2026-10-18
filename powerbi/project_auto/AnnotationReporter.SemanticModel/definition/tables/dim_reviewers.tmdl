@@ -1,0 +1,24 @@
+table dim_reviewers
+	lineageTag: 3e77de42-db15-4118-aa65-421425991186
+
+	column reviewer_id
+		dataType: string
+		isHidden
+		lineageTag: 202dbdfc-5e18-49ba-a496-bfba444343b7
+		summarizeBy: none
+		sourceColumn: reviewer_id
+
+	column full_name
+		dataType: string
+		lineageTag: 00982ced-72f8-4d94-881c-c53349aac51e
+		summarizeBy: none
+		sourceColumn: full_name
+
+	partition dim_reviewers = m
+		mode: directQuery
+		source =
+				let
+				    Database = PostgreSQL.Database("127.0.0.1:55432", "annotation_reporting", [CreateNavigationProperties=false]),
+				    Source = Database{[Schema="public", Item="pbi_dim_reviewers"]}[Data]
+				in Source
+

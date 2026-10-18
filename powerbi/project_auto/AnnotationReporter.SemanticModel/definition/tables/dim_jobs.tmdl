@@ -1,0 +1,50 @@
+table dim_jobs
+	lineageTag: c7d4c33e-1ca3-4187-ba92-f5d4f194356b
+
+	column job_id
+		dataType: int64
+		isHidden
+		lineageTag: 6c665f7e-6543-4226-8e78-3274825604e5
+		summarizeBy: none
+		sourceColumn: job_id
+
+	column task_id
+		dataType: int64
+		isHidden
+		lineageTag: 272bf419-1c75-4f91-9ef9-b6db2b7f078a
+		summarizeBy: none
+		sourceColumn: task_id
+
+	column annotator_id
+		dataType: string
+		isHidden
+		lineageTag: 0e8d546b-3d93-48d5-9ed4-4865e0dc2296
+		summarizeBy: none
+		sourceColumn: annotator_id
+
+	column stage
+		dataType: string
+		lineageTag: 0e3be374-2d3d-4b9e-b5bb-1e5fc46d00db
+		summarizeBy: none
+		sourceColumn: stage
+
+	column state
+		dataType: string
+		lineageTag: 26ae35cd-8c1d-415b-b57d-5cc54908f8c4
+		summarizeBy: none
+		sourceColumn: state
+
+	column frame_count
+		dataType: int64
+		lineageTag: a71a55bf-8d09-4c80-beb0-57b55f9da13a
+		summarizeBy: none
+		sourceColumn: frame_count
+
+	partition dim_jobs = m
+		mode: directQuery
+		source =
+				let
+				    Database = PostgreSQL.Database("127.0.0.1:55432", "annotation_reporting", [CreateNavigationProperties=false]),
+				    Source = Database{[Schema="public", Item="pbi_dim_jobs"]}[Data]
+				in Source
+

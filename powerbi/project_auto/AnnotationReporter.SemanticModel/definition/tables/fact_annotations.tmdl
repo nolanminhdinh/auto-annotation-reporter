@@ -1,0 +1,62 @@
+table fact_annotations
+	lineageTag: 2f7425a4-6ae1-4e4e-b2c8-a86d7ce20bb6
+
+	column annotation_id
+		dataType: string
+		isHidden
+		lineageTag: 9ddaa38f-063c-4082-94ed-0929c54d8d18
+		summarizeBy: none
+		sourceColumn: annotation_id
+
+	column job_id
+		dataType: int64
+		isHidden
+		lineageTag: 97abf237-8495-413e-a9aa-30bf359043a0
+		summarizeBy: none
+		sourceColumn: job_id
+
+	column label_key
+		dataType: string
+		isHidden
+		lineageTag: 4daaf103-9f51-476b-bc4f-89959c586e80
+		summarizeBy: none
+		sourceColumn: label_key
+
+	column frame_idx
+		dataType: int64
+		lineageTag: ba043a4f-2384-4cb6-9e2b-a6eb99a5ca94
+		summarizeBy: none
+		sourceColumn: frame_idx
+
+	column shape_type
+		dataType: string
+		lineageTag: 2c859f05-f25b-40ab-836d-36645aae0324
+		summarizeBy: none
+		sourceColumn: shape_type
+
+	column area_pixels
+		dataType: double
+		lineageTag: 1c698b5f-58c2-4b89-ac77-4928b6de2c07
+		summarizeBy: none
+		sourceColumn: area_pixels
+
+	column frame_area_pct
+		dataType: double
+		lineageTag: f6775602-4419-410a-ab0c-9ce5c998ee8f
+		summarizeBy: none
+		sourceColumn: frame_area_pct
+
+	column size_scale
+		dataType: string
+		lineageTag: db252a1d-4e8b-47bf-ab03-b10a89d3cd19
+		summarizeBy: none
+		sourceColumn: size_scale
+
+	partition fact_annotations = m
+		mode: directQuery
+		source =
+				let
+				    Database = PostgreSQL.Database("127.0.0.1:55432", "annotation_reporting", [CreateNavigationProperties=false]),
+				    Source = Database{[Schema="public", Item="pbi_fact_annotations"]}[Data]
+				in Source
+

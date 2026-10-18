@@ -37,6 +37,11 @@ def normalize_snapshot(
         )
 
     # 2. Source availability warnings
+    for source,result in (cvat_data or {}).get('optional_sources',{}).items():
+        if result.get('status') in ('failed','partial','unavailable'):
+            warnings.append(f'CVAT optional source {source}: {result["status"]}; không coi dữ liệu thiếu là không có bản ghi.')
+    if (cvat_data or {}).get('quality_reports_data',{}).get('status') in ('failed','partial'):
+        warnings.append('CVAT Quality Reports chưa lấy đầy đủ; xem quality_reports_data và HTTP status trong snapshot.')
     for source in ("cvat", "github"):
         if manifest.get("sources", {}).get(source, {}).get("status") != "success":
             warnings.append(
@@ -156,10 +161,14 @@ def normalize_snapshot(
 
     # 5. Quality Scores Handling
     quality_report = (cvat_data or {}).get("quality_report")
+    quality_value=None
     if quality_report:
+        quality_value=quality_report.get('mean_iou')
+        if quality_value is None: quality_value=quality_report.get('quality_score')
+    if quality_report and quality_value is not None:
         scores_data = {
             "status": "available",
-            "value": quality_report.get("mean_iou") or quality_report.get("quality_score"),
+            "value": quality_value,
             "method": "CVAT Quality Report (Ground Truth)",
             "source_url": f"{host}/api/quality/reports/{quality_report.get('id', '')}",
             "scored_at": quality_report.get("created_date"),

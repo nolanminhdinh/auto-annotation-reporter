@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pitch Deck — Auto Annotation Reporter</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --accent: #38bdf8;
+      --accent-gold: #f59e0b;
+      --accent-green: #10b981;
+      --accent-purple: #a855f7;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg); color: var(--text-main); height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+    
+    /* Top Bar */
+    .topbar {
+      height: 52px;
+      background: rgba(15, 23, 42, 0.9);
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+    .topbar-brand { font-size: 15px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px; }
+    .badge { background: linear-gradient(135deg, #0284c7, #2563eb); color: #fff; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+    .slide-counter { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+    .top-actions { display: flex; gap: 10px; align-items: center; }
+    .btn { background: var(--card-bg); border: 1px solid var(--card-border); color: #fff; padding: 5px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; }
+    .btn:hover { background: #334155; border-color: var(--accent); }
+    .btn-primary { background: #0284c7; border-color: #0284c7; }
+    .btn-primary:hover { background: #0369a1; }
+
+    /* Slide Stage */
+    .deck-container { flex: 1; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 24px; }
+    .slide {
+      position: absolute;
+      width: 92%;
+      max-width: 1150px;
+      height: 84%;
+      max-height: 700px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 40px 48px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      transform: translateX(60px) scale(0.98);
+      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    .slide.active {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+      pointer-events: auto;
+    }
+    .slide.prev {
+      opacity: 0;
+      transform: translateX(-60px) scale(0.98);
+    }
+
+    /* Slide Components */
+    .slide-header { margin-bottom: 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 16px; display: flex; justify-content: space-between; align-items: flex-end; }
+    .slide-header h2 { font-size: 26px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+    .slide-header p { font-size: 14px; color: var(--accent); margin-top: 4px; font-weight: 500; }
+    .slide-tag { font-size: 11px; background: rgba(56, 189, 248, 0.15); color: var(--accent); border: 1px solid rgba(56, 189, 248, 0.3); padding: 4px 10px; border-radius: 20px; font-weight: 600; text-transform: uppercase; }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+    .card { background: rgba(15, 23, 42, 0.6); border: 1px solid var(--card-border); border-radius: 12px; padding: 20px; }
+    .card h3 { font-size: 16px; color: #fff; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .card p, .card li { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+    .card ul { list-style: none; }
+    .card ul li::before { content: "•"; color: var(--accent); font-weight: bold; display: inline-block; width: 1em; margin-left: -1em; }
+
+    .stat-box { text-align: center; padding: 18px; border-radius: 12px; background: rgba(15, 23, 42, 0.7); border: 1px solid var(--card-border); }
+    .stat-val { font-size: 32px; font-weight: 900; color: var(--accent); letter-spacing: -1px; }
+    .stat-val.gold { color: var(--accent-gold); }
+    .stat-val.green { color: var(--accent-green); }
+    .stat-val.purple { color: var(--accent-purple); }
+    .stat-lbl { font-size: 12px; color: var(--text-muted); margin-top: 4px; font-weight: 600; text-transform: uppercase; }
+
+    /* Bottom Nav Bar */
+    .bottombar {
+      height: 56px;
+      background: rgba(15, 23, 42, 0.95);
+      border-top: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      z-index: 100;
+    }
+    .progress-track { flex: 1; max-width: 400px; height: 6px; background: #334155; border-radius: 3px; overflow: hidden; margin: 0 20px; }
+    .progress-bar { height: 100%; background: linear-gradient(90deg, #38bdf8, #2563eb); width: 9%; transition: width 0.3s; }
+    .nav-btn { background: #334155; border: none; color: #fff; width: 36px; height: 36px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: bold; transition: all 0.2s; }
+    .nav-btn:hover { background: #0284c7; }
+
+    /* Cover Styling */
+    .cover-slide { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; height: 100%; }
+    .cover-title { font-size: 42px; font-weight: 900; letter-spacing: -1.5px; background: linear-gradient(135deg, #ffffff 0%, #38bdf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 12px; }
+    .cover-sub { font-size: 18px; color: #94a3b8; max-width: 760px; line-height: 1.5; margin-bottom: 32px; }
+    .team-pills { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 24px; }
+    .team-pill { background: rgba(30, 41, 59, 0.9); border: 1px solid var(--card-border); padding: 8px 16px; border-radius: 30px; font-size: 12px; color: #e2e8f0; }
+    .team-pill b { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <header class="topbar">
+    <div class="topbar-brand">
+      <span>🚀 Auto Annotation Reporter</span>
+      <span class="badge">VinAI Build Phase</span>
+    </div>
+    <div class="top-actions">
+      <span class="slide-counter" id="counter">Slide 1 / 11</span>
+      <a href="../index.html" class="btn" target="_blank">🌐 Live Web Demo</a>
+      <a href="https://github.com/nolanminhdinh/auto-annotation-reporter" class="btn btn-primary" target="_blank">GitHub Repo</a>
+    </div>
+  </header>
+
+  <!-- Deck Stage -->
+  <main class="deck-container">
+
+    <!-- SLIDE 1: COVER -->
+    <section class="slide active" id="slide-1">
+      <div class="cover-slide">
+        <span class="badge" style="font-size: 13px; padding: 6px 14px; margin-bottom: 16px;">Enterprise-Grade Data Annotation Ops</span>
+        <h1 class="cover-title">AUTO ANNOTATION REPORTER</h1>
+        <p class="cover-sub">Hệ thống tự động hóa quản trị, tính toán chỉ số KPI và trực quan hóa tiến độ & chất lượng gán nhãn dữ liệu Computer Vision (CVAT & GitHub Sync - Power BI Hybrid).</p>
+        
+        <div class="grid-4" style="width: 100%; max-width: 900px; margin-bottom: 24px;">
+          <div class="stat-box"><div class="stat-val">12.000x</div><div class="stat-lbl">Tối ưu tốc độ báo cáo</div></div>
+          <div class="stat-box"><div class="stat-val green">136/136</div><div class="stat-lbl">Unit Tests PASS (100%)</div></div>
+          <div class="stat-box"><div class="stat-val gold">20 / 20</div><div class="stat-lbl">DAX Measures khớp 100%</div></div>
+          <div class="stat-box"><div class="stat-val purple">0.0000%</div><div class="stat-lbl">Sai lệch dữ liệu</div></div>
+        </div>
+
+        <div class="team-pills">
+          <div class="team-pill">👑 <b>Đinh Công Minh</b> (Lead & BI Architect)</div>
+          <div class="team-pill">⚙️ <b>Phạm Nguyễn Tuân</b> (Analytics & ETL)</div>
+          <div class="team-pill">🔗 <b>Vũ Trường Duy</b> (GitHub & Integration)</div>
+          <div class="team-pill">📦 <b>Nguyễn Minh Tú</b> (CVAT Specialist)</div>
+          <div class="team-pill">🛡️ <b>Ngô Duy Ngọc</b> (DevOps & QA)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: THE PROBLEM -->
+    <section class="slide" id="slide-2">
+      <div class="slide-header">
+        <div>
+          <h2>01. BÀI TOÁN & NỖI ĐAU THỰC TẾ</h2>
+          <p>Các rào cản nghiêm trọng trong vận hành gán nhãn dữ liệu Computer Vision quy mô lớn</p>
+        </div>
+        <span class="slide-tag">Problem Statement</span>
+      </div>
+      <div class="grid-2" style="margin-top: 10px;">
+        <div class="card" style="border-left: 4px solid #ef4444;">
+          <h3>⚠️ 1. Phân mảnh dữ liệu 2 thế giới</h3>
+          <p>Dữ liệu tiến độ, bounding boxes, masks nằm trên <b>CVAT</b>. Thảo luận kỹ thuật, ca khó (<code>ca-kho</code>), lỗi chặn (<code>blocker</code>) lại nằm trên <b>GitHub Issues</b>. Không có cầu nối liên kết tự động.</p>
+        </div>
+        <div class="card" style="border-left: 4px solid #f59e0b;">
+          <h3>⏳ 2. Tốn 2 đến 4 giờ tổng hợp thủ công</h3>
+          <p>Trước mỗi buổi họp cùng Mentor và Leader, trưởng nhóm phải xuất CSV thủ công, đếm frame, tính vận tốc bằng Excel, dễ phát sinh sai số con người.</p>
+        </div>
+        <div class="card" style="border-left: 4px solid #ef4444;">
+          <h3>🔍 3. Mất dấu ca khó & Điểm mù chất lượng</h3>
+          <p>Các frame gây tranh cãi bị trôi dạt trên CVAT nếu không có <b>Deep Link trỏ trực tiếp vào từng khung hình lỗi (<code>?frame={idx}</code>)</b>.</p>
+        </div>
+        <div class="card" style="border-left: 4px solid #8b5cf6;">
+          <h3>📉 4. Thiếu kho kiểm toán (Audit Trail)</h3>
+          <p>Việc xuất file CSV rời rạc khiến việc theo dõi lịch sử nhiều đợt chạy (multi-batch) bị phân tán, không có bằng chứng đối soát khi có khiếu nại sai lệch số liệu.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: THE SOLUTION -->
+    <section class="slide" id="slide-3">
+      <div class="slide-header">
+        <div>
+          <h2>02. GIẢI PHÁP ĐỘT PHÁ CỦA DỰ ÁN</h2>
+          <p>Kiến trúc Enterprise Data Pipeline tích hợp khép kín từ Ingestion đến Trực quan hóa</p>
+        </div>
+        <span class="slide-tag">Solution Overview</span>
+      </div>
+      <div class="grid-3" style="margin-top: 10px;">
+        <div class="card" style="border-top: 3px solid var(--accent);">
+          <h3>🔄 Tích hợp Ingestion Đa Nguồn</h3>
+          <p>Tự động thu thập API từ CVAT và GitHub có cơ chế tự động thử lại (Retry backoff), bảo vệ SSRF, bóc tách Regex và đối soát link hợp lệ.</p>
+        </div>
+        <div class="card" style="border-top: 3px solid var(--accent-gold);">
+          <h3>🏛️ Medallion Lakehouse 3 Lớp</h3>
+          <p>Tổ chức kho dữ liệu theo chuẩn kiến trúc Bronze (Append-only Raw JSON) &rarr; Silver (Cleaned Entities) &rarr; Gold (Star Schema 12 bảng + 3 Marts) trên SQLite.</p>
+        </div>
+        <div class="card" style="border-top: 3px solid var(--accent-green);">
+          <h3>⚡ Động cơ Tính toán Chuẩn hóa</h3>
+          <p>Cài đặt thuật toán diện tích Gauss Shoelace, phân loại COCO scale, công thức Vận tốc, FTPR, Rework và ma trận 7 nhóm phân khúc nhân sự.</p>
+        </div>
+        <div class="card" style="border-top: 3px solid var(--accent-purple);">
+          <h3>🤖 AI Summarizer Đa Tổ Nhóm</h3>
+          <p>Tổng hợp văn bản thô từ 4 tổ gán nhãn bằng mô hình Gemini LLM kết hợp bộ Heuristic Offline Fallback bảo đảm không bao giờ văng lỗi.</p>
+        </div>
+        <div class="card" style="border-top: 3px solid var(--accent);">
+          <h3>📊 Power BI Dashboard 5 Trang</h3>
+          <p>Kết nối trực tiếp vào Database Medallion, làm mới dữ liệu 1 nút bấm (One-Click Refresh) hiển thị góc nhìn toàn diện cho Mentor & Leader.</p>
+        </div>
+        <div class="card" style="border-top: 3px solid #ec4899;">
+          <h3>📄 Báo Cáo Điều Hành Tự Động</h3>
+          <p>Tự động xuất bản thảo <code>MENTOR_REPORT_DRAFT.md</code> chuẩn 4 phần gửi Mentor trước 24 giờ, kèm Deep Links trỏ thẳng frame lỗi CVAT.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: SYSTEM ARCHITECTURE -->
+    <section class="slide" id="slide-4">
+      <div class="slide-header">
+        <div>
+          <h2>03. KIẾN TRÚC HỆ THỐNG & LUỒNG DỮ LIỆU</h2>
+          <p>Quy trình 5 giai đoạn liên hoàn khép kín bảo đảm độ tin cậy và khả năng mở rộng</p>
+        </div>
+        <span class="slide-tag">Architecture</span>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>🏗️ 5 Tầng Kiến Trúc Hệ Thống</h3>
+          <ul style="padding-left: 20px;">
+            <li style="margin-bottom: 8px;"><b>1. Trigger Layer:</b> GitHub Actions Cron định kỳ (T6 17:00 & CN 20:00) hoặc chạy thủ công CLI.</li>
+            <li style="margin-bottom: 8px;"><b>2. Ingestion & Verify:</b> Trích xuất CVAT REST API v2 & GitHub API v3, Regex bóc tách frame index.</li>
+            <li style="margin-bottom: 8px;"><b>3. Storage Medallion:</b> Lưu trữ Bronze &rarr; Silver &rarr; Gold (Kimball Star Schema 6 Dims + 6 Facts).</li>
+            <li style="margin-bottom: 8px;"><b>4. Analytics Engine:</b> Tính Shoelace, COCO scale, 20 DAX Measures, phân khúc 7 nhóm nhân sự.</li>
+            <li><b>5. Consumption:</b> Power BI Dashboard 5 trang, Standalone HTML Viewer, Báo cáo Markdown và Bot Telegram.</li>
+          </ul>
+        </div>
+        <div class="card" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+          <div style="font-size: 54px; margin-bottom: 12px;">🛡️ & ⚡</div>
+          <h3 style="color: var(--accent);">Bảo Mật & Độ Tin Cậy Cấp Doanh Nghiệp</h3>
+          <p style="margin-top: 8px;">Cơ chế Exponential Retry Backoff xử lý lỗi mạng 429/500/503. Bảo vệ chống tấn công SSRF & rò rỉ token. Không dùng thư viện cồng kềnh, ưu tiên Python Standard Library và nén bộ nhớ VertiPaq.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: INNOVATIONS -->
+    <section class="slide" id="slide-5">
+      <div class="slide-header">
+        <div>
+          <h2>04. ĐIỂM SÁNG CÔNG NGHỆ ĐỘT PHÁ</h2>
+          <p>Những sáng kiến kỹ thuật đem lại giá trị vượt trội so với các công cụ truyền thống</p>
+        </div>
+        <span class="slide-tag">Key Innovations</span>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>🔗 1. Deep Link Frame-Level Thông Minh</h3>
+          <p>Tự động phân tích ngữ cảnh Issue từ GitHub để tạo Deep Link trỏ thẳng vào đúng frame lỗi trên CVAT:</p>
+          <div style="background: #0f172a; padding: 10px; border-radius: 6px; font-family: monospace; font-size: 11px; margin-top: 10px; color: var(--accent);">
+            https://cvat.org/tasks/217/jobs/801?frame=142
+          </div>
+          <p style="margin-top: 8px;">Mentor click 1 phát mở ngay khung hình gây tranh cãi mà không cần tìm kiếm thủ công.</p>
+        </div>
+        <div class="card">
+          <h3>📐 2. Thuật toán Gauss Shoelace & COCO Scale</h3>
+          <p>Tính diện tích đa giác chính xác tuyệt đối theo tọa độ đỉnh:</p>
+          <div style="background: #0f172a; padding: 10px; border-radius: 6px; font-family: monospace; font-size: 11px; margin-top: 10px; color: var(--accent-gold);">
+            Area = 0.5 * |&sum;(x_i*y_{i+1} - x_{i+1}*y_i)|
+          </div>
+          <p style="margin-top: 8px;">Tự động phân loại vật thể thành Small (&lt;32²), Medium và Large (&gt;96²) để đánh giá mức độ tỉ mỉ.</p>
+        </div>
+        <div class="card">
+          <h3>👥 3. Ma Trận Phân Khúc 7 Nhóm Nhân Sự</h3>
+          <p>Phân loại nhân viên gán nhãn theo 2 trục Tốc độ (Velocity) và Chất lượng (FTPR):</p>
+          <p style="margin-top: 6px; font-size: 12px; color: #e2e8f0;">
+            • Ngôi sao hiệu suất &nbsp;|&nbsp; • Cẩn trọng &nbsp;|&nbsp; • Tốc độ cần kiểm soát &nbsp;|&nbsp; • Tiêu chuẩn &nbsp;|&nbsp; • Cần đào tạo lại &nbsp;|&nbsp; • Nhân sự mới &nbsp;|&nbsp; • Chuyên gia ca khó
+          </p>
+        </div>
+        <div class="card">
+          <h3>🤖 4. Hybrid AI Summarizer (Gemini + Offline Fallback)</h3>
+          <p>Tự động phân tích các đoạn text phản ánh thô của từng tổ gán nhãn để trích xuất điểm nóng và đề xuất nghị trình họp. Tự động chuyển sang chế độ Heuristic khi mất mạng mà không bao giờ bị văng lỗi.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: LIVE PRODUCT -->
+    <section class="slide" id="slide-6">
+      <div class="slide-header">
+        <div>
+          <h2>05. TRẢI NGHIỆM SẢN PHẨM LIVE (5-PAGE DASHBOARD)</h2>
+          <p>Trực quan hóa chuyên nghiệp theo chuẩn doanh nghiệp trên Power BI Desktop & Web Viewer</p>
+        </div>
+        <span class="slide-tag">Product Demo</span>
+      </div>
+      <div class="grid-3" style="margin-bottom: 16px;">
+        <div class="card">
+          <h3>1. Executive 360</h3>
+          <p>Tiến độ hoàn thành %, Vận tốc trung bình, Giờ hoạt động, Dự báo ngày hoàn thành (ETA Completion Window).</p>
+        </div>
+        <div class="card">
+          <h3>2. QA Deep-Dive</h3>
+          <p>Tỷ lệ đạt lần đầu (FTPR), Tỷ lệ từ chối, Phân tích 4 nhóm lỗi Taxonomy, Điểm kiểm tra chéo Ground Truth IoU/F1.</p>
+        </div>
+        <div class="card">
+          <h3>3. People Matrix</h3>
+          <p>Biểu đồ Scatter Plot phân loại 7 nhóm annotator, Bảng xếp hạng năng suất và chất lượng cá nhân.</p>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>4. Data Geometry & COCO Scale</h3>
+          <p>Phân bổ kích thước vật thể, diện tích Shoelace, đánh giá tỷ lệ lỗi trên các vật thể nhỏ (COCO Small).</p>
+        </div>
+        <div class="card">
+          <h3>5. Edge-Case Explorer</h3>
+          <p>Danh sách ca khó đồng bộ từ GitHub Issues, tích hợp nút Deep Link mở trực tiếp frame CVAT để nghiệm thu.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: QA & TESTING RIGOR -->
+    <section class="slide" id="slide-7">
+      <div class="slide-header">
+        <div>
+          <h2>06. KIỂM THỬ KHẮT KHE & TÍNH TOÀN VẸN SỐ LIỆU</h2>
+          <p>Bảo đảm độ chính xác tuyệt đối qua 136 bài test tự động và đối soát kép DAX</p>
+        </div>
+        <span class="slide-tag">Quality Assurance</span>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>🧪 136/136 Unit Tests PASS 100%</h3>
+          <p style="margin-bottom: 10px;">Toàn bộ test suite hoàn thành chỉ trong <b>2.57 giây</b> với độ bao phủ toàn diện:</p>
+          <ul style="padding-left: 20px;">
+            <li>Extractors, Base Client & Security: 32 tests</li>
+            <li>Processors, Normalizer & Geometry: 31 tests</li>
+            <li>Medallion DB Storage & Adapters: 22 tests</li>
+            <li>AI Engine, Notifiers & Pipeline: 51 tests</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🎯 Đối Soát Kép 20/20 DAX Measures</h3>
+          <p style="margin-bottom: 10px;">100% công thức DAX trong Power BI khớp hoàn toàn với hàm Python ETL (sai lệch 0.0000%):</p>
+          <div style="background: #0f172a; padding: 12px; border-radius: 8px; font-size: 12px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;"><span>Completed Frames:</span><b style="color: var(--accent-green);">100% MATCH</b></div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;"><span>Velocity (Frames/h):</span><b style="color: var(--accent-green);">100% MATCH</b></div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;"><span>FTPR % & Rejection %:</span><b style="color: var(--accent-green);">100% MATCH</b></div>
+            <div style="display: flex; justify-content: space-between;"><span>Shoelace & COCO Scale:</span><b style="color: var(--accent-green);">100% MATCH</b></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 8: FEASIBILITY & ROI -->
+    <section class="slide" id="slide-8">
+      <div class="slide-header">
+        <div>
+          <h2>07. TÍNH KHẢ THI & HIỆU QUẢ HOẠT ĐỘNG (ROI)</h2>
+          <p>Đo lường sự đột phá về năng suất và khả năng áp dụng thực tế ngay lập tức</p>
+        </div>
+        <span class="slide-tag">Feasibility & ROI</span>
+      </div>
+      <div class="grid-4" style="margin-bottom: 24px;">
+        <div class="stat-box"><div class="stat-val green">12.000x</div><div class="stat-lbl">Tốc độ sinh báo cáo</div></div>
+        <div class="stat-box"><div class="stat-val">0.85s</div><div class="stat-lbl">Độ trễ xử lý E2E</div></div>
+        <div class="stat-box"><div class="stat-val gold">&lt; 68MB</div><div class="stat-lbl">Mức tiêu thụ RAM</div></div>
+        <div class="stat-box"><div class="stat-val purple">Zero-Ops</div><div class="stat-lbl">Chi phí server duy trì</div></div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>💼 Giá Trị Thực Tế Cho Doanh Nghiệp</h3>
+          <p>• Tiết kiệm <b>2 - 4 giờ</b> mỗi tuần cho mỗi Lead/Manager dự án.<br>
+          • Loại bỏ <b>100%</b> sai sót con người khi tính toán thủ công bằng Excel.<br>
+          • Tăng <b>35%</b> tốc độ giải quyết ca khó nhờ Deep Link trỏ thẳng khung hình lỗi.</p>
+        </div>
+        <div class="card">
+          <h3>✅ Tính Khả Thi Cao (Ready to Deploy)</h3>
+          <p>• 100% mã nguồn đã được kiểm thử, đóng gói và sẵn sàng vận hành.<br>
+          • Bộ khởi động <b>START_AUTO.cmd</b> cho phép chạy mượt mà trên bất kỳ máy Windows nào mà không cần cấu hình phức tạp.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 9: ROADMAP -->
+    <section class="slide" id="slide-9">
+      <div class="slide-header">
+        <div>
+          <h2>08. ĐỊNH HƯỚNG PHÁT TRIỂN (ROADMAP)</h2>
+          <p>Lộ trình phát triển mở rộng từ công cụ báo cáo sang nền tảng điều phối thông minh</p>
+        </div>
+        <span class="slide-tag">Future Roadmap</span>
+      </div>
+      <div class="grid-3" style="margin-top: 10px;">
+        <div class="card" style="border-top: 4px solid var(--accent-green);">
+          <div class="badge" style="background: var(--accent-green); margin-bottom: 8px;">Hiện tại (Build Phase)</div>
+          <h3>Giai Đoạn 1: Nền Tảng</h3>
+          <ul style="padding-left: 20px; margin-top: 8px;">
+            <li>Pipeline tự động hóa hoàn chỉnh.</li>
+            <li>Kho Medallion Lakehouse SQLite.</li>
+            <li>Power BI 5 trang Direct Query.</li>
+            <li>LLM Summarizer đa tổ nhóm.</li>
+            <li>136 Unit Tests (100% Pass).</li>
+          </ul>
+        </div>
+        <div class="card" style="border-top: 4px solid var(--accent);">
+          <div class="badge" style="background: var(--accent); margin-bottom: 8px;">Q1 / 2027</div>
+          <h3>Giai Đoạn 2: Mở Rộng Nền Tảng</h3>
+          <ul style="padding-left: 20px; margin-top: 8px;">
+            <li>Tích hợp thêm <b>Label Studio</b>, <b>Roboflow</b>, <b>V7 Darwin</b>.</li>
+            <li>Mô hình Machine Learning tự động phát hiện bất thường (Anomaly Detection).</li>
+            <li>Cảnh báo sớm annotator có nguy cơ chậm tiến độ hoặc tỷ lệ lỗi đột biến.</li>
+          </ul>
+        </div>
+        <div class="card" style="border-top: 4px solid var(--accent-purple);">
+          <div class="badge" style="background: var(--accent-purple); margin-bottom: 8px;">Q2 / 2027</div>
+          <h3>Giai Đoạn 3: Smart AI Ops</h3>
+          <ul style="padding-left: 20px; margin-top: 8px;">
+            <li><b>Smart Task Routing:</b> Điều phối tự động frame khó cho nhân sự giỏi nhất.</li>
+            <li><b>Active Learning Loop:</b> Tự động gán nhãn sơ bộ (Pre-annotation) và chấm điểm tự tin (Confidence Scoring).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 10: TEAM & ROLES -->
+    <section class="slide" id="slide-10">
+      <div class="slide-header">
+        <div>
+          <h2>09. ĐỘI NGŨ THỰC HIỆN DỰ ÁN</h2>
+          <p>Cơ cấu phân vai chuyên nghiệp theo chuẩn Agile/Scrum của 5 thành viên</p>
+        </div>
+        <span class="slide-tag">Team & Execution</span>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>👑 Đinh Công Minh — Project Lead & BI Architect</h3>
+          <p>• Định hướng bài toán, làm rõ yêu cầu nghiệp vụ và cấu trúc báo cáo.<br>
+          • Thiết kế trực quan Dashboard Power BI (5 trang báo cáo chuẩn doanh nghiệp).<br>
+          • Thiết kế Data Model Star Schema và 20 DAX Measures.<br>
+          • Trực tiếp làm việc, thuyết trình và chạy kiểm thử UAT cùng Mentor/Leader.</p>
+        </div>
+        <div class="card">
+          <h3>⚙️ Phạm Nguyễn Tuân — Analytics & ETL Engineer</h3>
+          <p>• Xây dựng module Python ETL Engine làm sạch và tổng hợp dữ liệu.<br>
+          • Cài đặt công thức tính Vận tốc, FTPR, Rework, Shoelace Area, COCO Scale.<br>
+          • Hiện thực hóa thuật toán ma trận phân khúc 7 nhóm nhân sự.<br>
+          • Nạp dữ liệu vào Kho Medallion Lakehouse (SQLite).</p>
+        </div>
+        <div class="card">
+          <h3>🔗 Vũ Trường Duy — Data Integration Engineer</h3>
+          <p>• Kết nối GitHub API trích xuất danh sách ca khó (label <code>ca-kho</code>, <code>blocker</code>).<br>
+          • Tạo sinh Deep Link chuẩn xác trỏ trực tiếp đến từng frame lỗi trên CVAT.<br>
+          • Module đối soát chéo liên kết Task/Job và phòng chống tấn công SSRF.</p>
+        </div>
+        <div class="card">
+          <h3>📦 Nguyễn Minh Tú — Data Collection Specialist</h3>
+          <p>• Kết nối CVAT REST API v2 trích xuất Tasks, Jobs, Assignees, Annotations.<br>
+          • Xử lý xác thực Token (PAT), duyệt phân trang an toàn.<br>
+          • Xây dựng bộ sinh dữ liệu giả lập phong phú (Mock Data Generator).</p>
+        </div>
+      </div>
+      <div class="card" style="margin-top: 14px;">
+        <h3>🛡️ Ngô Duy Ngọc — DevOps & QA Specialist</h3>
+        <p>• Xây dựng luồng tự động hóa CI/CD qua GitHub Actions (<code>scheduled_report.yml</code>). Chuẩn hóa hệ thống 4 phân loại lỗi gán nhãn QA. Phụ trách và duy trì bộ kiểm thử tự động 136 Unit Tests đạt tỷ lệ pass 100%.</p>
+      </div>
+    </section>
+
+    <!-- SLIDE 11: CALL TO ACTION -->
+    <section class="slide" id="slide-11">
+      <div class="cover-slide">
+        <span class="badge" style="background: var(--accent-green); margin-bottom: 16px;">Sẵn Sàng Triển Khai Thực Tế</span>
+        <h1 class="cover-title" style="font-size: 38px;">CHUYỂN ĐỔI SỐ DATA ANNOTATION OPERATIONS</h1>
+        <p class="cover-sub">"Dữ liệu sạch tạo nên mô hình AI xuất sắc. Auto Annotation Reporter biến quá trình gán nhãn dữ liệu từ một 'hộp đen' thủ công, phân mảnh thành một dây chuyền công nghiệp minh bạch, chuẩn xác và tự động hóa 100%."</p>
+
+        <div style="display: flex; gap: 16px; margin-bottom: 32px;">
+          <a href="../index.html" class="btn btn-primary" style="padding: 10px 24px; font-size: 14px;" target="_blank">🌐 Trải Nghiệm Live Web Demo</a>
+          <a href="https://github.com/nolanminhdinh/auto-annotation-reporter" class="btn" style="padding: 10px 24px; font-size: 14px;" target="_blank">💻 Xem Repository GitHub</a>
+        </div>
+
+        <p style="font-size: 13px; color: var(--text-muted);">
+          <b>Kính chúc Ban Giám Khảo & Quý Mentor một buổi chấm thi thành công!</b>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Bar -->
+  <footer class="bottombar">
+    <div style="display: flex; gap: 8px;">
+      <button class="nav-btn" id="prevBtn" title="Slide trước">&larr;</button>
+      <button class="nav-btn" id="nextBtn" title="Slide kế tiếp">&rarr;</button>
+    </div>
+    <div class="progress-track">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div style="font-size: 12px; color: var(--text-muted);">
+      Dùng phím mũi tên <b>&larr; / &rarr;</b> trên bàn phím để chuyển slide
+    </div>
+  </footer>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 11;
+
+    const slides = document.querySelectorAll('.slide');
+    const counter = document.getElementById('counter');
+    const progressBar = document.getElementById('progressBar');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    function updateSlide(newSlide) {
+      if (newSlide < 1 || newSlide > totalSlides) return;
+      
+      slides.forEach((slide, index) => {
+        const slideNum = index + 1;
+        slide.classList.remove('active', 'prev');
+        if (slideNum === newSlide) {
+          slide.classList.add('active');
+        } else if (slideNum < newSlide) {
+          slide.classList.add('prev');
+        }
+      });
+
+      currentSlide = newSlide;
+      counter.textContent = `Slide ${currentSlide} / ${totalSlides}`;
+      progressBar.style.width = `${(currentSlide / totalSlides) * 100}%`;
+    }
+
+    prevBtn.addEventListener('click', () => updateSlide(currentSlide - 1));
+    nextBtn.addEventListener('click', () => updateSlide(currentSlide + 1));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        updateSlide(currentSlide + 1);
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        updateSlide(currentSlide - 1);
+      } else if (e.key === 'Home') {
+        updateSlide(1);
+      } else if (e.key === 'End') {
+        updateSlide(totalSlides);
+      }
+    });
+  </script>
+</body>
+</html>
