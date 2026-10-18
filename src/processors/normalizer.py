@@ -25,6 +25,8 @@ def normalize_snapshot(
     scope = manifest.get("scope", {})
     host = scope.get("cvat_host", "https://app.cvat.ai").rstrip("/")
     warnings: List[str] = []
+    if manifest.get('simulation', {}).get('is_simulated') is True:
+        warnings.append('MÔ PHỎNG ĐẦY ĐỦ: Nhân sự, trạng thái, giờ làm, lịch sử review, lỗi và điểm GT là dữ liệu kiểm thử local; không phải kết quả vận hành thực trên CVAT.')
 
     # 1. Summarize Annotations
     annotations_summary = CVATExtractor.summarize_annotations(
@@ -136,6 +138,27 @@ def normalize_snapshot(
         if "guideline-update" in issue_labels:
             guideline_updates.append(item)
 
+    # Native CVAT issues are evidence too; validate job/frame scope locally.
+    cvat_jobs = {j['id']: j for j in jobs if j.get('type', 'annotation') == 'annotation'}
+    comments = {}
+    for comment in (cvat_data or {}).get('comments', []):
+        comments.setdefault(comment.get('issue'), []).append(comment)
+    for issue in (cvat_data or {}).get('issues', []):
+        jid, frame = issue.get('job'), issue.get('frame')
+        job = cvat_jobs.get(jid)
+        if not job or issue.get('resolved') is not False:
+            continue
+        valid = type(frame) is int and job.get('start_frame', 0) <= frame <= job.get('stop_frame', -1)
+        messages = sorted(comments.get(issue['id'], []), key=lambda c: c.get('created_date', ''))
+        description = '\n\n'.join(c.get('message', '') for c in messages)
+        url = f'{host}/tasks/{task.get("id")}/jobs/{jid}?frame={frame}' if valid else None
+        edge_cases.append({'case_id':f'cvat:{task.get("id")}:{issue["id"]}', 'number':issue['id'],
+            'title':f'CVAT #{issue["id"]}: {description[:90] or "Issue"}',
+            'description':description, 'labels':['CVAT issue'], 'source_url':url,
+            'state':'open', 'author':(issue.get('owner') or {}).get('username'),
+            'updated_at':issue.get('updated_date'), 'task_id':task.get('id'), 'job_id':jid,
+            'frame':frame, 'link_status':'verified' if valid else 'invalid_frame', 'cvat_job_url':url})
+
     # 4. Normalize Jobs & Batch Progress
     normalized_jobs = [
         {
@@ -162,14 +185,21 @@ def normalize_snapshot(
     # 5. Quality Scores Handling
     quality_report = (cvat_data or {}).get("quality_report")
     quality_value=None
+    quality_method = 'CVAT Quality Report (Ground Truth)'
     if quality_report:
         quality_value=quality_report.get('mean_iou')
         if quality_value is None: quality_value=quality_report.get('quality_score')
+    if quality_value is None and cvat_data:
+        from src.processors.cvat_quality import quality_evidence
+        evaluations, _, _ = quality_evidence(cvat_data, list(cvat_jobs.values()), task.get('id'), host)
+        if evaluations:
+            quality_value = sum(e['f1_score'] for e in evaluations) / len(evaluations)
+            quality_method = 'CVAT Ground Truth: F1 trung bình theo job; không phải mIoU'
     if quality_report and quality_value is not None:
         scores_data = {
             "status": "available",
             "value": quality_value,
-            "method": "CVAT Quality Report (Ground Truth)",
+            "method": quality_method,
             "source_url": f"{host}/api/quality/reports/{quality_report.get('id', '')}",
             "scored_at": quality_report.get("created_date"),
             "details": quality_report,

@@ -29,10 +29,10 @@ Total_Defects =
 IF(MAX(report_status[defects_available]) = 1, COALESCE(COUNTROWS(fact_qa_defects), 0))
 
 Defect_Density_Per_100F =
-DIVIDE([Total_Defects] * 100, [Total_Completed_Frames])
+IF(COUNTBLANK(fact_qa_defects[review_id]) > 0 || (COUNTROWS(fact_qa_defects) = 0 && COUNTROWS(FILTER(fact_ground_truth_eval, LEFT(fact_ground_truth_eval[eval_id], 8) = "cvat-qa:")) > 0), BLANK(), DIVIDE([Total_Defects] * 100, [Total_Completed_Frames]))
 
 Avg_Defects_Per_Job =
-DIVIDE([Total_Defects], DISTINCTCOUNT(fact_qa_reviews[job_id]))
+IF(COUNTBLANK(fact_qa_defects[review_id]) > 0 || (COUNTROWS(fact_qa_defects) = 0 && COUNTROWS(FILTER(fact_ground_truth_eval, LEFT(fact_ground_truth_eval[eval_id], 8) = "cvat-qa:")) > 0), DIVIDE([Total_Defects], DISTINCTCOUNT(fact_ground_truth_eval[job_id])), DIVIDE([Total_Defects], DISTINCTCOUNT(fact_qa_reviews[job_id])))
 
 Avg_mIoU_Score =
 IF(MAX(report_status[gt_available]) = 1, AVERAGE(fact_ground_truth_eval[mean_iou]))
@@ -80,10 +80,10 @@ Active_Annotators =
 COALESCE(COUNTROWS(FILTER(VALUES(dim_annotators[annotator_id]), NOT ISBLANK(dim_annotators[annotator_id]) && CALCULATE(COUNTROWS(fact_job_sessions)) > 0)), 0)
 
 Source_Label =
-IF(MAX(report_status[is_demo]) = 1, "DEMO / DỮ LIỆU GIẢ LẬP", "DỮ LIỆU NGUỒN") & "  |  " & FORMAT(MAX(report_status[as_of]), "dd/MM/yyyy")
+IF(CONTAINSSTRING(MAX(report_status[warnings]), "SIMULATED_SUPPLEMENT"), "MÔ PHỎNG ĐẦY ĐỦ / KHÔNG PHẢI KẾT QUẢ VẬN HÀNH THẬT", IF(MAX(report_status[is_demo]) = 1, "DEMO / DỮ LIỆU GIẢ LẬP", "DỮ LIỆU NGUỒN")) & "  |  " & FORMAT(MAX(report_status[as_of]), "dd/MM/yyyy")
 
 Data_Warnings =
-"Nguồn: " & IF(ISBLANK([Total_Active_Hours]), "giờ làm chưa đủ", "có giờ làm") & " | " & IF(MAX(report_status[reviews_available]) = 1, "có review", "thiếu review") & " | " & IF(MAX(report_status[gt_available]) = 1, "có Ground Truth", "thiếu Ground Truth") & UNICHAR(10) & "KPI trống = chưa đủ dữ liệu. Frames hoàn thành là proxy theo trạng thái job, chưa đồng nghĩa QA pass."
+IF(CONTAINSSTRING(MAX(report_status[warnings]), "SIMULATED_SUPPLEMENT"), "DỮ LIỆU MÔ PHỎNG: nhân sự, giờ làm, review, lỗi, GT và ngày hoàn thành đều phục vụ kiểm thử." & UNICHAR(10) & "Không dùng để đánh giá người thật. Link CVAT chỉ tham chiếu bộ ảnh; không phản ánh trạng thái mô phỏng local.", "Nguồn: " & IF(ISBLANK([Total_Active_Hours]), "chưa có giờ làm → chưa tính vận tốc/AHT", "có giờ làm") & " | " & IF(MAX(report_status[reviews_available]) = 1, "có lịch sử review", "chưa có lịch sử review → chưa tính FTPR/rejection") & UNICHAR(10) & IF(MAX(report_status[gt_available]) = 1, "QA/F1 có nguồn; ", "Chưa có QA/F1; ") & IF(ISBLANK([Avg_mIoU_Score]), "mIoU chưa có nguồn hình học. ", "") & "QA tự động theo mẫu không thay thế review; mật độ lỗi/frame hoàn thành để trống nếu khác phạm vi.")
 
 Selected_Case =
 SELECTEDVALUE(fact_edge_cases[description], "Chọn một ca trong bảng phía trên để đọc mô tả. Link example.org trong bản DEMO chỉ dùng minh họa.")

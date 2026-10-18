@@ -23,7 +23,7 @@ from src.processors.quality import first_time_pass_rate, rejection_rate, avg_mio
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_DB = ROOT / 'data' / 'annotation_reporting.db'
 SCHEMA_VERSION = 2
-TRANSFORM_VERSION = '2026-10-18.1'
+TRANSFORM_VERSION = '2026-10-18.3'
 
 # Canonical serving contract. CSVs, SQL views, M and DAX use these names.
 TABLES = {
@@ -113,6 +113,10 @@ def build_tables(folder: Path, frame_size=None):
     as_of = date.fromisoformat(iso_date(started))
     rows = {t:[] for t in TABLES}
     warnings = ['Completed frames are a job-state proxy, not a count of QA-accepted unique frames.']
+    if operations.get('is_simulated') is True:
+        if manifest.get('fixture') is not True:
+            raise ValueError('Simulated operations require an explicitly marked fixture snapshot')
+        warnings.insert(0,'SIMULATED_SUPPLEMENT: Personnel, job states, hours, reviews, defects, Ground Truth scores and completion dates are simulated for dashboard testing; not real operational results.')
     repo = scope.get('repo','')
     host = scope.get('cvat_host','').rstrip('/')
     users = {}
@@ -219,14 +223,25 @@ def build_tables(folder: Path, frame_size=None):
         if jid not in gt_by_job or stamp>gt_by_job[jid][0]: gt_by_job[jid]=(stamp,e)
     rows['fact_ground_truth_eval']=[e for _,e in gt_by_job.values()]
 
+    from src.processors.cvat_quality import quality_evidence
+    qa_evals, qa_defects, qa_warnings = quality_evidence(cvat, jobs, tid, host)
+    # An explicit operations supplement remains authoritative for its jobs.
+    existing_gt = {r['job_id'] for r in rows['fact_ground_truth_eval']}
+    rows['fact_ground_truth_eval'].extend(r for r in qa_evals if r['job_id'] not in existing_gt)
+    automatic_defects = not operations.get('availability', {}).get('defects') and bool(qa_evals)
+    if automatic_defects:
+        rows['fact_qa_defects'].extend(qa_defects)
+    warnings.extend(qa_warnings)
+
     from src.processors.normalizer import normalize_snapshot
     report=normalize_snapshot(manifest,cvat,github,read_json(folder/'links.json',[]),folder,manifest.get('mentor_session'))
     warnings.extend(report['metadata']['warnings'])
     cases={}
     for group in ('edge_cases','open_questions','blockers'):
         for item in report[group]['items']:
-            cases[item['number']]=item
-    for no,item in cases.items():
+            cases[item.get('case_id',f'{repo}#{item["number"]}')]=item
+    for case_id,item in cases.items():
+        no=item['number']
         labels=item['labels']; jid=item.get('job_id')
         link_status = item.get('link_status')
         link = item.get('cvat_job_url')
@@ -236,7 +251,7 @@ def build_tables(folder: Path, frame_size=None):
             if not linked_job['start_frame'] <= frame <= linked_job['stop_frame']:
                 link_status = 'invalid_frame'; link = None
                 warnings.append(f'Issue #{no} references a frame outside its job range; CVAT URL suppressed.')
-        rows['fact_edge_cases'].append({'case_id':f'{repo}#{no}','number':no,'task_id':tid,'job_id':jid if jid in job_ids else None,'title':item.get('title'),'description':item.get('description'),'labels':', '.join(labels),'state':item.get('state'),'severity':'Blocker' if 'blocker' in labels else None,'frame':frame,'link_status':link_status,'cvat_deep_link':link,'source_url':item.get('source_url')})
+        rows['fact_edge_cases'].append({'case_id':case_id,'number':no,'task_id':tid,'job_id':jid if jid in job_ids else None,'title':item.get('title'),'description':item.get('description'),'labels':', '.join(labels),'state':item.get('state'),'severity':'Blocker' if 'blocker' in labels else None,'frame':frame,'link_status':link_status,'cvat_deep_link':link,'source_url':item.get('source_url')})
     if any(a['area_pixels'] is not None and a['frame_area_pct'] is None for a in rows['fact_annotations']): warnings.append('Frame dimensions missing for some records; their frame_area_pct is null.')
     for source, result in cvat.get('optional_sources', {}).items():
         if result.get('status') in ('failed','partial'): warnings.append(f'Optional CVAT source {source} is {result["status"]}.')
@@ -247,8 +262,8 @@ def build_tables(folder: Path, frame_size=None):
     if any(j['status']=='completed' and j['date_key'] is None for j in rows['fact_job_sessions']): warnings.append('Completion timestamps missing; daily production excludes undated jobs.')
     availability=operations.get('availability',{})
     reviews_available=availability.get('reviews') is True
-    defects_available=availability.get('defects') is True
-    gt_available=availability.get('ground_truth') is True
+    defects_available=availability.get('defects') is True or automatic_defects
+    gt_available=availability.get('ground_truth') is True or bool(qa_evals)
     if rows['fact_qa_reviews'] and not reviews_available: raise ValueError('Reviews require availability.reviews=true')
     if rows['fact_qa_defects'] and not defects_available: raise ValueError('Defects require availability.defects=true')
     if rows['fact_ground_truth_eval'] and not gt_available: raise ValueError('GT requires availability.ground_truth=true')
@@ -266,6 +281,7 @@ def build_tables(folder: Path, frame_size=None):
     completed=sum(j['total_frames'] for j in rows['fact_job_sessions'] if j['status']=='completed')
     hours=sum(j['active_time_hours'] or 0 for j in rows['fact_job_sessions']) if hours_available else None
     nobjects=len(rows['fact_annotations']); ndefects=len(rows['fact_qa_defects']) if defects_available else None
+    sampled_defects = automatic_defects or (not rows['fact_qa_defects'] and any(e['eval_id'].startswith('cvat-qa:') for e in rows['fact_ground_truth_eval']))
     areas=[a['area_pixels'] for a in rows['fact_annotations'] if a['area_pixels'] is not None]
     frame_pcts=[a['frame_area_pct'] for a in rows['fact_annotations'] if a['frame_area_pct'] is not None]
     scales=[a['size_scale'] for a in rows['fact_annotations'] if a['size_scale'] is not None]
@@ -277,8 +293,8 @@ def build_tables(folder: Path, frame_size=None):
         'Avg_Time_Per_Object_Secs':(ratio(hours*3600 if hours is not None else None,nobjects),'seconds/record'),
         'First_Time_Pass_Rate':(first_time_pass_rate(review_models) if reviews_available else None,'ratio'),
         'Rejection_Rate':(rejection_rate(review_models) if reviews_available else None,'ratio'),
-        'Total_Defects':(ndefects,'defects'), 'Defect_Density_Per_100F':(ratio(ndefects*100 if ndefects is not None else None,completed),'defects/100 frames'),
-        'Avg_Defects_Per_Job':(ratio(ndefects,len({r.job_id for r in review_models})) if reviews_available else None,'defects/job'),
+        'Total_Defects':(ndefects,'defects'), 'Defect_Density_Per_100F':(None if sampled_defects else ratio(ndefects*100 if ndefects is not None else None,completed),'defects/100 frames'),
+        'Avg_Defects_Per_Job':(ratio(ndefects,len(qa_evals)) if sampled_defects else ratio(ndefects,len({r.job_id for r in review_models})) if reviews_available else None,'defects/job'),
         'Avg_mIoU_Score':(avg_miou(gt_models) if gt_available else None,'ratio'),
         'Avg_F1_Score':(avg_f1(gt_models) if gt_available else None,'ratio'),
         'Avg_Object_Area_Pixels':(sum(areas)/len(areas) if areas else None,'pixels^2'),

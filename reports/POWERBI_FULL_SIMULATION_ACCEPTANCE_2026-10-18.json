@@ -1,0 +1,38 @@
+{
+  "status": "verified",
+  "checked_at": "2026-10-18T14:43:11.305412+00:00",
+  "report": "powerbi\\AnnotationReporter_Auto.pbix",
+  "report_sha256": "29299399980e23d0f50e576e871bd9ab3dfa1fc9046da1d14e35e3e63df969f3",
+  "automatic_page_refresh_seconds": 10,
+  "configured_pages": [
+    "01 Tổng quan",
+    "02 Chất lượng",
+    "03 Nhân sự",
+    "04 Hình học",
+    "05 Ca khó"
+  ],
+  "endpoint": "127.0.0.1:55432",
+  "snapshot_id": "S95ff943e25c3b0b256b6de00",
+  "native_observations": {
+    "pages_observed": [
+      "executive",
+      "quality",
+      "people",
+      "geometry",
+      "cases"
+    ],
+    "source_label": "MÔ PHỎNG ĐẦY ĐỦ / KHÔNG PHẢI KẾT QUẢ VẬN HÀNH THẬT",
+    "all_20_numeric_kpis_populated": true,
+    "visual_errors_seen": false,
+    "saved_in_desktop": true
+  },
+  "dax_reconciliations": [
+    {
+      "file": "reports/POWERBI_FULL_SIMULATION_DAX_RECONCILIATION_2026-10-18.json",
+      "passed": 20,
+      "total": 20
+    }
+  ],
+  "tests_passed": 152,
+  "scope": "Explicit local synthetic simulation including personnel, workflow, hours, reviews, defects, GT scores and completion dates; no CVAT or GitHub writes."
+}

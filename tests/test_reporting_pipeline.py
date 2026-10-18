@@ -13,6 +13,18 @@ from powerbi.create_demo_snapshot import create_demo
 from src.reporting_pipeline import publish_snapshot,build_tables
 
 class ReportingPipelineTests(unittest.TestCase):
+    def test_simulated_operations_require_fixture_marking(self):
+        self.edit('operations.json',lambda d:d.update(is_simulated=True))
+        self.edit('manifest.json',lambda d:d.update(fixture=False))
+        with self.assertRaisesRegex(ValueError,'explicitly marked fixture'):
+            self.publish()
+
+    def test_simulated_operations_have_visible_provenance(self):
+        self.edit('operations.json',lambda d:d.update(is_simulated=True))
+        self.edit('manifest.json',lambda d:d.update(fixture=True))
+        self.publish()
+        self.assertIn('SIMULATED_SUPPLEMENT',self.query('SELECT warnings FROM pbi_report_status')[0][0])
+
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory(); self.addCleanup(self.tmp.cleanup)
         self.root=Path(self.tmp.name);self.source=create_demo(self.root/'source')

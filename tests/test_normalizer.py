@@ -5,6 +5,21 @@ from src.processors.normalizer import normalize_snapshot
 
 
 class NormalizerTests(unittest.TestCase):
+    def test_native_cvat_issues_scope_resolution_and_frame_validation(self):
+        cvat={'task':{'id':10},'jobs':[{'id':1,'type':'annotation','start_frame':0,'stop_frame':9}],
+              'issues':[{'id':7,'job':1,'frame':3,'resolved':False},
+                        {'id':8,'job':1,'frame':30,'resolved':False},
+                        {'id':9,'job':1,'frame':3,'resolved':True},
+                        {'id':10,'job':99,'frame':3,'resolved':False}],
+              'comments':[{'issue':7,'message':'Check actual box','created_date':'2026-10-18'}]}
+        result=normalize_snapshot({'scope':{'cvat_host':'https://cvat.test'}},cvat,{'issues':[]},[],Path('sample'))
+        items=result['edge_cases']['items']
+        self.assertEqual([i['number'] for i in items],[7,8])
+        self.assertEqual(items[0]['case_id'],'cvat:10:7')
+        self.assertEqual(items[0]['description'],'Check actual box')
+        self.assertTrue(items[0]['cvat_job_url'].endswith('?frame=3'))
+        self.assertIsNone(items[1]['cvat_job_url'])
+
     def test_other_task_issue_excluded_and_general_question_kept(self):
         issues = [
             {"number": 1, "title": "Specific Case", "state": "open", "labels": [{"name": "mentor-question"}]},

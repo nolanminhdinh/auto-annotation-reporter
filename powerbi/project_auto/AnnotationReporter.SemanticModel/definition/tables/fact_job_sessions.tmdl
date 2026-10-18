@@ -51,12 +51,12 @@ table fact_job_sessions
 		displayFolder: KPI
 		lineageTag: 05074b32-6c92-466d-8ee5-b0b1742d3550
 
-	measure Defect_Density_Per_100F = DIVIDE([Total_Defects] * 100, [Total_Completed_Frames])
+	measure Defect_Density_Per_100F = IF(COUNTBLANK(fact_qa_defects[review_id]) > 0 || (COUNTROWS(fact_qa_defects) = 0 && COUNTROWS(FILTER(fact_ground_truth_eval, LEFT(fact_ground_truth_eval[eval_id], 8) = "cvat-qa:")) > 0), BLANK(), DIVIDE([Total_Defects] * 100, [Total_Completed_Frames]))
 		formatString: 0.00
 		displayFolder: KPI
 		lineageTag: 137c5797-5a05-4ccb-aed0-2b7ecd375d47
 
-	measure Avg_Defects_Per_Job = DIVIDE([Total_Defects], DISTINCTCOUNT(fact_qa_reviews[job_id]))
+	measure Avg_Defects_Per_Job = IF(COUNTBLANK(fact_qa_defects[review_id]) > 0 || (COUNTROWS(fact_qa_defects) = 0 && COUNTROWS(FILTER(fact_ground_truth_eval, LEFT(fact_ground_truth_eval[eval_id], 8) = "cvat-qa:")) > 0), DIVIDE([Total_Defects], DISTINCTCOUNT(fact_ground_truth_eval[job_id])), DIVIDE([Total_Defects], DISTINCTCOUNT(fact_qa_reviews[job_id])))
 		formatString: 0.00
 		displayFolder: KPI
 		lineageTag: 2b331ae4-20ae-4b02-92b3-89c8cb76ebd4
@@ -136,11 +136,11 @@ table fact_job_sessions
 		displayFolder: Report helpers
 		lineageTag: 2ecdf108-5550-4a10-89d9-404a31100d23
 
-	measure Source_Label = IF(MAX(report_status[is_demo]) = 1, "DEMO / DỮ LIỆU GIẢ LẬP", "DỮ LIỆU NGUỒN") & "  |  " & FORMAT(MAX(report_status[as_of]), "dd/MM/yyyy")
+	measure Source_Label = IF(CONTAINSSTRING(MAX(report_status[warnings]), "SIMULATED_SUPPLEMENT"), "MÔ PHỎNG ĐẦY ĐỦ / KHÔNG PHẢI KẾT QUẢ VẬN HÀNH THẬT", IF(MAX(report_status[is_demo]) = 1, "DEMO / DỮ LIỆU GIẢ LẬP", "DỮ LIỆU NGUỒN")) & "  |  " & FORMAT(MAX(report_status[as_of]), "dd/MM/yyyy")
 		displayFolder: Report helpers
 		lineageTag: 6c2bca46-29a7-45f0-a083-dea687fddf2e
 
-	measure Data_Warnings = "Nguồn: " & IF(ISBLANK([Total_Active_Hours]), "giờ làm chưa đủ", "có giờ làm") & " | " & IF(MAX(report_status[reviews_available]) = 1, "có review", "thiếu review") & " | " & IF(MAX(report_status[gt_available]) = 1, "có Ground Truth", "thiếu Ground Truth") & UNICHAR(10) & "KPI trống = chưa đủ dữ liệu. Frames hoàn thành là proxy theo trạng thái job, chưa đồng nghĩa QA pass."
+	measure Data_Warnings = IF(CONTAINSSTRING(MAX(report_status[warnings]), "SIMULATED_SUPPLEMENT"), "DỮ LIỆU MÔ PHỎNG: nhân sự, giờ làm, review, lỗi, GT và ngày hoàn thành đều phục vụ kiểm thử." & UNICHAR(10) & "Không dùng để đánh giá người thật. Link CVAT chỉ tham chiếu bộ ảnh; không phản ánh trạng thái mô phỏng local.", "Nguồn: " & IF(ISBLANK([Total_Active_Hours]), "chưa có giờ làm → chưa tính vận tốc/AHT", "có giờ làm") & " | " & IF(MAX(report_status[reviews_available]) = 1, "có lịch sử review", "chưa có lịch sử review → chưa tính FTPR/rejection") & UNICHAR(10) & IF(MAX(report_status[gt_available]) = 1, "QA/F1 có nguồn; ", "Chưa có QA/F1; ") & IF(ISBLANK([Avg_mIoU_Score]), "mIoU chưa có nguồn hình học. ", "") & "QA tự động theo mẫu không thay thế review; mật độ lỗi/frame hoàn thành để trống nếu khác phạm vi.")
 		displayFolder: Report helpers
 		lineageTag: 197210e0-a63a-40a6-b783-dd3118b8feb9
 

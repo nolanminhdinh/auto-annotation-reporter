@@ -60,3 +60,9 @@ powerbi/*_backup.pbix
 **/.pbi/localSettings.json
 **/.pbi/cache.abf
 **/.pbi/unappliedChanges.json
+
+# Internal document authoring and render previews
+/outputs/demo_render/
+/outputs/build_demo_document.py
+/outputs/render_demo_preview.py
+~$*

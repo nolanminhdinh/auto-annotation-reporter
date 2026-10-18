@@ -1,0 +1,36 @@
+{
+  "status": "verified",
+  "checked_at": "2026-10-18T14:30:37.813596+00:00",
+  "report": "powerbi\\AnnotationReporter_Auto.pbix",
+  "report_sha256": "bce03baea8e69753d32757ef922e9bf1371a5eb21f93627ac75bf30179644337",
+  "automatic_page_refresh_seconds": 10,
+  "configured_pages": [
+    "01 Tổng quan",
+    "02 Chất lượng",
+    "03 Nhân sự",
+    "04 Hình học",
+    "05 Ca khó"
+  ],
+  "endpoint": "127.0.0.1:55432",
+  "snapshot_id": "Sce75c5f945ca3d38afc91e12",
+  "native_observations": {
+    "pages_observed": [
+      "executive",
+      "quality",
+      "cases"
+    ],
+    "f1": 0.75,
+    "open_cvat_issues": 5,
+    "quality_charts_populated": true,
+    "saved_in_desktop": true
+  },
+  "dax_reconciliations": [
+    {
+      "file": "reports/POWERBI_QA_MAPPING_DAX_RECONCILIATION_2026-10-18.json",
+      "snapshot_id": "Sce75c5f945ca3d38afc91e12",
+      "passed": 20,
+      "total": 20
+    }
+  ],
+  "scope": "CVAT API test dataset; no simulated work hours/review history/IoU supplement. Five-page refresh configuration verified in saved PBIX; three pages visually observed. No Worker-login permission test or real human review acceptance."
+}
