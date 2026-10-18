@@ -1,6 +1,6 @@
 ﻿job_id,task_id,annotator_id,stage,state,frame_count,updated_at
-3001,217,101,annotation,completed,100,2026-10-16 02:36:36
-3002,217,101,annotation,completed,100,2026-10-16 02:36:36
-3003,217,102,annotation,completed,100,2026-10-16 02:36:36
-3004,217,102,annotation,annotation,100,2026-10-16 02:36:36
-3005,217,,annotation,annotation,100,2026-10-16 02:36:36
+3001,217,101,annotation,completed,100,2026-10-18 04:22:01
+3002,217,101,annotation,completed,100,2026-10-18 04:22:01
+3003,217,102,annotation,completed,100,2026-10-18 04:22:01
+3004,217,102,annotation,annotation,100,2026-10-18 04:22:01
+3005,217,,annotation,annotation,100,2026-10-18 04:22:01

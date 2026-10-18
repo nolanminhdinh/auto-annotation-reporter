@@ -35,7 +35,8 @@ if str(PROJECT_DIR) not in sys.path:
 from src.generators.llm_summarizer import summarize_from_warehouse
 from src.generators.markdown_generator import render_mentor_report
 from src.generators.report_agent import ReportReaderAgent
-from src.storage.db_manager import DEFAULT_DB_PATH, export_gold_to_csv
+from src.notifiers.bot import send_telegram_report
+from src.storage.db_manager import DEFAULT_DB_PATH, export_gold_to_csv, get_connection
 from src.storage.populate_warehouse import run_etl_to_database
 
 
@@ -47,8 +48,9 @@ def run_full_pipeline(
     run_llm_summary: bool = True,
     run_verify: bool = True,
     show_brief: bool = True,
+    notify: str = "none",
 ) -> int:
-    """Điều phối toàn bộ quy trình từ ETL kho dữ liệu, LLM tóm tắt, xuất Power BI và kiểm toán Agent."""
+    """Điều phối toàn bộ quy trình từ ETL kho dữ liệu, LLM tóm tắt, xuất Power BI, kiểm toán Agent và gửi Bot."""
     target_db = db_path or DEFAULT_DB_PATH
     reports_dir = PROJECT_DIR / "reports"
     reports_dir.mkdir(parents=True, exist_ok=True)
@@ -136,6 +138,33 @@ def run_full_pipeline(
             briefing = agent.generate_executive_briefing()
             print("\n" + briefing + "\n")
 
+    # -------------------------------------------------------------------------
+    # BƯỚC 6: BẮN THÔNG BÁO BOT TELEGRAM (NẾU CÓ YÊU CẦU HOẶC CHẠY THEO LỊCH)
+    # -------------------------------------------------------------------------
+    if notify == "telegram":
+        print("📢 [6/6] Khởi tạo và phát thông báo qua Telegram Bot...")
+        try:
+            kpi_context: Dict[str, Any] = {}
+            with get_connection(target_db) as conn:
+                row_bp = conn.execute("SELECT * FROM gold_mart_batch_progress ORDER BY as_of DESC LIMIT 1").fetchone()
+                if row_bp:
+                    kpi_context.update(dict(row_bp))
+                row_qa = conn.execute("SELECT * FROM gold_mart_qa_metrics ORDER BY as_of DESC LIMIT 1").fetchone()
+                if row_qa:
+                    kpi_context.update(dict(row_qa))
+
+            res = send_telegram_report(
+                llm_summary=llm_result,
+                kpi_data=kpi_context,
+                deep_link="https://app.cvat.ai/tasks/217/jobs/3001?frame=142",
+            )
+            if res.get("mode") == "dry_run":
+                print("  ✓ Đã hiển thị bản xem trước tin nhắn Telegram định dạng chuẩn (Dry-run Mode).\n")
+            elif res.get("success"):
+                print("  ✓ Đã phát thành công tin nhắn báo cáo điều hành tới Telegram Group/Leader.\n")
+        except Exception as e:
+            print(f"  ⚠️ Lỗi phát thông báo Telegram: {e}\n")
+
     print("=" * 70)
     print("🎉 [HOÀN TẤT] PIPELINE TOÀN TRÌNH ĐÃ THỰC THI THÀNH CÔNG!")
     print("=" * 70 + "\n")
@@ -150,6 +179,7 @@ def main():
     parser.add_argument("--export-powerbi", action="store_true", default=True, help="Xuất các bảng CSV cho Power BI")
     parser.add_argument("--llm-summary", action="store_true", default=True, help="Phân tích báo cáo ngôn ngữ tự nhiên bằng LLM")
     parser.add_argument("--verify", action="store_true", default=True, help="Chạy đối soát tính nhất quán bằng AI Agent")
+    parser.add_argument("--notify", choices=["telegram", "none"], default="none", help="Phát thông báo tóm tắt qua bot (telegram/none)")
     parser.add_argument("--no-brief", action="store_true", help="Không in bản tóm tắt ra màn hình")
     args = parser.parse_args()
 
@@ -161,6 +191,7 @@ def main():
         run_llm_summary=args.llm_summary,
         run_verify=args.verify,
         show_brief=not args.no_brief,
+        notify=args.notify,
     )
 
 
