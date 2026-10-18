@@ -1,0 +1,155 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "reviews",
+  "position": {
+    "x": 24,
+    "y": 655,
+    "z": 27,
+    "height": 210,
+    "width": 1392,
+    "tabOrder": 27
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_qa_reviews"
+                    }
+                  },
+                  "Property": "job_id"
+                }
+              },
+              "queryRef": "fact_qa_reviews.job_id",
+              "nativeQueryRef": "job_id",
+              "displayName": "Job"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_qa_reviews"
+                    }
+                  },
+                  "Property": "review_iteration"
+                }
+              },
+              "queryRef": "fact_qa_reviews.review_iteration",
+              "nativeQueryRef": "review_iteration",
+              "displayName": "Lượt review"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_qa_reviews"
+                    }
+                  },
+                  "Property": "review_decision"
+                }
+              },
+              "queryRef": "fact_qa_reviews.review_decision",
+              "nativeQueryRef": "review_decision",
+              "displayName": "Kết quả"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_qa_reviews"
+                    }
+                  },
+                  "Property": "reviewed_at"
+                }
+              },
+              "queryRef": "fact_qa_reviews.reviewed_at",
+              "nativeQueryRef": "reviewed_at",
+              "displayName": "Thời điểm review"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Review history'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#172B4D'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

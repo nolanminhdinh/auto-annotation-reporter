@@ -1,0 +1,130 @@
+{
+  "checked_at": "2026-10-18T01:06:44.6003331Z",
+  "snapshot_id": "Se9c4113e89c265be1df0ea88",
+  "loaded_snapshot_id": "Se9c4113e89c265be1df0ea88",
+  "catalog": "b98d4c77-8e69-492a-bcb0-0b4946b07464",
+  "filter_context": "Whole snapshot, no report slicers",
+  "tolerance": 1E-09,
+  "results": [
+    {
+      "metric": "Total_Completed_Frames",
+      "expected": 1100.0,
+      "actual": 1100.0,
+      "passed": true
+    },
+    {
+      "metric": "Total_Objects_Created",
+      "expected": 285.0,
+      "actual": 285.0,
+      "passed": true
+    },
+    {
+      "metric": "Total_Active_Hours",
+      "expected": 37.50000000000001,
+      "actual": 37.5,
+      "passed": true
+    },
+    {
+      "metric": "Velocity_Frames_Per_Hour",
+      "expected": 29.33333333333333,
+      "actual": 29.333333333333332,
+      "passed": true
+    },
+    {
+      "metric": "Velocity_Objects_Per_Hour",
+      "expected": 7.599999999999999,
+      "actual": 7.6,
+      "passed": true
+    },
+    {
+      "metric": "Avg_Time_Per_Frame_Mins",
+      "expected": 2.045454545454546,
+      "actual": 2.0454545454545454,
+      "passed": true
+    },
+    {
+      "metric": "Avg_Time_Per_Object_Secs",
+      "expected": 473.6842105263159,
+      "actual": 473.6842105263158,
+      "passed": true
+    },
+    {
+      "metric": "First_Time_Pass_Rate",
+      "expected": 0.5454545454545454,
+      "actual": 0.5454545454545454,
+      "passed": true
+    },
+    {
+      "metric": "Rejection_Rate",
+      "expected": 0.3125,
+      "actual": 0.3125,
+      "passed": true
+    },
+    {
+      "metric": "Total_Defects",
+      "expected": 5.0,
+      "actual": 5.0,
+      "passed": true
+    },
+    {
+      "metric": "Defect_Density_Per_100F",
+      "expected": 0.45454545454545453,
+      "actual": 0.45454545454545453,
+      "passed": true
+    },
+    {
+      "metric": "Avg_Defects_Per_Job",
+      "expected": 0.45454545454545453,
+      "actual": 0.45454545454545453,
+      "passed": true
+    },
+    {
+      "metric": "Avg_mIoU_Score",
+      "expected": 0.8672727272727272,
+      "actual": 0.8672727272727272,
+      "passed": true
+    },
+    {
+      "metric": "Avg_F1_Score",
+      "expected": 0.8872727272727272,
+      "actual": 0.8872727272727272,
+      "passed": true
+    },
+    {
+      "metric": "Avg_Object_Area_Pixels",
+      "expected": 5696.0526315789475,
+      "actual": 5696.0526315789475,
+      "passed": true
+    },
+    {
+      "metric": "Avg_Area_Frame_Pct",
+      "expected": 0.002746938961988304,
+      "actual": 0.0027469389619882967,
+      "passed": true
+    },
+    {
+      "metric": "Pct_Small_Objects",
+      "expected": 0.3508771929824561,
+      "actual": 0.3508771929824561,
+      "passed": true
+    },
+    {
+      "metric": "Project_Progress_Pct",
+      "expected": 0.7333333333333333,
+      "actual": 0.7333333333333333,
+      "passed": true
+    },
+    {
+      "metric": "System_Avg_Velocity",
+      "expected": 29.33333333333333,
+      "actual": 29.333333333333332,
+      "passed": true
+    },
+    {
+      "metric": "Count_At_Risk_Annotators",
+      "expected": 2.0,
+      "actual": 2.0,
+      "passed": true
+    }
+  ]
+}

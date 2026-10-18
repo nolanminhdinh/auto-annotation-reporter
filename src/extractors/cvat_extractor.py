@@ -1,5 +1,6 @@
 """CVAT REST API Extractor for Tasks, Jobs, Annotations, and Quality Reports."""
 from typing import Any, Dict, List, Optional
+from datetime import datetime, timezone
 import requests
 
 from .base_client import BaseClient
@@ -10,11 +11,11 @@ class CVATExtractor:
 
     def __init__(self, host: str, token: str, org: Optional[str] = None):
         self.host = host.rstrip("/")
-        # CVAT supports 'Token <PAT>' or 'Bearer <PAT>'
+        # Personal access token authentication.
         self.client = BaseClient(
             base_url=self.host,
             token=token,
-            auth_prefix="Token",
+            auth_prefix="Bearer",
             org=org,
         )
 
@@ -60,17 +61,59 @@ class CVATExtractor:
         return data
 
     def get_quality_reports(self, task_id: int) -> Optional[Dict[str, Any]]:
-        """Attempt to fetch quality reports (Ground Truth IoU/F1 comparisons)."""
+        """Latest task-level report metadata; job reports are not task aggregates."""
         try:
-            resp = self.client.get("api/quality/reports", {"task_id": task_id})
-            data = resp.json()
-            if isinstance(data, dict) and data.get("results"):
-                return data["results"][0]
-            if isinstance(data, list) and len(data) > 0:
-                return data[0]
+            reports = self.client.listing('api/quality/reports', {'task_id': task_id, 'page_size': 100})
+            candidates = [r for r in reports if r.get('job_id') is None and r.get('task_id', task_id) == task_id]
+            return max(candidates, key=self._report_order) if candidates else None
+        except (requests.RequestException, RuntimeError, ValueError, TypeError, KeyError):
             return None
-        except Exception:
-            return None
+
+    @staticmethod
+    def _report_order(report):
+        value = report.get('created_date')
+        try:
+            stamp = datetime.fromisoformat(value.replace('Z', '+00:00')) if value else datetime.min.replace(tzinfo=timezone.utc)
+            if stamp.tzinfo is None: stamp = stamp.replace(tzinfo=timezone.utc)
+        except (ValueError, AttributeError):
+            stamp = datetime.min.replace(tzinfo=timezone.utc)
+        try:
+            report_id = int(report.get('id', 0))
+        except (ValueError, TypeError):
+            report_id = 0
+        return stamp, report_id
+
+    def get_quality_bundle(self, task_id, job_ids):
+        """Read report/data with explicit availability; preserve payloads for mapping.
+
+        Raw report contents are not relabelled as reviewer history or synthetic GT.
+        """
+        try:
+            reports = self.client.listing('api/quality/reports', {'task_id': task_id, 'page_size': 100})
+        except (requests.RequestException, RuntimeError, ValueError) as error:
+            return {'status': 'failed', 'error_type': type(error).__name__, 'reports': []}
+        latest = {}
+        for report in reports:
+            if report.get('task_id', task_id) != task_id: continue
+            jid = report.get('job_id')
+            if jid is not None and jid not in job_ids: continue
+            if jid not in latest or self._report_order(report) > self._report_order(latest[jid]): latest[jid] = report
+        records = []
+        for report in latest.values():
+            try:
+                data = self.client.get(f'api/quality/reports/{int(report["id"])}/data', {'format': 'json'}).json()
+                if not isinstance(data, dict): raise ValueError('Expected quality report JSON object')
+                records.append({'status': 'success', 'metadata': report, 'data': data})
+            except (requests.RequestException, RuntimeError, ValueError, KeyError, TypeError) as error:
+                records.append({'status': 'failed', 'metadata': report, 'error_type': type(error).__name__})
+        status = 'unavailable' if not records else ('partial' if any(r['status'] != 'success' for r in records) else 'available')
+        return {'status': status, 'reports': records, 'latest_task_report': latest.get(None)}
+
+    def get_job_data_meta(self, job_id):
+        data = self.client.get(f'api/jobs/{job_id}/data/meta').json()
+        if not isinstance(data, dict) or not isinstance(data.get('frames'), list):
+            raise ValueError('Invalid media metadata')
+        return data
 
     def extract_snapshot(self, task_id: int) -> Dict[str, Any]:
         """Extract a complete snapshot from CVAT including tasks, jobs, annotations, and issues."""
@@ -80,12 +123,13 @@ class CVATExtractor:
         issues = self.get_issues(task_id)
 
         comments: List[Dict[str, Any]] = []
+        comment_failures = []
         for issue in issues:
             if "id" in issue:
                 try:
                     comments.extend(self.get_comments(issue["id"]))
-                except Exception:
-                    pass
+                except (requests.RequestException, RuntimeError, ValueError) as error:
+                    comment_failures.append({'issue_id': issue['id'], 'error_type': type(error).__name__})
 
         annotations: List[Dict[str, Any]] = []
         for job in jobs:
@@ -103,7 +147,14 @@ class CVATExtractor:
                     row["error"] = str(err)
                 annotations.append(row)
 
-        quality_report = self.get_quality_reports(task_id)
+        annotation_ids = {j['id'] for j in jobs if j.get('type', 'annotation') == 'annotation'}
+        quality_bundle = self.get_quality_bundle(task_id, annotation_ids)
+        media_metadata = []
+        for job_id in sorted(annotation_ids):
+            try:
+                media_metadata.append({'job_id': job_id, 'status': 'success', 'data': self.get_job_data_meta(job_id)})
+            except (requests.RequestException, RuntimeError, ValueError) as error:
+                media_metadata.append({'job_id': job_id, 'status': 'failed', 'error_type': type(error).__name__})
 
         return {
             "task": task,
@@ -112,7 +163,10 @@ class CVATExtractor:
             "issues": issues,
             "comments": comments,
             "annotations": annotations,
-            "quality_report": quality_report,
+            "quality_report": quality_bundle.get('latest_task_report'),
+            'quality_reports_data': quality_bundle,
+            'media_metadata': media_metadata,
+            'optional_sources': {'comments': {'status': 'partial' if comment_failures else 'available', 'failures': comment_failures}},
         }
 
     @staticmethod

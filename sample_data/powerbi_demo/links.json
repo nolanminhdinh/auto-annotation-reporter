@@ -1,0 +1,38 @@
+[
+  {
+    "github_issue": 1,
+    "cvat_task_id": 700,
+    "cvat_job_id": 7001,
+    "actual_cvat_task_id": 700,
+    "frame": 5,
+    "status": "verified",
+    "relationship_verified": true
+  },
+  {
+    "github_issue": 2,
+    "cvat_task_id": 700,
+    "cvat_job_id": 7002,
+    "actual_cvat_task_id": 700,
+    "frame": 105,
+    "status": "verified",
+    "relationship_verified": true
+  },
+  {
+    "github_issue": 3,
+    "cvat_task_id": 700,
+    "cvat_job_id": 7003,
+    "actual_cvat_task_id": 700,
+    "frame": 205,
+    "status": "verified",
+    "relationship_verified": true
+  },
+  {
+    "github_issue": 4,
+    "cvat_task_id": 700,
+    "cvat_job_id": 7004,
+    "actual_cvat_task_id": 700,
+    "frame": 305,
+    "status": "verified",
+    "relationship_verified": true
+  }
+]

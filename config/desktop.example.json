@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "mode": "demo",
+  "port": 55432,
+  "refresh_seconds": 10,
+  "completed_jobs": 10,
+  "snapshot": null,
+  "task_id": null,
+  "repo": null,
+  "operations": null,
+  "team_reports": null
+}

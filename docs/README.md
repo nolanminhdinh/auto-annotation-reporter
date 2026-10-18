@@ -47,6 +47,7 @@ docs/
 ### 📊 2. Thư mục `02-data-and-analytics/` — Nghiệp Vụ Dữ Liệu & Bộ Chỉ Số
 *Dành cho Data Analyst, BI Developer hoặc Mentor đánh giá tính chặt chẽ của số liệu.*
 * 📄 [`PROJECT_ANALYTICS_SPEC.md`](02-data-and-analytics/PROJECT_ANALYTICS_SPEC.md): **Tài liệu cốt lõi** chứa Mindmap nghiệp vụ, Data Model Star Schema, Data Dictionary 9 bảng, bộ 20 công thức DAX Measures, logic phân khúc nhân sự và đặc tả chi tiết 5 trang Power BI.
+* 📄 [`METRICS_ETL_PROCESSORS_TECH_DOC.md`](02-data-and-analytics/METRICS_ETL_PROCESSORS_TECH_DOC.md): **Tài liệu xây dựng kỹ thuật** chi tiết bộ tính toán chỉ số (WBS 2.1 – 2.5), công thức AHT, lọc idle, Shoelace, COCO Scale, phân khúc 7 nhóm và xuất bản CSV.
 * 📄 [`REPORT_TEMPLATE_SPEC.md`](02-data-and-analytics/REPORT_TEMPLATE_SPEC.md): Quy chuẩn cấu trúc bản báo cáo văn bản tóm tắt 4 phần gửi Mentor trước buổi họp.
 * 📄 [`MENTOR_REPORT_SAMPLE.md`](02-data-and-analytics/MENTOR_REPORT_SAMPLE.md): Bản báo cáo mẫu thực tế được sinh tự động từ hệ thống.
 
