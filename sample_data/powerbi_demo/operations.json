@@ -18,7 +18,7 @@
     },
     {
       "job_id": 7003,
-      "active_time_hours": 4,
+      "active_time_hours": 4.0,
       "completed_at": "2026-10-10T10:00:00Z"
     },
     {
@@ -28,7 +28,7 @@
     },
     {
       "job_id": 7005,
-      "active_time_hours": 3,
+      "active_time_hours": 3.0,
       "completed_at": "2026-10-11T10:00:00Z"
     },
     {
@@ -43,7 +43,7 @@
     },
     {
       "job_id": 7008,
-      "active_time_hours": 4,
+      "active_time_hours": 4.0,
       "completed_at": "2026-10-12T10:00:00Z"
     },
     {
@@ -53,7 +53,7 @@
     },
     {
       "job_id": 7010,
-      "active_time_hours": 3,
+      "active_time_hours": 3.0,
       "completed_at": "2026-10-13T10:00:00Z"
     },
     {
@@ -68,7 +68,7 @@
     },
     {
       "job_id": 7013,
-      "active_time_hours": 4,
+      "active_time_hours": 4.0,
       "completed_at": null
     },
     {
@@ -78,7 +78,7 @@
     },
     {
       "job_id": 7015,
-      "active_time_hours": 3,
+      "active_time_hours": 3.0,
       "completed_at": null
     }
   ],
@@ -86,8 +86,8 @@
     {
       "review_id": "R7001-1",
       "job_id": 7001,
-      "reviewer_id": "qa-demo",
-      "reviewer_name": "Reviewer (demo)",
+      "reviewer_id": "qa_lead",
+      "reviewer_name": "Vũ Đình Trọng (QA Lead)",
       "review_iteration": 1,
       "review_decision": "Rejected",
       "reviewed_at": "2026-10-10T12:00:00Z"
@@ -95,8 +95,8 @@
     {
       "review_id": "R7001-2",
       "job_id": 7001,
-      "reviewer_id": "qa-demo",
-      "reviewer_name": "Reviewer (demo)",
+      "reviewer_id": "qa_lead",
+      "reviewer_name": "Vũ Đình Trọng (QA Lead)",
       "review_iteration": 2,
       "review_decision": "Accepted",
       "reviewed_at": "2026-10-11T12:00:00Z"
@@ -104,8 +104,8 @@
     {
       "review_id": "R7002-1",
       "job_id": 7002,
-      "reviewer_id": "qa-demo",
-      "reviewer_name": "Reviewer (demo)",
+      "reviewer_id": "qa_lead",
+      "reviewer_name": "Vũ Đình Trọng (QA Lead)",
       "review_iteration": 1,
       "review_decision": "Accepted",
       "reviewed_at": "2026-10-10T12:00:00Z"
@@ -113,8 +113,8 @@
     {
       "review_id": "R7003-1",
       "job_id": 7003,
-      "reviewer_id": "qa-demo",
-      "reviewer_name": "Reviewer (demo)",
+      "reviewer_id": "qa_lead",
+      "reviewer_name": "Vũ Đình Trọng (QA Lead)",
       "review_iteration": 1,
       "review_decision": "Rejected",
       "reviewed_at": "2026-10-10T12:00:00Z"
@@ -122,8 +122,8 @@
     {
       "review_id": "R7003-2",
       "job_id": 7003,
-      "reviewer_id": "qa-demo",
-      "reviewer_name": "Reviewer (demo)",
+      "reviewer_id": "qa_lead",
+      "reviewer_name": "Vũ Đình Trọng (QA Lead)",
       "review_iteration": 2,
       "review_decision": "Accepted",
       "reviewed_at": "2026-10-11T12:00:00Z"
@@ -131,8 +131,8 @@
     {
       "review_id": "R7004-1",
       "job_id": 7004,
-      "reviewer_id": "qa-demo",
-      "reviewer_name": "Reviewer (demo)",
+      "reviewer_id": "qa_lead",
+      "reviewer_name": "Vũ Đình Trọng (QA Lead)",
       "review_iteration": 1,
       "review_decision": "Accepted",
       "reviewed_at": "2026-10-11T12:00:00Z"
@@ -140,8 +140,8 @@
     {
       "review_id": "R7005-1",
       "job_id": 7005,
-      "reviewer_id": "qa-demo",
-      "reviewer_name": "Reviewer (demo)",
+      "reviewer_id": "qa_lead",
+      "reviewer_name": "Vũ Đình Trọng (QA Lead)",
       "review_iteration": 1,
       "review_decision": "Accepted",
       "reviewed_at": "2026-10-11T12:00:00Z"
@@ -149,8 +149,8 @@
     {
       "review_id": "R7006-1",
       "job_id": 7006,
-      "reviewer_id": "qa-demo",
-      "reviewer_name": "Reviewer (demo)",
+      "reviewer_id": "qa_lead",
+      "reviewer_name": "Vũ Đình Trọng (QA Lead)",
       "review_iteration": 1,
       "review_decision": "Rejected",
       "reviewed_at": "2026-10-11T12:00:00Z"
@@ -158,8 +158,8 @@
     {
       "review_id": "R7006-2",
       "job_id": 7006,
-      "reviewer_id": "qa-demo",
-      "reviewer_name": "Reviewer (demo)",
+      "reviewer_id": "qa_lead",
+      "reviewer_name": "Vũ Đình Trọng (QA Lead)",
       "review_iteration": 2,
       "review_decision": "Accepted",
       "reviewed_at": "2026-10-12T12:00:00Z"
@@ -167,8 +167,8 @@
     {
       "review_id": "R7007-1",
       "job_id": 7007,
-      "reviewer_id": "qa-demo",
-      "reviewer_name": "Reviewer (demo)",
+      "reviewer_id": "qa_lead",
+      "reviewer_name": "Vũ Đình Trọng (QA Lead)",
       "review_iteration": 1,
       "review_decision": "Accepted",
       "reviewed_at": "2026-10-12T12:00:00Z"
@@ -176,8 +176,8 @@
     {
       "review_id": "R7008-1",
       "job_id": 7008,
-      "reviewer_id": "qa-demo",
-      "reviewer_name": "Reviewer (demo)",
+      "reviewer_id": "qa_lead",
+      "reviewer_name": "Vũ Đình Trọng (QA Lead)",
       "review_iteration": 1,
       "review_decision": "Rejected",
       "reviewed_at": "2026-10-12T12:00:00Z"
@@ -185,8 +185,8 @@
     {
       "review_id": "R7008-2",
       "job_id": 7008,
-      "reviewer_id": "qa-demo",
-      "reviewer_name": "Reviewer (demo)",
+      "reviewer_id": "qa_lead",
+      "reviewer_name": "Vũ Đình Trọng (QA Lead)",
       "review_iteration": 2,
       "review_decision": "Accepted",
       "reviewed_at": "2026-10-13T12:00:00Z"
@@ -194,8 +194,8 @@
     {
       "review_id": "R7009-1",
       "job_id": 7009,
-      "reviewer_id": "qa-demo",
-      "reviewer_name": "Reviewer (demo)",
+      "reviewer_id": "qa_lead",
+      "reviewer_name": "Vũ Đình Trọng (QA Lead)",
       "review_iteration": 1,
       "review_decision": "Accepted",
       "reviewed_at": "2026-10-12T12:00:00Z"
@@ -203,8 +203,8 @@
     {
       "review_id": "R7010-1",
       "job_id": 7010,
-      "reviewer_id": "qa-demo",
-      "reviewer_name": "Reviewer (demo)",
+      "reviewer_id": "qa_lead",
+      "reviewer_name": "Vũ Đình Trọng (QA Lead)",
       "review_iteration": 1,
       "review_decision": "Accepted",
       "reviewed_at": "2026-10-13T12:00:00Z"
@@ -225,23 +225,23 @@
       "frame_idx": 203,
       "label_id": 1,
       "defect_type": "missing_object",
-      "severity": "Major"
+      "severity": "Minor"
     },
     {
       "defect_id": "D7006",
       "review_id": "R7006-1",
       "frame_idx": 503,
       "label_id": 1,
-      "defect_type": "box_displacement",
-      "severity": "Major"
+      "defect_type": "wrong_class",
+      "severity": "Minor"
     },
     {
       "defect_id": "D7008",
       "review_id": "R7008-1",
       "frame_idx": 703,
       "label_id": 1,
-      "defect_type": "missing_object",
-      "severity": "Major"
+      "defect_type": "wrong_attr",
+      "severity": "Blocker"
     }
   ],
   "ground_truth_evals": [

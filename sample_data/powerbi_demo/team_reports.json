@@ -1,23 +1,23 @@
 [
   {
     "report_id": "TR-001",
-    "team": "Team Vehicles (DEMO)",
-    "reporter": "demo_1",
-    "report_text": "Đã hoàn thành phần việc được giao. Có tranh chấp guideline khi xe bị che khuất, cần Mentor xác nhận cách xử lý.",
+    "team": "Team Xe Cộ (Vehicles)",
+    "reporter": "demo_minh",
+    "report_text": "Đã hoàn thành 100% chỉ tiêu tuần. Phát hiện tranh chấp quy chuẩn bounding box khi xe bị che khuất > 70% bởi rào chắn, đề nghị Mentor ra quyết định.",
     "reported_at": "2026-10-16T09:00:00Z"
   },
   {
     "report_id": "TR-002",
-    "team": "Team Pedestrians (DEMO)",
-    "reporter": "demo_2",
-    "report_text": "Blocker: một nhóm ảnh bị lóa nên không thể xác định nhãn. Có cần loại ảnh này khỏi batch không?",
+    "team": "Team Người Đi Bộ (Pedestrians)",
+    "reporter": "demo_tu",
+    "report_text": "Blocker nghiêm trọng: Cụm ảnh Frame 200-299 tại Camera 02 bị ngược sáng hoàng hôn, bóng đổ dài gây nhầm lẫn giữa người và vệt phản chiếu.",
     "reported_at": "2026-10-16T09:15:00Z"
   },
   {
     "report_id": "TR-003",
-    "team": "Team QA (DEMO)",
-    "reporter": "demo_qa",
-    "report_text": "Reviewer đã rà soát các lỗi được ghi nhận. Cần thống nhất quy chuẩn bounding box cho vật thể ở mép ảnh trước phiên Mentor.",
+    "team": "Team Kiểm Định Chất Lượng (QA/QC)",
+    "reporter": "qa_lead",
+    "report_text": "Đã hoàn tất kiểm định vòng 1 và vòng 2. Tỷ lệ First-Time Pass đạt 60%, 4 lỗi chủ đạo đã được gán nhãn deep-link. Cần Mentor chốt cách gán nhãn xe điện 3 bánh.",
     "reported_at": "2026-10-16T09:30:00Z"
   }
 ]

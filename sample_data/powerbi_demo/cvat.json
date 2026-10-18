@@ -1,7 +1,7 @@
 {
   "task": {
     "id": 700,
-    "name": "DEMO — Vehicle annotation operations",
+    "name": "DEMO — Full Traffic Annotation Operations Benchmark",
     "size": 1500,
     "mode": "annotation"
   },
@@ -17,8 +17,10 @@
       "stop_frame": 99,
       "assignee": {
         "id": 1,
-        "username": "demo_1",
-        "first_name": "Minh (demo)"
+        "username": "demo_minh",
+        "first_name": "Nguyễn",
+        "last_name": "Văn Minh (demo)",
+        "joined_date": "2026-06-01"
       }
     },
     {
@@ -32,8 +34,10 @@
       "stop_frame": 199,
       "assignee": {
         "id": 2,
-        "username": "demo_2",
-        "first_name": "Tu (demo)"
+        "username": "demo_tu",
+        "first_name": "Trần",
+        "last_name": "Anh Tú (demo)",
+        "joined_date": "2026-07-15"
       }
     },
     {
@@ -47,8 +51,10 @@
       "stop_frame": 299,
       "assignee": {
         "id": 3,
-        "username": "demo_3",
-        "first_name": "Duy (demo)"
+        "username": "demo_duy",
+        "first_name": "Phạm",
+        "last_name": "Quốc Duy (demo)",
+        "joined_date": "2026-08-01"
       }
     },
     {
@@ -62,8 +68,10 @@
       "stop_frame": 399,
       "assignee": {
         "id": 4,
-        "username": "demo_4",
-        "first_name": "Tuan (demo)"
+        "username": "demo_tuan",
+        "first_name": "Lê",
+        "last_name": "Minh Tuấn (demo)",
+        "joined_date": "2026-08-20"
       }
     },
     {
@@ -77,8 +85,10 @@
       "stop_frame": 499,
       "assignee": {
         "id": 5,
-        "username": "demo_5",
-        "first_name": "Ngoc (demo)"
+        "username": "demo_ngoc",
+        "first_name": "Hoàng",
+        "last_name": "Bích Ngọc (demo)",
+        "joined_date": "2026-09-01"
       }
     },
     {
@@ -92,8 +102,10 @@
       "stop_frame": 599,
       "assignee": {
         "id": 1,
-        "username": "demo_1",
-        "first_name": "Minh (demo)"
+        "username": "demo_minh",
+        "first_name": "Nguyễn",
+        "last_name": "Văn Minh (demo)",
+        "joined_date": "2026-06-01"
       }
     },
     {
@@ -107,8 +119,10 @@
       "stop_frame": 699,
       "assignee": {
         "id": 2,
-        "username": "demo_2",
-        "first_name": "Tu (demo)"
+        "username": "demo_tu",
+        "first_name": "Trần",
+        "last_name": "Anh Tú (demo)",
+        "joined_date": "2026-07-15"
       }
     },
     {
@@ -122,8 +136,10 @@
       "stop_frame": 799,
       "assignee": {
         "id": 3,
-        "username": "demo_3",
-        "first_name": "Duy (demo)"
+        "username": "demo_duy",
+        "first_name": "Phạm",
+        "last_name": "Quốc Duy (demo)",
+        "joined_date": "2026-08-01"
       }
     },
     {
@@ -137,8 +153,10 @@
       "stop_frame": 899,
       "assignee": {
         "id": 4,
-        "username": "demo_4",
-        "first_name": "Tuan (demo)"
+        "username": "demo_tuan",
+        "first_name": "Lê",
+        "last_name": "Minh Tuấn (demo)",
+        "joined_date": "2026-08-20"
       }
     },
     {
@@ -152,8 +170,10 @@
       "stop_frame": 999,
       "assignee": {
         "id": 5,
-        "username": "demo_5",
-        "first_name": "Ngoc (demo)"
+        "username": "demo_ngoc",
+        "first_name": "Hoàng",
+        "last_name": "Bích Ngọc (demo)",
+        "joined_date": "2026-09-01"
       }
     },
     {
@@ -167,8 +187,10 @@
       "stop_frame": 1099,
       "assignee": {
         "id": 1,
-        "username": "demo_1",
-        "first_name": "Minh (demo)"
+        "username": "demo_minh",
+        "first_name": "Nguyễn",
+        "last_name": "Văn Minh (demo)",
+        "joined_date": "2026-06-01"
       }
     },
     {
@@ -182,8 +204,10 @@
       "stop_frame": 1199,
       "assignee": {
         "id": 2,
-        "username": "demo_2",
-        "first_name": "Tu (demo)"
+        "username": "demo_tu",
+        "first_name": "Trần",
+        "last_name": "Anh Tú (demo)",
+        "joined_date": "2026-07-15"
       }
     },
     {
@@ -197,8 +221,10 @@
       "stop_frame": 1299,
       "assignee": {
         "id": 3,
-        "username": "demo_3",
-        "first_name": "Duy (demo)"
+        "username": "demo_duy",
+        "first_name": "Phạm",
+        "last_name": "Quốc Duy (demo)",
+        "joined_date": "2026-08-01"
       }
     },
     {
@@ -212,8 +238,10 @@
       "stop_frame": 1399,
       "assignee": {
         "id": 4,
-        "username": "demo_4",
-        "first_name": "Tuan (demo)"
+        "username": "demo_tuan",
+        "first_name": "Lê",
+        "last_name": "Minh Tuấn (demo)",
+        "joined_date": "2026-08-20"
       }
     },
     {
@@ -227,27 +255,43 @@
       "stop_frame": 1499,
       "assignee": {
         "id": 5,
-        "username": "demo_5",
-        "first_name": "Ngoc (demo)"
+        "username": "demo_ngoc",
+        "first_name": "Hoàng",
+        "last_name": "Bích Ngọc (demo)",
+        "joined_date": "2026-09-01"
       }
     }
   ],
   "labels": [
     {
       "id": 1,
-      "name": "car"
+      "name": "car",
+      "color": "#E53935"
     },
     {
       "id": 2,
-      "name": "motorbike"
+      "name": "motorbike",
+      "color": "#1E88E5"
     },
     {
       "id": 3,
-      "name": "pedestrian"
+      "name": "pedestrian",
+      "color": "#43A047"
     },
     {
       "id": 4,
-      "name": "truck"
+      "name": "truck",
+      "color": "#FB8C00"
+    },
+    {
+      "id": 5,
+      "name": "traffic_sign",
+      "color": "#8E24AA"
+    },
+    {
+      "id": 6,
+      "name": "cyclist",
+      "color": "#00ACC1"
     }
   ],
   "issues": [],
@@ -264,11 +308,13 @@
             "frame": 0,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 2,
@@ -276,11 +322,13 @@
             "frame": 1,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 3,
@@ -288,11 +336,13 @@
             "frame": 2,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 4,
@@ -300,107 +350,131 @@
             "frame": 3,
             "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 5,
             "type": "rectangle",
             "frame": 4,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 6,
             "type": "rectangle",
             "frame": 5,
-            "label_id": 2,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 7,
             "type": "rectangle",
             "frame": 6,
-            "label_id": 3,
+            "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 8,
-            "type": "rectangle",
+            "type": "polygon",
             "frame": 7,
-            "label_id": 4,
+            "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              100.0,
+              150.0,
+              140.0,
+              130.0,
+              180.0,
+              170.0,
+              150.0,
+              220.0,
+              90.0,
+              200.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 9,
-            "type": "rectangle",
+            "type": "polyline",
             "frame": 8,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              50.0,
+              200.0,
+              120.0,
+              280.0,
+              200.0,
+              350.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 10,
-            "type": "rectangle",
+            "type": "points",
             "frame": 9,
-            "label_id": 2,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              150.0,
+              180.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 11,
             "type": "rectangle",
             "frame": 10,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 12,
             "type": "rectangle",
             "frame": 11,
-            "label_id": 4,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           }
         ],
         "tracks": [],
@@ -418,11 +492,13 @@
             "frame": 100,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 2,
@@ -430,11 +506,13 @@
             "frame": 101,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 3,
@@ -442,11 +520,13 @@
             "frame": 102,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 4,
@@ -454,107 +534,131 @@
             "frame": 103,
             "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 5,
             "type": "rectangle",
             "frame": 104,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 6,
             "type": "rectangle",
             "frame": 105,
-            "label_id": 2,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 7,
             "type": "rectangle",
             "frame": 106,
-            "label_id": 3,
+            "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 8,
-            "type": "rectangle",
+            "type": "polygon",
             "frame": 107,
-            "label_id": 4,
+            "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              100.0,
+              150.0,
+              140.0,
+              130.0,
+              180.0,
+              170.0,
+              150.0,
+              220.0,
+              90.0,
+              200.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 9,
-            "type": "rectangle",
+            "type": "polyline",
             "frame": 108,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              50.0,
+              200.0,
+              120.0,
+              280.0,
+              200.0,
+              350.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 10,
-            "type": "rectangle",
+            "type": "points",
             "frame": 109,
-            "label_id": 2,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              150.0,
+              180.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 11,
             "type": "rectangle",
             "frame": 110,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 12,
             "type": "rectangle",
             "frame": 111,
-            "label_id": 4,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 13,
@@ -562,11 +666,13 @@
             "frame": 112,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           }
         ],
         "tracks": [],
@@ -584,11 +690,13 @@
             "frame": 200,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 2,
@@ -596,11 +704,13 @@
             "frame": 201,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 3,
@@ -608,11 +718,13 @@
             "frame": 202,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 4,
@@ -620,107 +732,131 @@
             "frame": 203,
             "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 5,
             "type": "rectangle",
             "frame": 204,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 6,
             "type": "rectangle",
             "frame": 205,
-            "label_id": 2,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 7,
             "type": "rectangle",
             "frame": 206,
-            "label_id": 3,
+            "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 8,
-            "type": "rectangle",
+            "type": "polygon",
             "frame": 207,
-            "label_id": 4,
+            "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              100.0,
+              150.0,
+              140.0,
+              130.0,
+              180.0,
+              170.0,
+              150.0,
+              220.0,
+              90.0,
+              200.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 9,
-            "type": "rectangle",
+            "type": "polyline",
             "frame": 208,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              50.0,
+              200.0,
+              120.0,
+              280.0,
+              200.0,
+              350.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 10,
-            "type": "rectangle",
+            "type": "points",
             "frame": 209,
-            "label_id": 2,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              150.0,
+              180.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 11,
             "type": "rectangle",
             "frame": 210,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 12,
             "type": "rectangle",
             "frame": 211,
-            "label_id": 4,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 13,
@@ -728,11 +864,13 @@
             "frame": 212,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 14,
@@ -740,11 +878,13 @@
             "frame": 213,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           }
         ],
         "tracks": [],
@@ -762,11 +902,13 @@
             "frame": 300,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 2,
@@ -774,11 +916,13 @@
             "frame": 301,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 3,
@@ -786,11 +930,13 @@
             "frame": 302,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 4,
@@ -798,107 +944,131 @@
             "frame": 303,
             "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 5,
             "type": "rectangle",
             "frame": 304,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 6,
             "type": "rectangle",
             "frame": 305,
-            "label_id": 2,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 7,
             "type": "rectangle",
             "frame": 306,
-            "label_id": 3,
+            "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 8,
-            "type": "rectangle",
+            "type": "polygon",
             "frame": 307,
-            "label_id": 4,
+            "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              100.0,
+              150.0,
+              140.0,
+              130.0,
+              180.0,
+              170.0,
+              150.0,
+              220.0,
+              90.0,
+              200.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 9,
-            "type": "rectangle",
+            "type": "polyline",
             "frame": 308,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              50.0,
+              200.0,
+              120.0,
+              280.0,
+              200.0,
+              350.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 10,
-            "type": "rectangle",
+            "type": "points",
             "frame": 309,
-            "label_id": 2,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              150.0,
+              180.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 11,
             "type": "rectangle",
             "frame": 310,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 12,
             "type": "rectangle",
             "frame": 311,
-            "label_id": 4,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 13,
@@ -906,11 +1076,13 @@
             "frame": 312,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 14,
@@ -918,11 +1090,13 @@
             "frame": 313,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 15,
@@ -930,11 +1104,13 @@
             "frame": 314,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           }
         ],
         "tracks": [],
@@ -952,11 +1128,13 @@
             "frame": 400,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 2,
@@ -964,11 +1142,13 @@
             "frame": 401,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 3,
@@ -976,11 +1156,13 @@
             "frame": 402,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 4,
@@ -988,107 +1170,131 @@
             "frame": 403,
             "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 5,
             "type": "rectangle",
             "frame": 404,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 6,
             "type": "rectangle",
             "frame": 405,
-            "label_id": 2,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 7,
             "type": "rectangle",
             "frame": 406,
-            "label_id": 3,
+            "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 8,
-            "type": "rectangle",
+            "type": "polygon",
             "frame": 407,
-            "label_id": 4,
+            "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              100.0,
+              150.0,
+              140.0,
+              130.0,
+              180.0,
+              170.0,
+              150.0,
+              220.0,
+              90.0,
+              200.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 9,
-            "type": "rectangle",
+            "type": "polyline",
             "frame": 408,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              50.0,
+              200.0,
+              120.0,
+              280.0,
+              200.0,
+              350.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 10,
-            "type": "rectangle",
+            "type": "points",
             "frame": 409,
-            "label_id": 2,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              150.0,
+              180.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 11,
             "type": "rectangle",
             "frame": 410,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 12,
             "type": "rectangle",
             "frame": 411,
-            "label_id": 4,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 13,
@@ -1096,11 +1302,13 @@
             "frame": 412,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 14,
@@ -1108,11 +1316,13 @@
             "frame": 413,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 15,
@@ -1120,11 +1330,13 @@
             "frame": 414,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 16,
@@ -1132,11 +1344,13 @@
             "frame": 415,
             "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           }
         ],
         "tracks": [],
@@ -1154,11 +1368,13 @@
             "frame": 500,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 2,
@@ -1166,11 +1382,13 @@
             "frame": 501,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 3,
@@ -1178,11 +1396,13 @@
             "frame": 502,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 4,
@@ -1190,107 +1410,131 @@
             "frame": 503,
             "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 5,
             "type": "rectangle",
             "frame": 504,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 6,
             "type": "rectangle",
             "frame": 505,
-            "label_id": 2,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 7,
             "type": "rectangle",
             "frame": 506,
-            "label_id": 3,
+            "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 8,
-            "type": "rectangle",
+            "type": "polygon",
             "frame": 507,
-            "label_id": 4,
+            "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              100.0,
+              150.0,
+              140.0,
+              130.0,
+              180.0,
+              170.0,
+              150.0,
+              220.0,
+              90.0,
+              200.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 9,
-            "type": "rectangle",
+            "type": "polyline",
             "frame": 508,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              50.0,
+              200.0,
+              120.0,
+              280.0,
+              200.0,
+              350.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 10,
-            "type": "rectangle",
+            "type": "points",
             "frame": 509,
-            "label_id": 2,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              150.0,
+              180.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 11,
             "type": "rectangle",
             "frame": 510,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 12,
             "type": "rectangle",
             "frame": 511,
-            "label_id": 4,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 13,
@@ -1298,11 +1542,13 @@
             "frame": 512,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 14,
@@ -1310,11 +1556,13 @@
             "frame": 513,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 15,
@@ -1322,11 +1570,13 @@
             "frame": 514,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 16,
@@ -1334,23 +1584,27 @@
             "frame": 515,
             "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 17,
             "type": "rectangle",
             "frame": 516,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           }
         ],
         "tracks": [],
@@ -1368,11 +1622,13 @@
             "frame": 600,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 2,
@@ -1380,11 +1636,13 @@
             "frame": 601,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 3,
@@ -1392,11 +1650,13 @@
             "frame": 602,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 4,
@@ -1404,107 +1664,131 @@
             "frame": 603,
             "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 5,
             "type": "rectangle",
             "frame": 604,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 6,
             "type": "rectangle",
             "frame": 605,
-            "label_id": 2,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 7,
             "type": "rectangle",
             "frame": 606,
-            "label_id": 3,
+            "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 8,
-            "type": "rectangle",
+            "type": "polygon",
             "frame": 607,
-            "label_id": 4,
+            "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              100.0,
+              150.0,
+              140.0,
+              130.0,
+              180.0,
+              170.0,
+              150.0,
+              220.0,
+              90.0,
+              200.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 9,
-            "type": "rectangle",
+            "type": "polyline",
             "frame": 608,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              50.0,
+              200.0,
+              120.0,
+              280.0,
+              200.0,
+              350.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 10,
-            "type": "rectangle",
+            "type": "points",
             "frame": 609,
-            "label_id": 2,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              150.0,
+              180.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 11,
             "type": "rectangle",
             "frame": 610,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 12,
             "type": "rectangle",
             "frame": 611,
-            "label_id": 4,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 13,
@@ -1512,11 +1796,13 @@
             "frame": 612,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 14,
@@ -1524,11 +1810,13 @@
             "frame": 613,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 15,
@@ -1536,11 +1824,13 @@
             "frame": 614,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 16,
@@ -1548,35 +1838,47 @@
             "frame": 615,
             "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 17,
             "type": "rectangle",
             "frame": 616,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 18,
-            "type": "rectangle",
+            "type": "polygon",
             "frame": 617,
-            "label_id": 2,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              100.0,
+              150.0,
+              140.0,
+              130.0,
+              180.0,
+              170.0,
+              150.0,
+              220.0,
+              90.0,
+              200.0
+            ],
+            "occluded": false,
+            "outside": false
           }
         ],
         "tracks": [],
@@ -1594,11 +1896,13 @@
             "frame": 700,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 2,
@@ -1606,11 +1910,13 @@
             "frame": 701,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 3,
@@ -1618,11 +1924,13 @@
             "frame": 702,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 4,
@@ -1630,107 +1938,131 @@
             "frame": 703,
             "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 5,
             "type": "rectangle",
             "frame": 704,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 6,
             "type": "rectangle",
             "frame": 705,
-            "label_id": 2,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 7,
             "type": "rectangle",
             "frame": 706,
-            "label_id": 3,
+            "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 8,
-            "type": "rectangle",
+            "type": "polygon",
             "frame": 707,
-            "label_id": 4,
+            "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              100.0,
+              150.0,
+              140.0,
+              130.0,
+              180.0,
+              170.0,
+              150.0,
+              220.0,
+              90.0,
+              200.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 9,
-            "type": "rectangle",
+            "type": "polyline",
             "frame": 708,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              50.0,
+              200.0,
+              120.0,
+              280.0,
+              200.0,
+              350.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 10,
-            "type": "rectangle",
+            "type": "points",
             "frame": 709,
-            "label_id": 2,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              150.0,
+              180.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 11,
             "type": "rectangle",
             "frame": 710,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 12,
             "type": "rectangle",
             "frame": 711,
-            "label_id": 4,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 13,
@@ -1738,11 +2070,13 @@
             "frame": 712,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 14,
@@ -1750,11 +2084,13 @@
             "frame": 713,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 15,
@@ -1762,11 +2098,13 @@
             "frame": 714,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 16,
@@ -1774,47 +2112,63 @@
             "frame": 715,
             "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 17,
             "type": "rectangle",
             "frame": 716,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 18,
-            "type": "rectangle",
+            "type": "polygon",
             "frame": 717,
-            "label_id": 2,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              100.0,
+              150.0,
+              140.0,
+              130.0,
+              180.0,
+              170.0,
+              150.0,
+              220.0,
+              90.0,
+              200.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 19,
-            "type": "rectangle",
+            "type": "polyline",
             "frame": 718,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              50.0,
+              200.0,
+              120.0,
+              280.0,
+              200.0,
+              350.0
+            ],
+            "occluded": false,
+            "outside": false
           }
         ],
         "tracks": [],
@@ -1832,11 +2186,13 @@
             "frame": 800,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 2,
@@ -1844,11 +2200,13 @@
             "frame": 801,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 3,
@@ -1856,11 +2214,13 @@
             "frame": 802,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 4,
@@ -1868,107 +2228,131 @@
             "frame": 803,
             "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 5,
             "type": "rectangle",
             "frame": 804,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 6,
             "type": "rectangle",
             "frame": 805,
-            "label_id": 2,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 7,
             "type": "rectangle",
             "frame": 806,
-            "label_id": 3,
+            "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 8,
-            "type": "rectangle",
+            "type": "polygon",
             "frame": 807,
-            "label_id": 4,
+            "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              100.0,
+              150.0,
+              140.0,
+              130.0,
+              180.0,
+              170.0,
+              150.0,
+              220.0,
+              90.0,
+              200.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 9,
-            "type": "rectangle",
+            "type": "polyline",
             "frame": 808,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              50.0,
+              200.0,
+              120.0,
+              280.0,
+              200.0,
+              350.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 10,
-            "type": "rectangle",
+            "type": "points",
             "frame": 809,
-            "label_id": 2,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              150.0,
+              180.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 11,
             "type": "rectangle",
             "frame": 810,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 12,
             "type": "rectangle",
             "frame": 811,
-            "label_id": 4,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 13,
@@ -1976,11 +2360,13 @@
             "frame": 812,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 14,
@@ -1988,11 +2374,13 @@
             "frame": 813,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 15,
@@ -2000,11 +2388,13 @@
             "frame": 814,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 16,
@@ -2012,59 +2402,75 @@
             "frame": 815,
             "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 17,
             "type": "rectangle",
             "frame": 816,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 18,
-            "type": "rectangle",
+            "type": "polygon",
             "frame": 817,
-            "label_id": 2,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              100.0,
+              150.0,
+              140.0,
+              130.0,
+              180.0,
+              170.0,
+              150.0,
+              220.0,
+              90.0,
+              200.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 19,
-            "type": "rectangle",
+            "type": "polyline",
             "frame": 818,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              50.0,
+              200.0,
+              120.0,
+              280.0,
+              200.0,
+              350.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 20,
-            "type": "rectangle",
+            "type": "points",
             "frame": 819,
-            "label_id": 4,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              150.0,
+              180.0
+            ],
+            "occluded": false,
+            "outside": false
           }
         ],
         "tracks": [],
@@ -2082,11 +2488,13 @@
             "frame": 900,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 2,
@@ -2094,11 +2502,13 @@
             "frame": 901,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 3,
@@ -2106,11 +2516,13 @@
             "frame": 902,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 4,
@@ -2118,107 +2530,131 @@
             "frame": 903,
             "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 5,
             "type": "rectangle",
             "frame": 904,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 6,
             "type": "rectangle",
             "frame": 905,
-            "label_id": 2,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 7,
             "type": "rectangle",
             "frame": 906,
-            "label_id": 3,
+            "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 8,
-            "type": "rectangle",
+            "type": "polygon",
             "frame": 907,
-            "label_id": 4,
+            "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              100.0,
+              150.0,
+              140.0,
+              130.0,
+              180.0,
+              170.0,
+              150.0,
+              220.0,
+              90.0,
+              200.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 9,
-            "type": "rectangle",
+            "type": "polyline",
             "frame": 908,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              50.0,
+              200.0,
+              120.0,
+              280.0,
+              200.0,
+              350.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 10,
-            "type": "rectangle",
+            "type": "points",
             "frame": 909,
-            "label_id": 2,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              150.0,
+              180.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 11,
             "type": "rectangle",
             "frame": 910,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 12,
             "type": "rectangle",
             "frame": 911,
-            "label_id": 4,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 13,
@@ -2226,11 +2662,13 @@
             "frame": 912,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 14,
@@ -2238,11 +2676,13 @@
             "frame": 913,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 15,
@@ -2250,11 +2690,13 @@
             "frame": 914,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 16,
@@ -2262,71 +2704,89 @@
             "frame": 915,
             "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 17,
             "type": "rectangle",
             "frame": 916,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 18,
-            "type": "rectangle",
+            "type": "polygon",
             "frame": 917,
-            "label_id": 2,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              100.0,
+              150.0,
+              140.0,
+              130.0,
+              180.0,
+              170.0,
+              150.0,
+              220.0,
+              90.0,
+              200.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 19,
-            "type": "rectangle",
+            "type": "polyline",
             "frame": 918,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              50.0,
+              200.0,
+              120.0,
+              280.0,
+              200.0,
+              350.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 20,
-            "type": "rectangle",
+            "type": "points",
             "frame": 919,
-            "label_id": 4,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              150.0,
+              180.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 21,
             "type": "rectangle",
             "frame": 920,
-            "label_id": 1,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           }
         ],
         "tracks": [],
@@ -2344,11 +2804,13 @@
             "frame": 1000,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 2,
@@ -2356,11 +2818,13 @@
             "frame": 1001,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 3,
@@ -2368,11 +2832,13 @@
             "frame": 1002,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 4,
@@ -2380,107 +2846,131 @@
             "frame": 1003,
             "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 5,
             "type": "rectangle",
             "frame": 1004,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 6,
             "type": "rectangle",
             "frame": 1005,
-            "label_id": 2,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 7,
             "type": "rectangle",
             "frame": 1006,
-            "label_id": 3,
+            "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 8,
-            "type": "rectangle",
+            "type": "polygon",
             "frame": 1007,
-            "label_id": 4,
+            "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              100.0,
+              150.0,
+              140.0,
+              130.0,
+              180.0,
+              170.0,
+              150.0,
+              220.0,
+              90.0,
+              200.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 9,
-            "type": "rectangle",
+            "type": "polyline",
             "frame": 1008,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              50.0,
+              200.0,
+              120.0,
+              280.0,
+              200.0,
+              350.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 10,
-            "type": "rectangle",
+            "type": "points",
             "frame": 1009,
-            "label_id": 2,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              150.0,
+              180.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 11,
             "type": "rectangle",
             "frame": 1010,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 12,
             "type": "rectangle",
             "frame": 1011,
-            "label_id": 4,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 13,
@@ -2488,11 +2978,13 @@
             "frame": 1012,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 14,
@@ -2500,11 +2992,13 @@
             "frame": 1013,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 15,
@@ -2512,11 +3006,13 @@
             "frame": 1014,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 16,
@@ -2524,83 +3020,103 @@
             "frame": 1015,
             "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 17,
             "type": "rectangle",
             "frame": 1016,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 18,
-            "type": "rectangle",
+            "type": "polygon",
             "frame": 1017,
-            "label_id": 2,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              100.0,
+              150.0,
+              140.0,
+              130.0,
+              180.0,
+              170.0,
+              150.0,
+              220.0,
+              90.0,
+              200.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 19,
-            "type": "rectangle",
+            "type": "polyline",
             "frame": 1018,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              50.0,
+              200.0,
+              120.0,
+              280.0,
+              200.0,
+              350.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 20,
-            "type": "rectangle",
+            "type": "points",
             "frame": 1019,
-            "label_id": 4,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              150.0,
+              180.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 21,
             "type": "rectangle",
             "frame": 1020,
-            "label_id": 1,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 22,
             "type": "rectangle",
             "frame": 1021,
-            "label_id": 2,
+            "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           }
         ],
         "tracks": [],
@@ -2618,11 +3134,13 @@
             "frame": 1100,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 2,
@@ -2630,11 +3148,13 @@
             "frame": 1101,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 3,
@@ -2642,11 +3162,13 @@
             "frame": 1102,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 4,
@@ -2654,107 +3176,131 @@
             "frame": 1103,
             "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 5,
             "type": "rectangle",
             "frame": 1104,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 6,
             "type": "rectangle",
             "frame": 1105,
-            "label_id": 2,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 7,
             "type": "rectangle",
             "frame": 1106,
-            "label_id": 3,
+            "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 8,
-            "type": "rectangle",
+            "type": "polygon",
             "frame": 1107,
-            "label_id": 4,
+            "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              100.0,
+              150.0,
+              140.0,
+              130.0,
+              180.0,
+              170.0,
+              150.0,
+              220.0,
+              90.0,
+              200.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 9,
-            "type": "rectangle",
+            "type": "polyline",
             "frame": 1108,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              50.0,
+              200.0,
+              120.0,
+              280.0,
+              200.0,
+              350.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 10,
-            "type": "rectangle",
+            "type": "points",
             "frame": 1109,
-            "label_id": 2,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              150.0,
+              180.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 11,
             "type": "rectangle",
             "frame": 1110,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 12,
             "type": "rectangle",
             "frame": 1111,
-            "label_id": 4,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 13,
@@ -2762,11 +3308,13 @@
             "frame": 1112,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 14,
@@ -2774,11 +3322,13 @@
             "frame": 1113,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 15,
@@ -2786,11 +3336,13 @@
             "frame": 1114,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 16,
@@ -2798,95 +3350,117 @@
             "frame": 1115,
             "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 17,
             "type": "rectangle",
             "frame": 1116,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 18,
-            "type": "rectangle",
+            "type": "polygon",
             "frame": 1117,
-            "label_id": 2,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              100.0,
+              150.0,
+              140.0,
+              130.0,
+              180.0,
+              170.0,
+              150.0,
+              220.0,
+              90.0,
+              200.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 19,
-            "type": "rectangle",
+            "type": "polyline",
             "frame": 1118,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              50.0,
+              200.0,
+              120.0,
+              280.0,
+              200.0,
+              350.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 20,
-            "type": "rectangle",
+            "type": "points",
             "frame": 1119,
-            "label_id": 4,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              150.0,
+              180.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 21,
             "type": "rectangle",
             "frame": 1120,
-            "label_id": 1,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 22,
             "type": "rectangle",
             "frame": 1121,
-            "label_id": 2,
+            "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 23,
             "type": "rectangle",
             "frame": 1122,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           }
         ],
         "tracks": [],
@@ -2904,11 +3478,13 @@
             "frame": 1200,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 2,
@@ -2916,11 +3492,13 @@
             "frame": 1201,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 3,
@@ -2928,11 +3506,13 @@
             "frame": 1202,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 4,
@@ -2940,107 +3520,131 @@
             "frame": 1203,
             "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 5,
             "type": "rectangle",
             "frame": 1204,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 6,
             "type": "rectangle",
             "frame": 1205,
-            "label_id": 2,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 7,
             "type": "rectangle",
             "frame": 1206,
-            "label_id": 3,
+            "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 8,
-            "type": "rectangle",
+            "type": "polygon",
             "frame": 1207,
-            "label_id": 4,
+            "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              100.0,
+              150.0,
+              140.0,
+              130.0,
+              180.0,
+              170.0,
+              150.0,
+              220.0,
+              90.0,
+              200.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 9,
-            "type": "rectangle",
+            "type": "polyline",
             "frame": 1208,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              50.0,
+              200.0,
+              120.0,
+              280.0,
+              200.0,
+              350.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 10,
-            "type": "rectangle",
+            "type": "points",
             "frame": 1209,
-            "label_id": 2,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              150.0,
+              180.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 11,
             "type": "rectangle",
             "frame": 1210,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 12,
             "type": "rectangle",
             "frame": 1211,
-            "label_id": 4,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 13,
@@ -3048,11 +3652,13 @@
             "frame": 1212,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 14,
@@ -3060,11 +3666,13 @@
             "frame": 1213,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 15,
@@ -3072,11 +3680,13 @@
             "frame": 1214,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 16,
@@ -3084,107 +3694,131 @@
             "frame": 1215,
             "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 17,
             "type": "rectangle",
             "frame": 1216,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 18,
-            "type": "rectangle",
+            "type": "polygon",
             "frame": 1217,
-            "label_id": 2,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              100.0,
+              150.0,
+              140.0,
+              130.0,
+              180.0,
+              170.0,
+              150.0,
+              220.0,
+              90.0,
+              200.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 19,
-            "type": "rectangle",
+            "type": "polyline",
             "frame": 1218,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              50.0,
+              200.0,
+              120.0,
+              280.0,
+              200.0,
+              350.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 20,
-            "type": "rectangle",
+            "type": "points",
             "frame": 1219,
-            "label_id": 4,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              150.0,
+              180.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 21,
             "type": "rectangle",
             "frame": 1220,
-            "label_id": 1,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 22,
             "type": "rectangle",
             "frame": 1221,
-            "label_id": 2,
+            "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 23,
             "type": "rectangle",
             "frame": 1222,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 24,
             "type": "rectangle",
             "frame": 1223,
-            "label_id": 4,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           }
         ],
         "tracks": [],
@@ -3202,11 +3836,13 @@
             "frame": 1300,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 2,
@@ -3214,11 +3850,13 @@
             "frame": 1301,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 3,
@@ -3226,11 +3864,13 @@
             "frame": 1302,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 4,
@@ -3238,107 +3878,131 @@
             "frame": 1303,
             "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 5,
             "type": "rectangle",
             "frame": 1304,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 6,
             "type": "rectangle",
             "frame": 1305,
-            "label_id": 2,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 7,
             "type": "rectangle",
             "frame": 1306,
-            "label_id": 3,
+            "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 8,
-            "type": "rectangle",
+            "type": "polygon",
             "frame": 1307,
-            "label_id": 4,
+            "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              100.0,
+              150.0,
+              140.0,
+              130.0,
+              180.0,
+              170.0,
+              150.0,
+              220.0,
+              90.0,
+              200.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 9,
-            "type": "rectangle",
+            "type": "polyline",
             "frame": 1308,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              50.0,
+              200.0,
+              120.0,
+              280.0,
+              200.0,
+              350.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 10,
-            "type": "rectangle",
+            "type": "points",
             "frame": 1309,
-            "label_id": 2,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              150.0,
+              180.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 11,
             "type": "rectangle",
             "frame": 1310,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 12,
             "type": "rectangle",
             "frame": 1311,
-            "label_id": 4,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 13,
@@ -3346,11 +4010,13 @@
             "frame": 1312,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 14,
@@ -3358,11 +4024,13 @@
             "frame": 1313,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 15,
@@ -3370,11 +4038,13 @@
             "frame": 1314,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 16,
@@ -3382,107 +4052,131 @@
             "frame": 1315,
             "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 17,
             "type": "rectangle",
             "frame": 1316,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 18,
-            "type": "rectangle",
+            "type": "polygon",
             "frame": 1317,
-            "label_id": 2,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              100.0,
+              150.0,
+              140.0,
+              130.0,
+              180.0,
+              170.0,
+              150.0,
+              220.0,
+              90.0,
+              200.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 19,
-            "type": "rectangle",
+            "type": "polyline",
             "frame": 1318,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              50.0,
+              200.0,
+              120.0,
+              280.0,
+              200.0,
+              350.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 20,
-            "type": "rectangle",
+            "type": "points",
             "frame": 1319,
-            "label_id": 4,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              150.0,
+              180.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 21,
             "type": "rectangle",
             "frame": 1320,
-            "label_id": 1,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 22,
             "type": "rectangle",
             "frame": 1321,
-            "label_id": 2,
+            "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 23,
             "type": "rectangle",
             "frame": 1322,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 24,
             "type": "rectangle",
             "frame": 1323,
-            "label_id": 4,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 25,
@@ -3490,11 +4184,13 @@
             "frame": 1324,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           }
         ],
         "tracks": [],
@@ -3512,11 +4208,13 @@
             "frame": 1400,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 2,
@@ -3524,11 +4222,13 @@
             "frame": 1401,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 3,
@@ -3536,11 +4236,13 @@
             "frame": 1402,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 4,
@@ -3548,107 +4250,131 @@
             "frame": 1403,
             "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 5,
             "type": "rectangle",
             "frame": 1404,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 6,
             "type": "rectangle",
             "frame": 1405,
-            "label_id": 2,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 7,
             "type": "rectangle",
             "frame": 1406,
-            "label_id": 3,
+            "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 8,
-            "type": "rectangle",
+            "type": "polygon",
             "frame": 1407,
-            "label_id": 4,
+            "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              100.0,
+              150.0,
+              140.0,
+              130.0,
+              180.0,
+              170.0,
+              150.0,
+              220.0,
+              90.0,
+              200.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 9,
-            "type": "rectangle",
+            "type": "polyline",
             "frame": 1408,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              50.0,
+              200.0,
+              120.0,
+              280.0,
+              200.0,
+              350.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 10,
-            "type": "rectangle",
+            "type": "points",
             "frame": 1409,
-            "label_id": 2,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              150.0,
+              180.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 11,
             "type": "rectangle",
             "frame": 1410,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 12,
             "type": "rectangle",
             "frame": 1411,
-            "label_id": 4,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 13,
@@ -3656,11 +4382,13 @@
             "frame": 1412,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 14,
@@ -3668,11 +4396,13 @@
             "frame": 1413,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 15,
@@ -3680,11 +4410,13 @@
             "frame": 1414,
             "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 16,
@@ -3692,107 +4424,131 @@
             "frame": 1415,
             "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 17,
             "type": "rectangle",
             "frame": 1416,
-            "label_id": 1,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 18,
-            "type": "rectangle",
+            "type": "polygon",
             "frame": 1417,
-            "label_id": 2,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              100.0,
+              150.0,
+              140.0,
+              130.0,
+              180.0,
+              170.0,
+              150.0,
+              220.0,
+              90.0,
+              200.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 19,
-            "type": "rectangle",
+            "type": "polyline",
             "frame": 1418,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              50.0,
+              200.0,
+              120.0,
+              280.0,
+              200.0,
+              350.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 20,
-            "type": "rectangle",
+            "type": "points",
             "frame": 1419,
-            "label_id": 4,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              150.0,
+              180.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 21,
             "type": "rectangle",
             "frame": 1420,
-            "label_id": 1,
+            "label_id": 3,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 22,
             "type": "rectangle",
             "frame": 1421,
-            "label_id": 2,
+            "label_id": 4,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 23,
             "type": "rectangle",
             "frame": 1422,
-            "label_id": 3,
+            "label_id": 5,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 24,
             "type": "rectangle",
             "frame": 1423,
-            "label_id": 4,
+            "label_id": 6,
             "points": [
-              10,
-              20,
-              130,
-              140
-            ]
+              10.0,
+              20.0,
+              130.0,
+              140.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 25,
@@ -3800,11 +4556,13 @@
             "frame": 1424,
             "label_id": 1,
             "points": [
-              10,
-              20,
-              30,
-              40
-            ]
+              10.0,
+              20.0,
+              30.0,
+              40.0
+            ],
+            "occluded": false,
+            "outside": false
           },
           {
             "id": 26,
@@ -3812,11 +4570,13 @@
             "frame": 1425,
             "label_id": 2,
             "points": [
-              10,
-              20,
-              65,
-              75
-            ]
+              10.0,
+              20.0,
+              65.0,
+              75.0
+            ],
+            "occluded": false,
+            "outside": false
           }
         ],
         "tracks": [],
@@ -11460,5 +12220,19 @@
         ]
       }
     }
-  ]
+  ],
+  "optional_sources": {
+    "issues": {
+      "status": "available"
+    },
+    "comments": {
+      "status": "available"
+    },
+    "media_metadata": {
+      "status": "available"
+    }
+  },
+  "quality_reports_data": {
+    "status": "available"
+  }
 }

@@ -1,12 +1,13 @@
 {
   "schema_version": 1,
   "fixture": true,
+  "content_provenance": "comprehensive_synthetic_benchmark",
   "started_at": "2026-10-16T10:00:00Z",
   "finished_at": "2026-10-16T10:01:00Z",
   "scope": {
     "task_id": 700,
-    "repo": "demo/annotation",
-    "cvat_host": "https://example.org"
+    "repo": "nolanminhdinh/auto-annotation-reporter",
+    "cvat_host": "https://app.cvat.ai"
   },
   "sources": {
     "cvat": {
